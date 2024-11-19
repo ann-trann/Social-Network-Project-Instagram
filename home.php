@@ -8,8 +8,8 @@ if (!loggedIn()) {
 }
 
 $user_id = $_SESSION['user_id'];
-require "shared/header.php";
+require "shared/sidebar.php";
 ?>
 
-<?php require_once "shared/global.header.php"; ?>
+<?php require_once "shared/global.sidebar.php"; ?>
 <script src="js/common.js"></script>

@@ -7,11 +7,10 @@ const show_hide_password=getID("show_hide_password");
 const imageElement=getSL(".heroImg");
 let slideIndex=0;
 const IMAGE_DATA=[
-    "http://localhost/Social-Network-Project-Instagram/assets/images/logo/1.png",
-    "http://localhost/Social-Network-Project-Instagram/assets/images/logo/2.png",
-    "http://localhost/Social-Network-Project-Instagram/assets/images/logo/3.png",
-    "http://localhost/Social-Network-Project-Instagram/assets/images/logo/4.png",
-    
+    "/Social-Network-Project-Instagram/assets/images/logo/1.png",
+    "/Social-Network-Project-Instagram/assets/images/logo/2.png", 
+    "/Social-Network-Project-Instagram/assets/images/logo/3.png",
+    "/Social-Network-Project-Instagram/assets/images/logo/4.png"     
 ];
 
 if(password){

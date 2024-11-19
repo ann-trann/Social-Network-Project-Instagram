@@ -5,8 +5,6 @@ if(!isset($title)){$title = "Instagram";
 $desc = "Instagram lets you capture, follow, like and share world's moments in a better way and tell your story with photos, messages, posts and everything in between";
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +19,7 @@ $desc = "Instagram lets you capture, follow, like and share world's moments in a
 
     <link rel="shortcut icon" href="<?= url_for('assets/images/favicon/instagram.ico'); ?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= url_for('css/master.css'); ?>">
+    <script src="<?= url_for('js/sidebar.js'); ?>" defer></script>
 </head>
 <body>
     

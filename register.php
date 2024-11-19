@@ -1,7 +1,7 @@
 <?php 
 require_once "core/init.php";
 require_once "shared/register_handlers.php";
-require "shared/header.php";
+require "shared/sidebar.php";
 ?>
 
     <section class="pageContainer">

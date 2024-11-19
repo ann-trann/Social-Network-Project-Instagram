@@ -1,7 +1,7 @@
 <?php 
 require_once "core/init.php";
 require_once "shared/login_handlers.php";
-require_once "shared/header.php";
+require_once "shared/sidebar.php";
 ?>
 
     <section class="pageContainer">
@@ -37,7 +37,7 @@ require_once "shared/header.php";
                     </form>
 
                     <footer class="form--footer">
-                        Don't have an account? <a href="register.php">Sign Up</a>
+                        Don't have an account? <a href="login_register.php">Sign Up</a>
                     </footer>
                 </article>
         </main>
