@@ -1,0 +1,15 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^([a-zA-Z0-9_]+)$ $1.php [QSA,NC,L]
+RewriteRule ^profile/([a-zA-Z0-9._@\-]+)$ profile.php?username=$1 [QSA,NC,L]
+RewriteRule ^profile/$ profile.php [QSA,NC,L]
+
+ErrorDocument 404 /Instagram/404.php
+
+<FilesMatch "\.htaccess$">
+    Require all denied
+</FilesMatch>
+
+IndexIgnore *
