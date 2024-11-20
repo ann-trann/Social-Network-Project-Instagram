@@ -1,3 +1,4 @@
+// More dropdown
 document.addEventListener('DOMContentLoaded', function() {
     const moreBtn = document.getElementById('more-btn');
     const moreDropdown = document.querySelector('.more-dropdown');

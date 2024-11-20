@@ -1,4 +1,5 @@
-@import url(register.css);
+@import url(login_register.css);
 @import url(error.css);
 @import url(home.css);
 @import url(sidebar.css);
+@import url(create_post_modal.css);

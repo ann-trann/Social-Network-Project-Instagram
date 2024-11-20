@@ -23,11 +23,6 @@ if (!defined('SHARED_PATH')) {
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/explore.svg') ?>
         <span>Explore</span>
     </a>
-    
-    <a href="#" class="nav-item">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/reels.svg') ?>
-        <span>Reels</span>
-    </a>
 
     <a href="#" class="nav-item">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/messages.svg') ?>
@@ -38,7 +33,7 @@ if (!defined('SHARED_PATH')) {
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications.svg') ?>
         <span>Notifications</span>
     </a>
-    <a href="#" class="nav-item">
+    <a href="#" data-nav="create" class="nav-item">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/create.svg') ?>
         <span>Create</span>
     </a>
@@ -61,6 +56,8 @@ if (!defined('SHARED_PATH')) {
         </a>
     </div>
 
+
+    <!-- More dropdown -->
     <div class="more-dropdown">
         <a href="#" class="dropdown-item">
             <?php include(dirname(SHARED_PATH) . '/assets/svg/more_dropdown/setting.svg') ?>
@@ -75,12 +72,24 @@ if (!defined('SHARED_PATH')) {
             <span>Saved</span>
         </a>
         <a href="#" class="dropdown-item">
-            <?php include(dirname(SHARED_PATH) . '/assets/svg/more_dropdown/appearance.svg') ?>
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/more_dropdown/switch_appearance.svg') ?>
             <span>Switch appearance</span>
         </a>
-        <a href="#" class="dropdown-item">Report a problem</a>
+
+        <a href="#" class="dropdown-item">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/more_dropdown/report.svg') ?>
+            <span>Report a problem</span>
+        </a>
+
+        <div class="dropdown-divider"></div>
+
         <a href="#" class="dropdown-item">Switch accounts</a>
         <a href="logout.php" class="dropdown-item">Log out</a>
     </div>
+
+    
+    <!-- Create post modal -->
+    <?php include(SHARED_PATH . '/modals/create_post_modal.php'); ?>
+
 
 </nav>
