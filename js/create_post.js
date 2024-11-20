@@ -153,6 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
         previewArea.style.display = 'none';
         nextButton.style.display = 'none';
         backButton1.style.display = 'none';
+        backButton2.style.display = 'none';
+        captionArea.style.display = 'none';
         document.getElementById('share-button').style.display = 'none';
         modal.classList.remove('expanded');
         modalBody.classList.remove('expanded');
@@ -173,6 +175,8 @@ document.addEventListener('DOMContentLoaded', () => {
         previewArea.style.display = 'none';
         nextButton.style.display = 'none';
         backButton1.style.display = 'none';
+        backButton2.style.display = 'none';
+        captionArea.style.display = 'none';
         document.getElementById('share-button').style.display = 'none';
         modal.classList.remove('expanded');
         modalBody.classList.remove('expanded');
