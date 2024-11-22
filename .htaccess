@@ -2,6 +2,9 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f 
 RewriteCond %{REQUEST_FILENAME} !-d
 
+
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
 RewriteRule ^([a-zA-Z0-9_]+)$ $1.php [QSA,NC,L]
 RewriteRule ^profile/([a-zA-Z0-9._@\-]+)$ profile.php?username=$1 [QSA,NC,L]
 RewriteRule ^profile/$ profile.php [QSA,NC,L]

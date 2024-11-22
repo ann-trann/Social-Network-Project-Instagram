@@ -11,8 +11,8 @@ body {
     min-height: 100vh;
 }
 
-.sidebar {
-    width: 250px;
+.sidebar-small {
+    width: 75px;
     height: 100vh;
     border-right: 1px solid #dbdbdb;
     position: fixed;
@@ -20,11 +20,12 @@ body {
     padding: 25px 12px;
     left: 0;
     top: 0;
-    display: flex;
+    display: none;
     flex-direction: column;
+    height: 100vh;
 }
 
-.logo {
+.logo-small {
     height: 50px;
     margin-top: 20px;
     margin-bottom: 40px;
@@ -34,11 +35,11 @@ body {
     align-items: center;
 }
 
-.logo svg {
+.logo-small svg {
     display: block;
 }
 
-.nav-item {
+.nav-item-small {
     display: flex;
     align-items: center;
     padding: 12px;
@@ -47,25 +48,28 @@ body {
     border-radius: 8px;
     text-decoration: none;
     color: black;
+
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
 }
 
-.nav-item svg {
+.nav-item-small svg {
     width: 24px;
     height: 24px;
 }
 
-
-.nav-item:hover {
+.nav-item-small:hover {
     transform: scale(1.01);
     background-color: #f2f2f2;
 }
 
-.nav-item span {
+.nav-item-small span {
     margin-left: 16px;
     font-size: 16px;
 }
 
-.nav-item img {
+.nav-item-small img {
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -73,51 +77,50 @@ body {
 }
 
 
-.nav-item svg,
-.nav-item img {
+.nav-item-small svg,
+.nav-item-small img {
     transition: transform 0.2s ease;
 }
 
-.nav-item:hover svg,
-.nav-item:hover img {
+.nav-item-small:hover svg,
+.nav-item-small:hover img {
     transform: scale(1.05);
 }
 
-.bottom-nav-items {    
+.bottom-nav-items-small {    
     margin-top: auto;
+    margin-top: auto;  /* Đẩy phần tử xuống cuối */
+    width: 100%;       /* Đảm bảo chiều rộng đầy đủ */
+    /* display: flex; */
+    justify-content: center;
 }
 
-.main-container {
+/* .main-container {
     display: flex;
     margin-left: 250px;
     width: calc(100% - 250px);
-}
+} */
 
-.nav-item.active {
+.nav-item-small.active {
     font-weight: 700;
 }
 
-.more-icon-default {
+.more-icon-default-small {
     display: flex;
 }
 
-.more-icon-active {
+.more-icon-active-small {
     display: none;
 }
 
-#more-btn {
+#more-btn-small {
     padding-left: 0px;
 }
 
-#more-btn.active .more-icon-default {
+#more-btn-small.active .more-icon-default-small {
     display: none;
 }
 
-#more-btn.active .more-icon-active {
+#more-btn-small.active .more-icon-active-small {
     display: flex;
 }
-
-#more-btn.active .more-text {
-    font-weight: 700;
-}
-
