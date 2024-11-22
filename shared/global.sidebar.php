@@ -9,37 +9,60 @@ if (!defined('SHARED_PATH')) {
         <?php include(dirname(SHARED_PATH) . '/assets/svg/logo.svg') ?>
     </div>
 
-    <a href="#" class="nav-item">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/home.svg') ?>
+    <a href="<?php echo url_for('home'); ?>" class="nav-item <?php echo ($page === 'home') ? 'active' : ''; ?>">
+        <?php 
+        if ($page === 'home') {
+            include(dirname(SHARED_PATH) . '/assets/svg/sidebar/home_active.svg');
+        } else {
+            include(dirname(SHARED_PATH) . '/assets/svg/sidebar/home.svg');
+        }
+        ?>
         <span>Home</span>
     </a>
     
-    <a href="#" class="nav-item" id="search-btn">
+    <a class="nav-item" id="search-btn">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search.svg') ?>
         <span>Search</span>
     </a>
 
-    <a href="#" class="nav-item">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/explore.svg') ?>
+    <a href="<?php echo url_for('explore'); ?>" class="nav-item <?php echo ($page === 'explore') ? 'active' : ''; ?>">
+        <?php 
+        if ($page === 'explore') {
+            include(dirname(SHARED_PATH) . '/assets/svg/sidebar/explore_active.svg');
+        } else {
+            include(dirname(SHARED_PATH) . '/assets/svg/sidebar/explore.svg');
+        }
+        ?>
         <span>Explore</span>
     </a>
 
-    <a href="#" class="nav-item">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/messages.svg') ?>
+    <a href="<?php echo url_for('message'); ?>" class="nav-item <?php echo ($page === 'message') ? 'active' : ''; ?>">
+        <?php 
+        if ($page === 'message') {
+            include(dirname(SHARED_PATH) . '/assets/svg/sidebar/messages_active.svg');
+        } else {
+            include(dirname(SHARED_PATH) . '/assets/svg/sidebar/messages.svg');
+        }
+        ?>
         <span>Messages</span>
     </a>
 
-    <a href="#" class="nav-item">
+    <a class="nav-item">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications.svg') ?>
         <span>Notifications</span>
     </a>
-    <a href="#" data-nav="create" class="nav-item">
+    
+    <a data-nav="create" class="nav-item">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/create.svg') ?>
         <span>Create</span>
     </a>
 
-    <a href="<?php echo url_for('profile'); ?>" class="nav-item">
-        <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
+    <a href="<?php echo url_for('profile'); ?>" class="nav-item <?php echo ($page === 'profile') ? 'active' : ''; ?>">
+        <?php if ($page === 'profile'): ?>
+            <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
+        <?php else: ?>
+            <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
+        <?php endif; ?>
         <span>Profile</span>
     </a>
 

@@ -1,9 +1,11 @@
 <?php
 require_once "core/init.php";
 
+$page = 'home';
+
 // Kiểm tra đăng nhập trước khi cho phép truy cập trang home
 if (!loggedIn()) {
-    Redirect::to('login.php');
+    Redirect::to('login');
     exit();
 }
 
@@ -15,7 +17,7 @@ require "shared/sidebar.php";
 <?php require_once "shared/global.sidebar_small.php"; ?>
 
 
-<main class="main-content">
+<main class="main-content-home">
     <div class="left-sidebar">
     </div>
     <div class="feed-container">
@@ -35,11 +37,20 @@ require "shared/sidebar.php";
                 </div>
 
                 <div class="post-image-container">
-                    <img src="plumeria.jpg" alt="Plumeria flower with text" class="post-image">
+                    <img src="<?php echo url_for('/assets/images/postImage/image1.jpg'); ?>" alt="Image 1" class="post-image">
                 </div>
 
                 <div class="post-actions">
-                    ♡ ⚪ ▽
+                    <a class="like-post">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                    </a>
+                    <a class="comment-post">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
+                    </a>
+                    <a class="share-post">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/share.svg') ?>
+                    </a>
+
                 </div>
 
                 <div class="likes">2,866 likes</div>
@@ -52,6 +63,42 @@ require "shared/sidebar.php";
                     View all 8 comments
                 </div>
             </div>
+
+            <div class="instagram-post">
+                <div class="post-header">
+                    <div class="profile-pic"></div>
+                    <a href="#" class="username">hehehe</a>
+                    <div class="dots">...</div>
+                </div>
+
+                <div class="post-image-container">
+                    <img src="<?php echo url_for('/assets/images/postImage/image2.jpg'); ?>" alt="Image 2" class="post-image">
+                </div>
+
+                <div class="post-actions">
+                    <a class="like-post">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                    </a>
+                    <a class="comment-post">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
+                    </a>
+                    <a class="share-post">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/share.svg') ?>
+                    </a>
+                </div>
+
+                <div class="likes">2,866 likes</div>
+
+                <div class="caption">
+                    hehehehehehehehe
+                </div>
+
+                <div class="view-comments">
+                    View all 8 comments
+                </div>
+            </div>
+
+            
         </div>
                 
     </div>

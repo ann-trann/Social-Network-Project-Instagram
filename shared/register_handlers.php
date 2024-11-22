@@ -1,7 +1,7 @@
 <?php
     require_once "core/init.php";
     if(loggedIn()){
-        Redirect::to('home.php');
+        Redirect::to('home');
     }
 
     if (Input::exists()){
@@ -9,7 +9,7 @@
             // Tạm thời bỏ qua validation và database
             session_regenerate_id();
             $_SESSION['user_id'] = 1; // Giả lập một user_id
-            Redirect::to('home.php');
+            Redirect::to('home');
         }
 
         // if(isset($_POST['submitButton'])){

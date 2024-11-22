@@ -1,4 +1,4 @@
 <?php
 require_once "core/init.php";
-Redirect::to('login.php');
+Redirect::to('login');
 ?>

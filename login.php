@@ -37,7 +37,7 @@ require_once "shared/sidebar.php";
                     </form>
 
                     <footer class="form--footer">
-                        Don't have an account? <a href="login_register.php">Sign Up</a>
+                        Don't have an account? <a href="login_register">Sign Up</a>
                     </footer>
                 </article>
         </main>

@@ -38,6 +38,10 @@
         return $form_errors;
     }
 
+    function redirect_to($location) {
+        Redirect::to($location);
+    }
+
 
 
     // function h($string = "") {
