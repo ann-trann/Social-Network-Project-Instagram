@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  /* Body Styles */
+  body {
+    background-color: #fafafa; /* Instagram-style background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  
+ 
+  
+
+  
+ 
+  
+  /* Main Container */
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 300px; /* Matches sidebar width */
+    width: calc(100% - 300px);
+    padding: 20px;
+  }
+  
+  /* Explore Section */
+  .explore-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Fixed 3 columns for alignment */
+    gap: 16px; /* Adjusted spacing for better layout */
+    padding: 20px; /* Consistent padding */
+    background-color: white;
+    margin-left: 20%;
+  }
+  
+  .grid-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px; /* Rounded corners for a softer look */
+    background-color: #f8f8f8; /* Subtle background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  }
+  
+  .grid-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .grid-item img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+  }
+  
+  /* Popup Container */
+  .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  /* Popup Content */
+  .popup-content {
+      display: flex;
+      background-color: #fff;
+      border-radius: 10px;
+      /* width: 200%; */
+      max-width: 1200px;
+      height: 90%;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* Left Section: Image */
+  .popup-image {
+      flex: 1;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 600px;
+      max-width:1000px;
+    }
+  
+  .popup-image img {
+      /* max-width: 500px; */
+      width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+  }
+  
+  #popupimage {
+  height: 100%;
+    
+  }
+  
+  
+  /* Right Section: Information */
+  .popup-info {
+      flex: 1;
+      padding: 20px;
+    max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  
+  /* User Info */
+  .user-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+  }
+  
+  .user-info .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+  }
+  
+  .user-info .btn-follow {
+      margin-left: auto;
+      background-color: #3897f0;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+
+  .caption-container{
+    height: 100%;
+  }
+
+  /* Caption */
+  .caption {
+      margin-bottom: 15px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #333;
+  }
+  
+  /* Actions */
+  .popup-info {
+    position: relative;
+  }
+  
+  .actions button {
+      margin-right: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      
+  }
+  
+  /* Add a Comment */
+  .add-comment {
+      display: flex;
+      align-items: center;
+      /* position: relative; */
+      
+  }
+  
+  .add-comment .border-comment {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      margin-right: 10px;
+  }
+  
+  .border-comment {
+    display: flex;
+  }
+  
+  .add-comment .btn-post {
+      background-color: #3897f0;
+      color: #fff;
+      border: none;
+      padding: 5px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  
+  /* Close Button */
+  .popup-close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 30px;
+      color: #fff;
+      cursor: pointer;
+  }
+  
+  .add-comment input {
+      padding-left: 10px;
+      border: 0px;
+      width: 100%;
+  }
+  
+  
+  .add-icon{
+    /* left: 11px; */
+    height:100%;
+  }
+  
+  .btn-save {
+    position:absolute;
+    right: 10px;
+  }

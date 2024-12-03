@@ -15,7 +15,7 @@ body {
     width: 75px;
     height: 100vh;
     border-right: 1px solid #dbdbdb;
-    position: fixed;
+    position: relative; /* thay position: fixed; */
     background: white;
     padding: 25px 12px;
     left: 0;
@@ -89,8 +89,8 @@ body {
 
 .bottom-nav-items-small {    
     margin-top: auto;
-    margin-top: auto;  /* Đẩy phần tử xuống cuối */
-    width: 100%;       /* Đảm bảo chiều rộng đầy đủ */
+    margin-top: auto;  /* Äáº©y pháº§n tá»­ xuá»‘ng cuá»‘i */
+    width: 100%;       /* Äáº£m báº£o chiá»u rá»™ng Ä‘áº§y Ä‘á»§ */
     /* display: flex; */
     justify-content: center;
 }

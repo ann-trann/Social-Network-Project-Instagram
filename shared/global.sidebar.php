@@ -6,7 +6,13 @@ if (!defined('SHARED_PATH')) {
 
 <nav class="sidebar">
     <div class="logo">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/logo.svg') ?>
+        <div class="small-icon-insta">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/Instagram.svg') ?>
+        </div>
+        <div class="small-logo-insta">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/logo.svg') ?>
+        </div>
+        
     </div>
 
     <a href="<?php echo url_for('home'); ?>" class="nav-item <?php echo ($page === 'home') ? 'active' : ''; ?>">
