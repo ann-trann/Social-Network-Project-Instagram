@@ -3,7 +3,7 @@ require_once "core/init.php";
 
 $page = 'explore';
 
-// Kiểm tra đăng nhập
+// Kiểm tra đăng nhập trước khi cho phép truy cập trang home
 if (!loggedIn()) {
     Redirect::to('login');
     exit();
@@ -11,12 +11,19 @@ if (!loggedIn()) {
 
 $user_id = $_SESSION['user_id'];
 require "shared/sidebar.php";
-
-
 ?>
 
- <?php require_once "shared/global.sidebar.php"; ?> 
-<?php require_once "shared/global.sidebar_small.php"; ?>
+<link rel="stylesheet" href="css/origin-form.css">
+
+
+<div class="nav-content">
+    <div class="nav-origin-container">
+        <div class="asdasdasd"></div>
+        <?php require_once "shared/global.sidebar.php"; ?>
+        <?php require_once "shared/global.sidebar_small.php"; ?>
+    </div>
+
+    <div class="nav-body-container">
 
 <main class="main-content-explore">
 <div class="explore-container">
@@ -92,7 +99,8 @@ require "shared/sidebar.php";
 </div>
 
 </main>
-
+    </div>
+    
 <link rel="stylesheet" href="css/explore.css">
 
 <script src="js/common.js"></script>

@@ -12,9 +12,16 @@ if (!loggedIn()) {
 $user_id = $_SESSION['user_id'];
 require "shared/sidebar.php";
 ?>
+<link rel="stylesheet" href="css/origin-form.css">
 
-<?php require_once "shared/global.sidebar.php"; ?>
-<?php require_once "shared/global.sidebar_small.php"; ?>
+<div class="nav-content">
+    <div class="nav-origin-container">
+        <div class="asdasdasd"></div>
+        <?php require_once "shared/global.sidebar.php"; ?>
+        <?php require_once "shared/global.sidebar_small.php"; ?>
+    </div>
+
+    <div class="nav-body-container">
 
 
 <main class="main-content-home">
@@ -158,6 +165,6 @@ require "shared/sidebar.php";
         </div>
     </div>
 </main>
-
+    </div>
 <script src="js/common.js"></script>
 <script src="js/home.js"></script>

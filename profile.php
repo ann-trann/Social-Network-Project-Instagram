@@ -13,7 +13,17 @@ if (!isset($_SESSION['user_id'])) {
 // Include header/sidebar
 require_once "shared/sidebar.php";
 ?>
+<link rel="stylesheet" href="css/origin-form.css">
 
+
+<div class="nav-content">
+    <div class="nav-origin-container">
+        <div class="asdasdasd"></div>
+        <?php require_once "shared/global.sidebar.php"; ?>
+        <?php require_once "shared/global.sidebar_small.php"; ?>
+    </div>
+
+    <div class="nav-body-container">
 <div class="wrapper">
     <?php include_once "shared/global.sidebar.php"; ?>
     <?php include_once "shared/global.sidebar_small.php"; ?>
@@ -70,7 +80,7 @@ require_once "shared/sidebar.php";
         
     </div>
 </div>
-
+    </div>
 
 <script src="js/common.js"></script>  <!-- Thêm dòng này -->
 <script src="js/profile.js"></script>
