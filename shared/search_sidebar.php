@@ -1,26 +1,27 @@
 <!-- Search sidebar -->
-<div class="search-sidebar">
-    <div class="search-header">
+<div class="search__search-sidebar">
+    <div class="search__search-header">
         <p>Search</p>
-        <div class="search-input">
-            <span class="search-icon">
+        
+        <div class="search__search-input">
+            <span class="search__search-icon">
                 <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search_small.svg') ?>
             </span>
             <input type="text" placeholder="Search">
-            <i class="fas fa-times clear-icon"></i>
+            <i class="fas fa-times search__clear-icon"></i>
         </div>
     </div>
 
-    <div class="search-area">
-        <div class="recent-search">
+    <div class="search__search-area">
+        <div class="search__recent-search">
             <p>Recent search</p>
-            <div class="recent-search-item">
+            <div class="search__recent-search-item">
                 <p>Recent search item</p>
             </div>
         </div>
 
-        <div class="search-result">
-            <div class="search-result-item">
+        <div class="search__search-result">
+            <div class="search__search-result-item">
                 <p>Search result item</p>
             </div>
         </div>

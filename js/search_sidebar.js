@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeSearchSidebar() {
     const searchBtn = document.getElementById('search-btn');
     const sidebarSmall = document.querySelector('.sidebar-small');
-    const searchSidebar = document.querySelector('.search-sidebar');
+    const searchSidebar = document.querySelector('.search__search-sidebar');
+
     
     searchBtn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -20,15 +21,18 @@ function initializeSearchSidebar() {
     searchSmall.addEventListener('click', function(e) {
         e.preventDefault();
         searchSidebar.classList.remove('active');
-        sidebarSmall.style.display = 'none';
+        if (!window.location.pathname.includes('message')) {
+            sidebarSmall.style.display = 'none';
+        }
     });
 }
 
+
 // Initialize search input clear
 function initializeSearchInputClear() {
-    const searchInput = document.querySelector('.search-input input');
-    const searchInputWrapper = document.querySelector('.search-input');
-    const clearIcon = document.querySelector('.clear-icon');
+    const searchInput = document.querySelector('.search__search-input input');
+    const searchInputWrapper = document.querySelector('.search__search-input');
+    const clearIcon = document.querySelector('.search__clear-icon');
     
     searchInput.addEventListener('input', function() {
         searchInputWrapper.classList.toggle('has-text', this.value.length > 0);
@@ -43,7 +47,7 @@ function initializeSearchInputClear() {
 
 // Initialize search navigation handlers
 function initializeSearchNavigationHandlers() {
-    const searchSidebar = document.querySelector('.search-sidebar');
+    const searchSidebar = document.querySelector('.search__search-sidebar');
     const sidebarSmall = document.querySelector('.sidebar-small');
     
     // Close search sidebar when clicking outside
@@ -69,3 +73,12 @@ function initializeSearchNavigationHandlers() {
         });
     });
 }
+
+
+// // Cập nhật sự kiện cho nút tìm kiếm
+// const searchSmall = document.getElementById('search-btn-small');
+// searchSmall.addEventListener('click', function(e) {
+//     e.preventDefault();
+//     searchSidebar.classList.toggle('active');
+//     sidebarSmall.style.display = searchSidebar.classList.contains('active') ? 'flex' : 'none';
+// });

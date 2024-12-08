@@ -1,4 +1,4 @@
-.search-sidebar {
+.search__search-sidebar {
     width: 400px;
     height: 100vh;
     margin-left: 75px;
@@ -13,17 +13,17 @@
     transition: transform 1s ease-out
 }
 
-.search-sidebar.active { 
+.search__search-sidebar.active { 
     display: block;
     transform: translateX(0); /* Hiển thị sidebar sang bên phải */
 }
 
-.search-header {
+.search__search-header {
     margin-bottom: 20px;
     border-bottom: 1px solid #d3d3d3;
 }
 
-.search-header p {
+.search__search-header p {
     padding: 30px 30px 0px 30px;
     font-size: 24px;
     font-weight: 600;
@@ -31,12 +31,12 @@
     color: #333;
 }
 
-.search-input {
+.search__search-input {
     position: relative;
     padding: 30px 20px 25px 30px;
 }
 
-.search-input input {
+.search__search-input input {
     width: 100%;
     padding: 10px 15px 10px 40px;
     border: 1px solid #ffffff;
@@ -47,11 +47,11 @@
     transition: border-color 0.3s ease;
 }
 
-.search-input input:focus {
+.search__search-input input:focus {
     border-color: #007bff;
 }
 
-.search-icon {
+.search__search-icon {
     position: absolute;
     left: 45px;
     top: 50%;
@@ -60,7 +60,7 @@
     height: 12px;
 }
 
-.clear-icon {
+.search__clear-icon {
     position: absolute;
     right: 35px;
     top: 50%;
@@ -71,30 +71,30 @@
 }
 
 /* Hiển thị clear-icon khi input có nội dung */
-.search-input.has-text .clear-icon {
+.search__search-input.has-text .search__clear-icon {
     display: block;
 }
 
 
 
 
-.search-content {
+.search__search-content {
     margin-top: 20px;
 }
 
 
-.search-area {
+.search__search-area {
     padding: 0 30px;
 }
 
-.recent-search p {
+.search__recent-search p {
     font-size: 16px;
     font-weight: 600;
     color: #333;
     margin-bottom: 15px;
 }
 
-.recent-search-item {
+.search__recent-search-item {
     padding: 10px 15px;
     background-color: #f8f9fa;
     border-radius: 8px;
@@ -103,32 +103,32 @@
     transition: background-color 0.2s ease;
 }
 
-.recent-search-item:hover {
+.search__recent-search-item:hover {
     background-color: #f0f0f0;
 }
 
-.recent-search-item p {
+.search__recent-search-item p {
     font-size: 14px;
     color: #666;
     margin: 0;
 }
 
-.search-result {
+.search__search-result {
     margin-top: 25px;
 }
 
-.search-result-item {
+.search__search-result-item {
     padding: 12px 15px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
-.search-result-item:hover {
+.search__search-result-item:hover {
     background-color: #f8f9fa;
 }
 
-.search-result-item p {
+.search__search-result-item p {
     font-size: 14px;
     color: #333;
     margin: 0;

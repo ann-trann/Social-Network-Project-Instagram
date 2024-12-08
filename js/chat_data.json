@@ -1,0 +1,43 @@
+{
+    "users": [
+        {
+            "id": "john-doe",
+            "name": "John Doe",
+            "lastMessage": "Sure, sounds good!",
+            "messages": [
+                {"sender": "john-doe", "content": "Hey, how are you?", "type": "received"},
+                {"sender": "current-user", "content": "I'm good, thanks! How about you?", "type": "sent"},
+                {"sender": "john-doe", "content": "Doing great! Want to catch up later?", "type": "received"},
+                {"sender": "current-user", "content": "Sure, sounds good!", "type": "sent"}
+            ]
+        },
+        {
+            "id": "jane-smith", 
+            "name": "Jane Smith",
+            "lastMessage": "See you tomorrow!",
+            "messages": [
+                {"sender": "current-user", "content": "Hi Jane!", "type": "sent"},
+                {"sender": "jane-smith", "content": "Hey there!", "type": "received"},
+                {"sender": "current-user", "content": "See you tomorrow!", "type": "sent"}
+            ]
+        },
+        {
+            "id": "mike-johnson",
+            "name": "Mike Johnson", 
+            "lastMessage": "Thanks for the help!",
+            "messages": [
+                {"sender": "current-user", "content": "Thanks for the help!", "type": "sent"},
+                {"sender": "mike-johnson", "content": "Anytime!", "type": "received"}
+            ]
+        },
+        {
+            "id": "sarah-brown",
+            "name": "Sarah Brown",
+            "lastMessage": "I'm good, thanks!",
+            "messages": [
+                {"sender": "sarah-brown", "content": "Hello!", "type": "received"},
+                {"sender": "current-user", "content": "I'm good, thanks!", "type": "sent"}
+            ]
+        }
+    ]
+}

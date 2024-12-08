@@ -151,12 +151,12 @@ button.profile-button {
 
 
 
-.nav-item.active span {
+/* .nav-item.active span {
     font-weight: 600;
-}
+} */
 
 
-.main-content-home {
+.home__main-content-home {
     margin-left: 250px; /* Cách lề trái 250px */
     width: calc(100% - 250px); /* Chiếm phần còn lại của màn hình */
     min-height: 100vh; /* Chiều cao tối thiểu bằng chiều cao viewport */
@@ -170,13 +170,13 @@ button.profile-button {
 
 }
 
-.feed-container {
+.home__feed-container {
     flex: 1;
     max-width: 630px;
-    z-index: -1;
+    z-index: 1;
 }
 
-.stories-container {
+.home__stories-container {
     background: #fff;
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -184,87 +184,87 @@ button.profile-button {
     margin-bottom: 24px;
 }
 
-.posts-container {
+.home__posts-container {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.right-sidebar {
+.home__right-sidebar {
     width: 319px;
     position: fixed;
     right: calc((100% - 1300px) / 2);
     z-index: -1;
 }
 
-.user-preview {
+.home__user-preview {
     display: flex;
     align-items: center;
     padding: 16px 0;
 }
 
-.user-preview img {
+.home__user-preview img {
     width: 56px;
     height: 56px;
     border-radius: 50%;
     margin-right: 12px;
 }
 
-.user-info {
+.home__user-info {
     flex: 1;
 }
 
-.user-info h4 {
+.home__user-info h4 {
     font-weight: 600;
     color: var(--text-dark);
 }
 
-.user-info p {
+.home__user-info p {
     color: var(--text-light);
 }
 
-.switch-btn {
+.home__switch-btn {
     color: #0095f6;
     font-weight: 600;
     font-size: 12px;
 }
 
-.suggestions {
+.home__suggestions {
     margin-top: 24px;
 }
 
-.suggestions-header {
+.home__suggestions-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
 }
 
-.suggestions-header h4 {
+.home__suggestions-header h4 {
     color: var(--text-light);
     font-weight: 600;
 }
 
-.suggestions-header a {
+.home__suggestions-header a {
     color: var(--text-dark);
     font-weight: 600;
     font-size: 12px;
 }
 
 
-.suggestion-item {
+.home__suggestion-item {
     display: flex;
     align-items: center;
     padding: 8px 0;
 }
 
-.suggestion-profile {
+.home__suggestion-profile {
     display: flex;
     align-items: center;
     flex: 1;
 }
 
-.suggestion-pic {
+.home__suggestion-pic {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -272,24 +272,24 @@ button.profile-button {
     margin-right: 12px;
 }
 
-.suggestion-info {
+.home__suggestion-info {
     flex: 1;
 }
 
-.suggestion-username {
+.home__suggestion-username {
     font-size: 14px;
     font-weight: 600;
     color: #262626;
     text-decoration: none;
 }
 
-.suggestion-text {
+.home__suggestion-text {
     font-size: 12px;
     color: #8e8e8e;
     margin-top: 3px;
 }
 
-.follow-button {
+.home__follow-button {
     color: #0095f6;
     font-size: 12px;
     font-weight: 600;
@@ -298,7 +298,7 @@ button.profile-button {
 
 
 /* Instagram post */
-.instagram-post {
+.home__instagram-post {
     width: 468px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     border: 1px solid #dbdbdb;
@@ -307,14 +307,14 @@ button.profile-button {
     background: white;
 }
 
-.post-header {
+.home__post-header {
     padding: 14px 16px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #efefef;
 }
 
-.profile-pic {
+.home__profile-pic {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -322,13 +322,13 @@ button.profile-button {
     background: #efefef;
 }
 
-.username {
+.home__username {
     font-weight: 600;
     color: #262626;
     text-decoration: none;
 }
 
-.post-image-container {
+.home__post-image-container {
     height: 585px; 
     background: #efebeb; 
     position: relative;
@@ -338,13 +338,13 @@ button.profile-button {
     width: 100%
 }
 
-.post-image {
+.home__post-image {
     width: 100%;
     object-fit: cover;
     max-height: 585px;
 }
 
-.post-actions {
+.home__post-actions {
     padding: 8px 8px;
     border-top: 1px solid #efefef;
     display: flex; 
@@ -352,36 +352,36 @@ button.profile-button {
     margin-left: 10px;
 }
 
-.post-actions a {
+.home__post-actions a {
     cursor: pointer;
     display: inline-flex; /* Thêm display inline-flex */
     align-items: center; /* Căn giữa icon theo chiều dọc */
 }
 
-.post-actions svg {
+.home__post-actions svg {
     width: 24px; /* Thêm kích thước cố định cho icon */
     height: 24px;
 }
 
-.likes {
+.home__likes {
     font-weight: 600;
     margin: 8px 0;
     padding: 0 16px;
     font-size: 12px;
 }
 
-.caption {
+.home__caption {
     padding: 0 16px 16px;
     font-size: 13px;
 }
 
-.view-comments {
+.home__view-comments {
     color: #8e8e8e;
     font-size: 14px;
     padding: 0 16px 16px;
     cursor: pointer;
 }
 
-.dots {
+.home__dots {
     margin-left: auto;
 }

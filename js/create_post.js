@@ -3,10 +3,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const createBtn = document.querySelector('a[data-nav="create"]');
-    const modalOverlay = document.querySelector('.modal-overlay');
+    const modalOverlay = document.querySelector('.create-post__modal-overlay');
 
     const modal = document.getElementById('create-post-modal');
-    const modalBody = document.querySelector('.create-modal-body');
+    const modalBody = document.querySelector('.create-post__create-modal-body');
     const uploadArea = document.getElementById('upload-area');
     const previewArea = document.getElementById('preview-area');
     const captionArea = document.getElementById('caption-area');
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle discard button click
     // Thêm các biến mới vào phần khai báo biến
-    const discardOverlay = document.querySelector('.discard-overlay');
+    const discardOverlay = document.querySelector('.create-post__discard-overlay');
     const discardButton = document.getElementById('discard-button');
     const cancelButton = document.getElementById('cancel-button');
 

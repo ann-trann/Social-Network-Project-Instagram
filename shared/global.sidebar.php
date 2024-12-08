@@ -6,15 +6,11 @@ if (!defined('SHARED_PATH')) {
 
 <nav class="sidebar">
     <div class="logo">
-        <div class="small-icon-insta">
-            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/Instagram.svg') ?>
-        </div>
-        <div class="small-logo-insta">
-            <?php include(dirname(SHARED_PATH) . '/assets/svg/logo.svg') ?>
-        </div>
-        
+        <?php include(dirname(SHARED_PATH) . '/assets/svg/logo.svg') ?>
     </div>
 
+
+    <!-- Home Button -->
     <a href="<?php echo url_for('home'); ?>" class="nav-item <?php echo ($page === 'home') ? 'active' : ''; ?>">
         <?php 
         if ($page === 'home') {
@@ -26,11 +22,15 @@ if (!defined('SHARED_PATH')) {
         <span>Home</span>
     </a>
     
+    
+    <!-- Search Button -->
     <a class="nav-item" id="search-btn">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search.svg') ?>
         <span>Search</span>
     </a>
 
+
+    <!-- Explore Button -->
     <a href="<?php echo url_for('explore'); ?>" class="nav-item <?php echo ($page === 'explore') ? 'active' : ''; ?>">
         <?php 
         if ($page === 'explore') {
@@ -42,27 +42,29 @@ if (!defined('SHARED_PATH')) {
         <span>Explore</span>
     </a>
 
-    <a href="<?php echo url_for('message'); ?>" class="nav-item <?php echo ($page === 'message') ? 'active' : ''; ?>">
-        <?php 
-        if ($page === 'message') {
-            include(dirname(SHARED_PATH) . '/assets/svg/sidebar/messages_active.svg');
-        } else {
-            include(dirname(SHARED_PATH) . '/assets/svg/sidebar/messages.svg');
-        }
-        ?>
+
+    <!-- Message Button -->
+    <a href="<?php echo url_for('message'); ?>" class="nav-item">
+        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/messages.svg'); ?>
         <span>Messages</span>
     </a>
 
-    <a class="nav-item">
+
+    <!-- Notification Button -->
+    <a class="nav-item" id="notification-btn">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications.svg') ?>
         <span>Notifications</span>
     </a>
     
+
+    <!-- Create Button -->
     <a data-nav="create" class="nav-item">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/create.svg') ?>
         <span>Create</span>
     </a>
 
+
+    <!-- Profile Button -->
     <a href="<?php echo url_for('profile'); ?>" class="nav-item <?php echo ($page === 'profile') ? 'active' : ''; ?>">
         <?php if ($page === 'profile'): ?>
             <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
@@ -73,8 +75,9 @@ if (!defined('SHARED_PATH')) {
     </a>
 
 
+    <!-- More Button -->
     <div class="bottom-nav-items">
-        <a href="#" class="nav-item" id="more-btn">
+        <a class="nav-item" id="more-btn">
             <span class="more-icon-default">
                 <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/more.svg') ?>
             </span>
@@ -85,6 +88,8 @@ if (!defined('SHARED_PATH')) {
         </a>
     </div>
 
+
+    
     <!-- Search sidebar -->
     <?php include(SHARED_PATH . '/search_sidebar.php'); ?>  
 
@@ -95,7 +100,7 @@ if (!defined('SHARED_PATH')) {
     <?php include(SHARED_PATH . '/more_dropdown.php'); ?>
     
     <!-- Create post modal -->
-    <?php include(SHARED_PATH . '/modals/create_post_modal.php'); ?>
+    <?php include(SHARED_PATH . '/create_post_modal.php'); ?>
 
 
 </nav>

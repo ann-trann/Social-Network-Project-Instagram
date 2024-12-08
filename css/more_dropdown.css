@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------------------------- */
 /* More dropdown */
 
-.more-dropdown {
+.more__more-dropdown {
     position: absolute;
     bottom: 76px;
     left: 12px;
@@ -15,11 +15,11 @@
     z-index: 1000;
 }
 
-.more-dropdown.active {
+.more__more-dropdown.active {
     display: block;
 }
 
-.dropdown-item {
+.more__dropdown-item {
     display: flex;
     padding: 16px;
     gap: 16px;  
@@ -30,25 +30,24 @@
     font-size: 14px;
 }
 
-.dropdown-item:hover {
+.more__dropdown-item:hover {
     background-color: #f2f2f2;
 }
 
-.dropdown-item svg {
+.more__dropdown-item svg {
     width: 20px; 
     height: 20px;
 }
 
-.dropdown-item span {
+.more__dropdown-item span {
     font-size: 14px;
 }
 
-#more-btn.active .more-text {
+#more-btn.active .more__more-text {
     font-weight: 700;
 }
 
-.dropdown-divider {
+.more__dropdown-divider {
     border-top: 7px solid #ececec;
     margin: 8px 0;
 }
-

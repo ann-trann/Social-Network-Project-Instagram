@@ -1,4 +1,4 @@
-.notification-sidebar {
+.notification__notification-sidebar {
     width: 400px;
     height: 100vh;
     margin-left: 75px;
@@ -8,21 +8,22 @@
     left: 0;
     display: none;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
     transform: translateX(-100%); /* Ẩn sidebar sang bên trái */
     transition: transform 1s ease-out
 }
 
-.notification-sidebar.active { 
+.notification__notification-sidebar.active { 
     display: block;
     transform: translateX(0); /* Hiển thị sidebar sang bên phải */
 }
 
-.notification-header {
+.notification__notification-header {
     margin-bottom: 20px;
     border-bottom: 1px solid #d3d3d3;
 }
 
-.notification-header h3 {
+.notification__notification-header h3 {
     padding: 30px 30px 0px 30px;
     font-size: 24px;
     font-weight: 600;
@@ -30,26 +31,25 @@
     color: #333;
 }
 
-
-.notification-body {
+.notification__notification-body {
     padding: 0 30px;
 }
 
-.this-month-item,
-.earlier-item {
+.notification__this-month-item,
+.notification__earlier-item {
     padding: 12px 15px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
-.this-month-item:hover,
-.earlier-item:hover {
+.notification__this-month-item:hover,
+.notification__earlier-item:hover {
     background-color: #f8f9fa;
 }
 
-.this-month-item p,
-.earlier-item p {
+.notification__this-month-item p,
+.notification__earlier-item p {
     font-size: 16px;
     font-weight: 600;
     color: #333;

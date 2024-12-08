@@ -1,64 +1,53 @@
-document.addEventListener('DOMContentLoaded', initializeNotificationSidebar);
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNotificationSidebar();
+    initializeNotificationNavigationHandlers();
+});
 
+// Initialize notification sidebar
 function initializeNotificationSidebar() {
-    const elements = {
-        notificationBtn: document.querySelector('.nav-item:nth-of-type(5)'),
-        notificationBtnSmall: document.querySelector('.nav-item-small:nth-of-type(5)'),
-        sidebarSmall: document.querySelector('.sidebar-small'),
-        sidebar: document.querySelector('.sidebar'),
-        notificationSidebar: document.querySelector('.notification-sidebar'),
-        searchSidebar: document.querySelector('.search-sidebar')
-    };
+    const notificationBtn = document.getElementById('notification-btn');
+    const sidebarSmall = document.querySelector('.sidebar-small');
+    const notificationSidebar = document.querySelector('.notification__notification-sidebar');
 
-    setupNotificationToggle(elements);
-    setupCloseNotification(elements);
-    setupNotificationOutsideClickHandler(elements);
-    setupNotificationNavigationHandlers(elements);
-}
-
-// Open notification sidebar when clicking on notification button
-function setupNotificationToggle({ notificationBtn, sidebarSmall, notificationSidebar }) {
+    // Cập nhật sự kiện cho nút notification
     notificationBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        e.stopPropagation();
         notificationSidebar.classList.toggle('active');
-        sidebarSmall.style.display = 'flex';
+        sidebarSmall.style.display = 'flex'; // Đảm bảo sidebar nhỏ vẫn hiển thị
     });
-}
-
-// Close notification sidebar when clicking on close button
-function setupCloseNotification({ notificationBtnSmall, sidebarSmall, notificationSidebar }) {
-    notificationBtnSmall.addEventListener('click', function(e) {
+    
+    const notificationSmall = document.getElementById('notification-btn-small');
+    notificationSmall.addEventListener('click', function(e) {
         e.preventDefault();
         notificationSidebar.classList.remove('active');
-        sidebarSmall.style.display = 'none';
+        if (!window.location.pathname.includes('message')) {
+            sidebarSmall.style.display = 'none';
+        }
     });
 }
 
-// Close notification sidebar when clicking outside
-function setupNotificationOutsideClickHandler({ notificationSidebar, sidebarSmall }) {
+
+
+// Initialize notification navigation handlers
+function initializeNotificationNavigationHandlers() {
+    const notificationSidebar = document.querySelector('.notification__notification-sidebar');
+    const sidebarSmall = document.querySelector('.sidebar-small');
+    
+    // Close notification sidebar when clicking outside
     document.addEventListener('click', function(e) {
         if (notificationSidebar.classList.contains('active')) {
             if (!notificationSidebar.contains(e.target) && 
-                !e.target.closest('#more-btn') && 
-                !e.target.closest('#more-btn-small') &&
-                !e.target.closest('[data-nav="create"]')) {
+                !e.target.closest('#notification-btn') && 
+                !e.target.closest('#notification-btn-small')) {
                 notificationSidebar.classList.remove('active');
                 sidebarSmall.style.display = 'none';
             }
         }
     });
-}
 
-// Close notification sidebar when clicking on navigation buttons
-function setupNotificationNavigationHandlers({ notificationSidebar, sidebarSmall, searchSidebar }) {
-    const navigationButtons = document.querySelectorAll('.nav-item:nth-of-type(1), .nav-item:nth-of-type(2), .nav-item:nth-of-type(3), .nav-item:nth-of-type(4)');
-    const navigationButtonsSmall = document.querySelectorAll('.nav-item-small:nth-of-type(1), .nav-item-small:nth-of-type(2),.nav-item-small:nth-of-type(3), .nav-item-small:nth-of-type(4)');
-    const searchBtn = document.querySelector('.nav-item:nth-of-type(2)');
-    const searchBtnSmall = document.querySelector('.nav-item-small:nth-of-type(2)');
-
-
-    [...navigationButtons, ...navigationButtonsSmall].forEach(button => {
+    // Close notification sidebar when clicking on navigation buttons
+    const navButtons = document.querySelectorAll('.nav-item:not(:nth-of-type(5)), .nav-item-small:not(:nth-of-type(5))');
+    navButtons.forEach(button => {
         button.addEventListener('click', function() {
             if (notificationSidebar.classList.contains('active')) {
                 notificationSidebar.classList.remove('active');
@@ -66,15 +55,4 @@ function setupNotificationNavigationHandlers({ notificationSidebar, sidebarSmall
             }
         });
     });
-
-
-    // // Handle search button specifically
-    // [searchBtn, searchBtnSmall].forEach(button => {
-    //     button.addEventListener('click', function() {
-    //         if (notificationSidebar.classList.contains('active')) {
-    //             notificationSidebar.classList.remove('active');
-    //             searchSidebar.classList.add('active');
-    //         }
-    //     });
-    // });
 }

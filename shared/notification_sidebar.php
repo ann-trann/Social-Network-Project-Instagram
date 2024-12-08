@@ -1,14 +1,14 @@
 <!-- Notification sidebar -->
-<div class="notification-sidebar">
-    <div class="notification-header">
+<div class="notification__notification-sidebar">
+    <div class="notification__notification-header">
         <h3>Notification</h3>
     </div>
 
-    <div class="notification-body">
-        <div class="this-month-item">
+    <div class="notification__notification-body">
+        <div class="notification__this-month-item">
             <p>This month</p>
         </div>
-        <div class="earlier-item">
+        <div class="notification__earlier-item">
             <p>Earlier</p>
         </div>
     </div>
