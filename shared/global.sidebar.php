@@ -25,9 +25,15 @@ if (!defined('SHARED_PATH')) {
     
     <!-- Search Button -->
     <a class="nav-item" id="search-btn">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search.svg') ?>
+        <div class="search-icon-default">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search.svg') ?>
+        </div>
+        <div class="search-icon-active">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search_active.svg') ?>
+        </div>
         <span>Search</span>
     </a>
+    
 
 
     <!-- Explore Button -->
@@ -52,7 +58,12 @@ if (!defined('SHARED_PATH')) {
 
     <!-- Notification Button -->
     <a class="nav-item" id="notification-btn">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications.svg') ?>
+        <div class="notification-icon-default">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications.svg') ?>
+        </div>
+        <div class="notification-icon-active">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications_active.svg') ?>
+        </div>
         <span>Notifications</span>
     </a>
     
@@ -78,12 +89,12 @@ if (!defined('SHARED_PATH')) {
     <!-- More Button -->
     <div class="bottom-nav-items">
         <a class="nav-item" id="more-btn">
-            <span class="more-icon-default">
+            <div class="more-icon-default">
                 <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/more.svg') ?>
-            </span>
-            <span class="more-icon-active">
+            </div>
+            <div class="more-icon-active">
                 <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/more_active.svg') ?>
-            </span>
+            </div>
             <span>More</span>
         </a>
     </div>

@@ -1,0 +1,190 @@
+.setting__main-content-setting {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    min-height: 100vh; 
+    background-color: #fafafa;
+    flex: 1;
+}
+
+.setting__setting-container {
+    width: 950px;
+    padding: 50px 200px;
+    margin: 0 auto; 
+    background-color: white;
+}
+
+.setting__title {
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.setting__profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.setting__profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.avatar-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.avatar-container:hover .avatar-overlay {
+    opacity: 1;
+}
+
+.setting__profile-picture input[type="file"] {
+    display: none;
+}
+
+.setting__change-photo-btn {
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+}
+
+.setting__remove-photo-btn {
+    background: none;
+    border: none;
+    color: #ed4956;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+    display: none;
+}
+
+.setting__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.setting__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.setting__form-group label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.setting__form-group input,
+.setting__form-group textarea {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+    resize: none;
+}
+
+.setting__help-text {
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+.setting__characters-count {
+    font-size: 12px;
+    color: #8e8e8e;
+    text-align: right;
+}
+
+
+/* Setting gender options */
+.setting__select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.setting__select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.setting__select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333;
+    pointer-events: none;
+}
+
+.setting__select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Submit Button Styles */
+.setting__submit-btn {
+    background: #0095f6;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.setting__submit-btn:hover {
+    background: #0081d6;
+}
+
+@media (max-width: 768px) {
+    .setting__main-content-setting {
+        padding: 15px;
+    }
+    
+    .setting__profile-picture {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

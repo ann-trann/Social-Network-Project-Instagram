@@ -1,6 +1,6 @@
 <!-- More dropdown -->
 <div class="more__more-dropdown">
-    <a href="#" class="more__dropdown-item">
+    <a href="setting" class="more__dropdown-item">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/more_dropdown/setting.svg') ?>
         <span>Settings</span>
     </a>

@@ -106,11 +106,11 @@ body {
     font-weight: 700;
 }
 
-.more-icon-default-small {
+.more-icon-default-small, .search-icon-default-small, .notification-icon-default-small {
     display: flex;
 }
 
-.more-icon-active-small {
+.more-icon-active-small, .search-icon-active-small, .notification-icon-active-small {
     display: none;
 }
 
@@ -118,10 +118,14 @@ body {
     padding-left: 0px;
 }
 
+#search-btn-small.active .search-icon-default-small,
+#notification-btn-small.active .notification-icon-default-small,
 #more-btn-small.active .more-icon-default-small {
     display: none;
 }
 
+#search-btn-small.active .search-icon-active-small,
+#notification-btn-small.active .notification-icon-active-small,
 #more-btn-small.active .more-icon-active-small {
     display: flex;
 }

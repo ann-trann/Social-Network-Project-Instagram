@@ -112,8 +112,26 @@ require "shared/sidebar.php";
                 <div class="explore__details-comment">
                     <div class="explore__post-caption">
                         <div class="explore__user-pic"></div>
-                        <div class="explore__user-name">John Doe</div>
-                        <div class="explore__user-caption">Hello hihihi Ngày xưa mình cũng có nhận một lớp nice thế và đến giờ mình vẫn siêu nhớ bé</div>
+                        <div class="explore__user-name-caption">
+                            <div class="explore__user-name">John Doe</div>
+                            <div class="explore__user-caption">Another commission completed! I made a lot of strawberry granny squares and piece them together into bag. I’m so obsessed with the strawberry lining which you can check it out on my recent reel 🍓. This bag is perfect for casual outfits and for outings 🥺✨.</div>
+                        </div>
+                    </div>
+
+                    <div class="explore__post-comment">
+                        <div class="explore__user-pic"></div>
+                        <div class="explore__user-name-caption">
+                            <div class="explore__user-name">Petticoat </div>
+                            <div class="explore__user-comment">Hello hihihi Ngày xưa mình cũng có nhận một lớp nice thế và đến giờ mình vẫn siêu nhớ bé</div>
+                        </div>
+                    </div>
+
+                    <div class="explore__post-comment">
+                        <div class="explore__user-pic"></div>
+                        <div class="explore__user-name-caption">
+                            <div class="explore__user-name">Ariana Grande</div>
+                            <div class="explore__user-comment">Ariana Grande’s Glinda Bubble Dress lives in my head rent free, can’t wait to finish the cosplay before the Wicked movie comes out</div>
+                        </div>
                     </div>
                 </div>
 
@@ -130,7 +148,9 @@ require "shared/sidebar.php";
                         </a>
 
                     </div>
-                    <a href="#" class="explore__details-save">Save</a>
+                    <a class="explore__save-post">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/save.svg') ?>
+                    </a>
                 </div>
                 
                 <div class="explore__like-count">2,171 likes</div>

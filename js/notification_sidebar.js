@@ -13,7 +13,10 @@ function initializeNotificationSidebar() {
     notificationBtn.addEventListener('click', function(e) {
         e.preventDefault();
         notificationSidebar.classList.toggle('active');
-        sidebarSmall.style.display = 'flex'; // Đảm bảo sidebar nhỏ vẫn hiển thị
+        sidebarSmall.style.display = 'flex';
+        
+        const notificationBtn = document.getElementById('notification-btn-small');
+        notificationBtn.classList.toggle('active');
     });
     
     const notificationSmall = document.getElementById('notification-btn-small');

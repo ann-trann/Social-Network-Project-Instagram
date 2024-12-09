@@ -99,22 +99,26 @@ body {
     font-weight: 700;
 }
 
-.more-icon-default {
+.more-icon-default, .search-icon-default, .notification-icon-default {
     display: flex;
 }
 
-.more-icon-active {
+.more-icon-active, .search-icon-active, .notification-icon-active {
     display: none;
 }
 
-#more-btn {
-    padding-left: 0px;
+#more-btn, #search-btn, #notification-btn {
+    padding-left: 12px;
 }
 
+#search-btn.active .search-icon-default,
+#notification-btn-small.active .notification-icon-default,
 #more-btn.active .more-icon-default {
     display: none;
 }
 
+#search-btn.active .search-icon-active,
+#notification-btn-small.active .notification-icon-active,
 #more-btn.active .more-icon-active {
     display: flex;
 }

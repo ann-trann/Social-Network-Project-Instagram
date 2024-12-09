@@ -8,7 +8,7 @@
     left: 0;
     display: none;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
+    border-radius: 0 20px 20px 0;
     transform: translateX(-100%); /* Ẩn sidebar sang bên trái */
     transition: transform 1s ease-out
 }

@@ -15,6 +15,9 @@ function initializeSearchSidebar() {
         e.preventDefault();
         searchSidebar.classList.toggle('active');
         sidebarSmall.style.display = 'flex';
+        
+        const searchBtn = document.getElementById('search-btn-small');
+        searchBtn.classList.toggle('active');
     });
     
     const searchSmall = document.getElementById('search-btn-small');
@@ -73,12 +76,3 @@ function initializeSearchNavigationHandlers() {
         });
     });
 }
-
-
-// // Cập nhật sự kiện cho nút tìm kiếm
-// const searchSmall = document.getElementById('search-btn-small');
-// searchSmall.addEventListener('click', function(e) {
-//     e.preventDefault();
-//     searchSidebar.classList.toggle('active');
-//     sidebarSmall.style.display = searchSidebar.classList.contains('active') ? 'flex' : 'none';
-// });

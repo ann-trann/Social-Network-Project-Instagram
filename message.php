@@ -13,7 +13,6 @@ $user_id = $_SESSION['user_id'];
 require "shared/sidebar.php";
 ?>
 
-<?php require_once "shared/global.sidebar.php"; ?>
 <?php require_once "shared/global.sidebar_small.php"; ?>
 
 <main class="messages__main-content-messages">

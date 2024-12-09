@@ -181,6 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 //---------------------------------------------------------
+// Get chat data from JSON file and populate chat list
 
 document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch chat data from JSON file
@@ -269,4 +270,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Call the function to load chat data
     loadChatData();
+});
+
+
+
+
+//---------------------------------------------------------
+
+// Toggle search sidebar
+document.getElementById('search-btn-small').addEventListener('click', function() {
+    const searchBtn = document.getElementById('search-btn-small');
+    const searchSidebar = document.querySelector('.search__search-sidebar');
+    searchSidebar.classList.toggle('active');
+    searchBtn.classList.toggle('active');
+});
+
+
+// Toggle notification sidebar
+document.getElementById('notification-btn-small').addEventListener('click', function() {
+    const notificationBtn = document.getElementById('notification-btn-small');
+    const notificationSidebar = document.querySelector('.notification__notification-sidebar');
+    notificationSidebar.classList.toggle('active');
+    notificationBtn.classList.toggle('active');
+});
+
+
+// Toggle more dropdown
+document.addEventListener('DOMContentLoaded', function() {
+    const moreBtn = document.getElementById('more-btn-small');
+    const moreDropdown = document.querySelector('.more__more-dropdown');
+
+    if (moreBtn && moreDropdown) {
+        moreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            moreDropdown.classList.toggle('active');
+            moreBtn.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!moreBtn.contains(e.target) && !moreDropdown.contains(e.target)) {
+                moreDropdown.classList.remove('active');
+                moreBtn.classList.remove('active');
+            }
+        });
+    }
 });

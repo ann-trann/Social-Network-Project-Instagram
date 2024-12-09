@@ -23,8 +23,13 @@ if (!defined('SHARED_PATH')) {
     
     
     <!-- Search Small Button -->
-    <a href="#" class="nav-item-small" id="search-btn-small">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search.svg') ?>
+    <a class="nav-item-small" id="search-btn-small">
+        <div class="search-icon-default-small">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search.svg') ?>
+        </div>
+        <div class="search-icon-active-small">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/search_active.svg') ?>
+        </div>
     </a>
 
 
@@ -42,7 +47,7 @@ if (!defined('SHARED_PATH')) {
 
 
     <!-- Message Small Button -->
-    <a href="#" class="nav-item-small <?php echo ($page === 'message') ? 'active' : ''; ?>">
+    <a href="<?php echo url_for('message'); ?>" class="nav-item-small <?php echo ($page === 'message') ? 'active' : ''; ?>">
         <?php 
         if ($page === 'message') {
             include(dirname(SHARED_PATH) . '/assets/svg/sidebar/messages_active.svg');
@@ -54,13 +59,18 @@ if (!defined('SHARED_PATH')) {
 
 
     <!-- Notification Small Button -->
-    <a href="#" class="nav-item-small" id="notification-btn-small">
-        <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications.svg') ?>
+    <a class="nav-item-small" id="notification-btn-small">
+        <div class="notification-icon-default-small">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications.svg') ?>
+        </div>
+        <div class="notification-icon-active-small">
+            <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/notifications_active.svg') ?>
+        </div>
     </a>
 
 
     <!-- Create Small Button -->
-    <a href="#" data-nav="create" class="nav-item-small">
+    <a data-nav="create" class="nav-item-small">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/create.svg') ?>
     </a>
 
@@ -80,21 +90,26 @@ if (!defined('SHARED_PATH')) {
     <!-- More Small Button -->
     <div class="bottom-nav-items-small">
         <a class="nav-item-small" id="more-btn-small">
-            <span class="more-icon-default-small">
+            <div class="more-icon-default-small">
                 <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/more.svg') ?>
-            </span>
-            <span class="more-icon-active-small">
+            </div>
+            <div class="more-icon-active-small">
                 <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/more_active.svg') ?>
-            </span>
+            </div>
         </a>
     </div>
 
+
+    <!-- Search sidebar -->
+    <?php include(SHARED_PATH . '/search_sidebar.php'); ?>  
+
+    <!-- Notification sidebar -->
+    <?php include(SHARED_PATH . '/notification_sidebar.php'); ?>
 
     <!-- More dropdown -->
     <?php include(SHARED_PATH . '/more_dropdown.php'); ?>
     
     <!-- Create post modal -->
     <?php include(SHARED_PATH . '/create_post_modal.php'); ?>
-
 
 </nav>
