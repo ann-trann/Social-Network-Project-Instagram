@@ -22,13 +22,14 @@
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    transition: width 0.3s ease;
-    width: 600px;
+    /* transition: width 0.3s ease; */
+    width: 40vw;
+    height: 40vw; 
     z-index: 1003;
 }
 
 .create-post__create-modal.expanded {
-    width: 900px;
+    width: 60vw;
 }
 
 /* Modal Content Container */
@@ -87,14 +88,15 @@
 /* Modal body styling */
 .create-post__create-modal-body {
     display: flex;
-    width: 600px;
+    width: 40vw;
+    height: calc(40vw - 54px);;
     transition: width 0.3s ease;
     position: relative;
 }
 
 /* Expanded modal body styling */
 .create-post__create-modal-body.expanded {
-    width: 900px;
+    width: 60vw;
     display: flex;
     flex-direction: row;
 }
@@ -104,8 +106,8 @@
 
 /* Upload Area Styles */
 .create-post__upload-area {
-    width: 600px;
-    height: 600px;
+    width: 40vw;
+    height: 40vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -139,8 +141,8 @@
 
 /* Preview Area Styles */
 .create-post__preview-area {
-    width: 600px;
-    height: 600px;
+    width: 40vw;
+    height: 100%;
     position: relative;
 }
 
@@ -156,8 +158,8 @@
 
 /* Caption Area Styles */
 .create-post__caption-area {
-    width: 300px;
-    height: 600px;
+    width: 20vw;
+    height: 100%;
     display: none;
     border-left: 1px solid #dbdbdb;
     /* padding: 16px; */
@@ -246,7 +248,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 4;
+    z-index: 1004;
 }
 
 .create-post__discard-modal {

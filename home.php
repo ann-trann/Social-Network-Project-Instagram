@@ -32,7 +32,7 @@ require "shared/sidebar.php";
             <div class="home__instagram-post">
                 <div class="home__post-header">
                     <div class="home__profile-pic"></div>
-                    <a href="#" class="home__username">beyouniquelyyou</a>
+                    <a href="<?php echo $user['username']; ?>" class="home__username">beyouniquelyyou</a>
                     <div class="home__dots">...</div>
                 </div>
 
@@ -53,7 +53,8 @@ require "shared/sidebar.php";
                 </div>
 
                 <div class="home__likes">2,866 likes</div>
-                <div class="home__caption">beyouniquelyyou Always 💛</div>
+                <div class="home__username-caption">beyouniquelyyou</div>
+                <div class="home__caption">Always 💛</div>
                 <div class="home__view-comments">View all 8 comments</div>
             </div>
 
@@ -62,7 +63,7 @@ require "shared/sidebar.php";
             <div class="home__instagram-post">
                 <div class="home__post-header">
                     <div class="home__profile-pic"></div>
-                    <a href="#" class="home__username">hehehe</a>
+                    <a href="#" class="home__username">leanneansar</a>
                     <div class="home__dots">...</div>
                 </div>
 
@@ -83,7 +84,8 @@ require "shared/sidebar.php";
                 </div>
 
                 <div class="home__likes">2,866 likes</div>
-                <div class="home__caption">hehehehehehehehe</div>
+                <div class="home__username-caption">leanneansar</div>
+                <div class="home__caption">I don’t know if it’s too early to say this but I’m so excited for the new year. I really look forward to starting a new chapter. How great that in life we have a day that allows us to “start over” fresh. It’s really incredible. I believe I’ve finally found my balance in life and feel 2025 is going to be it! I can’t wait to share with you so many news… all coming in 2025. ♥️</div>
                 <div class="home__view-comments">View all 8 comments</div>
             </div>
 
@@ -149,3 +151,4 @@ require "shared/sidebar.php";
 </main>
 
 <script src="js/common.js"></script>
+<script src="js/home.js"></script>

@@ -19,14 +19,6 @@
     z-index: 1;
 }
 
-.home__stories-container {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 24px;
-}
-
 .home__posts-container {
     display: flex;
     flex-direction: column;
@@ -34,9 +26,9 @@
 }
 
 .home__right-sidebar {
-    width: 319px;
+    width: 280px;
     position: fixed;
-    right: calc((100% - 1300px) / 2);
+    right: calc((100% - 1200px) / 2);
     z-index: -1;
 }
 
@@ -55,6 +47,7 @@
 
 .home__user-info {
     flex: 1;
+    font-size: 13px;
 }
 
 .home__user-info h4 {
@@ -81,6 +74,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    font-size: 13px;
 }
 
 .home__suggestions-header h4 {
@@ -142,7 +136,7 @@
 
 /* Instagram post */
 .home__instagram-post {
-    width: 468px;
+    width: 500px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     border: 1px solid #dbdbdb;
     border-radius: 3px;
@@ -169,6 +163,7 @@
     font-weight: 600;
     color: #262626;
     text-decoration: none;
+    font-size: 14px;
 }
 
 .home__post-image-container {
@@ -188,11 +183,9 @@
 }
 
 .home__post-actions {
-    padding: 8px 8px;
-    border-top: 1px solid #efefef;
     display: flex; 
     gap: 16px;
-    margin-left: 10px;
+    margin: 12px 16px 8px;
 }
 
 .home__post-actions a {
@@ -208,23 +201,55 @@
 
 .home__likes {
     font-weight: 600;
-    margin: 8px 0;
-    padding: 0 16px;
+    margin: 4px 16px;
     font-size: 12px;
 }
 
+
+
+.home__username-caption {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 4px 16px;
+}
+
 .home__caption {
-    padding: 0 16px 16px;
-    font-size: 13px;
+    margin: 4px 16px;
+    position: relative;
+    overflow: hidden;
+    max-height: 3em; /* Explicitly limit to 2 lines */
+    font-size: 13px;    
+}
+
+.home__caption.expanded {
+    max-height: none;
+    overflow: visible;
+}
+
+.home__caption-more {
+    color: #8e8e8e;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 0 3px 5px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: white;
+    padding-left: 10px;
+}
+
+.home__caption.expanded .home__caption-more {
+    position: static;
 }
 
 .home__view-comments {
     color: #8e8e8e;
     font-size: 14px;
-    padding: 0 16px 16px;
+    margin: 8px 16px 16px;
     cursor: pointer;
 }
 
 .home__dots {
     margin-left: auto;
+    display: none
 }
