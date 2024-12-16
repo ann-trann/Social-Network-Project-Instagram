@@ -5,9 +5,21 @@ $keywords = "Instagram profile, user profile, Instagram";
 
 $page = 'profile';
 
+// Lấy username từ URL
+$username = isset($_GET['username']) ? $_GET['username'] : '';
+
 // Đảm bảo user đã đăng nhập
 if (!isset($_SESSION['user_id'])) {
     redirect_to(url_for('index'));
+}
+
+// Nếu có username được truyền, hiển thị profile của user đó
+if ($username) {
+    // Thay thế phần sau bằng thông tin của user tương ứng
+    $profile_username = $username;
+} else {
+    // Nếu không có username, hiển thị profile của user hiện tại
+    $profile_username = $_SESSION['username'];
 }
 
 // Include header/sidebar
@@ -28,7 +40,7 @@ require_once "shared/sidebar.php";
             
             <div class="profile__profile-info">
                 <div class="profile__profile-title">
-                    <h2 class="profile__username">username</h2>
+                    <h2 class="profile__username"><?php echo $profile_username; ?></h2>
                     <button class="profile__edit-profile-btn" onclick="window.location.href='<?php echo url_for('/setting'); ?>'">Edit profile</button>
                     
                     <a class="profile__settings-option-btn">
@@ -38,8 +50,8 @@ require_once "shared/sidebar.php";
                 
                 <div class="profile__profile-stats">
                     <span><strong>0</strong> posts</span>
-                    <span><strong>0</strong> followers</span>
-                    <span><strong>0</strong> following</span>
+                    <span class="profile__followers-stats"><strong>0</strong> followers</span>
+                    <span class="profile__following-stats"><strong>0</strong> following</span>
                 </div>
                 
                 <div class="profile__profile-bio">
@@ -149,6 +161,7 @@ require_once "shared/sidebar.php";
                         <div class="profile__camera-icon">
                             <i class="fas fa-camera"></i>
                         </div>
+                        
                         <h2>Start Saving</h2>
                     </div>
                 </div>
@@ -170,7 +183,7 @@ require_once "shared/sidebar.php";
 
 
 
-    <!-- Discard post overlay -->
+    <!-- Setting post overlay -->
     <div class="profile__setting-overlay" style="display:none;">
         <div class="profile__setting-option-card">
             <a href="logout.php" class="profile__item-logout">Log out</a>
@@ -180,28 +193,41 @@ require_once "shared/sidebar.php";
 
 
     <!-- Followers -->
-    <!-- <div class="profile__followers-overlay" style="display:none;">
-        <div class="profile__follower">
-            <h3>Followers</h3>
+    <div class="profile__followers-overlay" style="display:none;">
+        <div class="profile__followers">
+            <div class="profile__followers-header">
+                <h3>Followers</h3>
+                <a class="profile__followers-close-btn" onclick="closePopup()"><i class="fas fa-times"></i></a>
+            </div>
             <div class="profile__list-followers">
-                <div class="profile__follower-item">
-                    <div class="profile__follower-pic"></div>
-                    <div class="profile__follower-info">
+                <div class="profile__followers-item">
+                    <div class="profile__followers-pic"></div>
+                    <div class="profile__followers-info">
+                        <h4>username</h4>
+                        <p>Full Name</p>
+                    </div>
+                </div>
+                <div class="profile__followers-item">
+                    <div class="profile__followers-pic"></div>
+                    <div class="profile__followers-info">
                         <h4>username</h4>
                         <p>Full Name</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
 
     <!-- Following -->
-    <!-- <div class="profile__following-overlay" style="display:none;">
+    <div class="profile__following-overlay" style="display:none;">
         <div class="profile__following">
-            <h3>Following</h3>
+            <div class="profile__following-header">
+                <h3>Following</h3>
+                <a class="profile__following-close-btn" onclick="closePopup()"><i class="fas fa-times"></i></a>
+            </div>
             <div class="profile__list-following">
-                <div class="profile__follower-item">
+                <div class="profile__following-item">
                     <div class="profile__following-pic"></div>
                     <div class="profile__following-info">
                         <h4>username</h4>
@@ -210,7 +236,7 @@ require_once "shared/sidebar.php";
                 </div>                
             </div>
         </div>
-    </div> -->
+    </div>
 
     
 </main>

@@ -9,6 +9,12 @@ if (!loggedIn()) {
     exit();
 }
 
+// Kiểm tra nếu có postId được truyền vào
+if (isset($_GET['postId'])) {
+    $postId = $_GET['postId'];
+    // Bạn có thể sử dụng $postId để load thông tin bài post cụ thể nếu cần
+}
+
 $user_id = $_SESSION['user_id'];
 require "shared/sidebar.php";
 ?>
@@ -23,7 +29,7 @@ require "shared/sidebar.php";
         <div class="explore__explore-grid">
             
             <!-- Explore Grid Item 1 -->
-            <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=1', 'User 1', 'This is caption for post 1')">
+            <div class="explore__grid-item" id="fdsaddgrf" onclick="showPopup('https://picsum.photos/300/300?random=1', 'User 1', 'This is caption for post 1', 'fdsaddgrf')">
                 <img src="https://picsum.photos/300/300?random=1" alt="Post 1">
                 <div class="explore__overlay">
                     <div class="explore__overlay-stats">
@@ -40,7 +46,7 @@ require "shared/sidebar.php";
             </div>
 
             <!-- Explore Grid Item 2 -->
-            <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/400?random=2', 'User 2', 'This is caption for post 2')">
+            <div class="explore__grid-item" id="fdddfthyu" onclick="showPopup('https://picsum.photos/300/400?random=2', 'User 2', 'This is caption for post 2', 'fdddfthyu')">
             <img src="https://picsum.photos/300/400?random=2" alt="Post 2">
                 <div class="explore__overlay">
                     <div class="explore__overlay-stats">
@@ -57,7 +63,7 @@ require "shared/sidebar.php";
             </div>
 
             <!-- Explore Grid Item 3 -->
-            <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/400/300?random=3', 'User 3', 'This is caption for post 3')">
+            <div class="explore__grid-item" id="drtykiu" onclick="showPopup('https://picsum.photos/400/300?random=3', 'User 3', 'This is caption for post 3', 'drtykiu')">
             <img src="https://picsum.photos/400/300?random=3" alt="Post 3">
                 <div class="explore__overlay">
                     <div class="explore__overlay-stats">
@@ -74,7 +80,7 @@ require "shared/sidebar.php";
             </div>
 
             <!-- Explore Grid Item 4 -->
-            <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/500?random=4', 'User 4', 'This is caption for post 4')">
+            <div class="explore__grid-item" id="fdssdeftr" onclick="showPopup('https://picsum.photos/300/500?random=4', 'User 4', 'This is caption for post 4', 'fdssdeftr')">
             <img src="https://picsum.photos/300/500?random=4" alt="Post 4">
                 <div class="explore__overlay">
                     <div class="explore__overlay-stats">
@@ -91,7 +97,7 @@ require "shared/sidebar.php";
             </div>
 
             <!-- Explore Grid Item 5 -->
-            <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/500/300?random=5', 'User 5', 'This is caption for post 5')">
+            <div class="explore__grid-item" id="wertyg" onclick="showPopup('https://picsum.photos/500/300?random=5', 'User 5', 'This is caption for post 5', 'wertyg')">
             <img src="https://picsum.photos/500/300?random=5" alt="Post 4">
                 <div class="explore__overlay">
                     <div class="explore__overlay-stats">
@@ -109,7 +115,7 @@ require "shared/sidebar.php";
 
             
             <!-- Explore Grid Item 6 -->
-            <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/600?random=6', 'User 5', 'This is caption for post 5')">
+            <div class="explore__grid-item" id="sertcvik" onclick="showPopup('https://picsum.photos/300/600?random=6', 'User 5', 'This is caption for post 5', 'sertcvik')">
             <img src="https://picsum.photos/300/600?random=6" alt="Post 4">
                 <div class="explore__overlay">
                     <div class="explore__overlay-stats">
@@ -128,7 +134,7 @@ require "shared/sidebar.php";
 
             
             <!-- Explore Grid Item 7 -->
-            <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/600/300?random=7', 'User 5', 'This is caption for post 5')">
+            <div class="explore__grid-item" id="cokerjm" onclick="showPopup('https://picsum.photos/600/300?random=7', 'User 5', 'This is caption for post 5')">
             <img src="https://picsum.photos/600/300?random=7" alt="Post 4">
                 <div class="explore__overlay">
                     <div class="explore__overlay-stats">
@@ -143,25 +149,6 @@ require "shared/sidebar.php";
                     </div>
                 </div>
             </div>
-
-            <!-- Explore Grid Item 8 -->
-            <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/3000/300?random=8', 'User 5', 'This is caption for post 5')">
-            <img src="https://picsum.photos/3000/300?random=8" alt="Post 4">
-                <div class="explore__overlay">
-                    <div class="explore__overlay-stats">
-                        <div class="explore__stat-item">
-                            <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                            <span>1.2K</span>
-                        </div>
-                        <div class="explore__stat-item">
-                            <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                            <span>234</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
 
         </div>
     </div>

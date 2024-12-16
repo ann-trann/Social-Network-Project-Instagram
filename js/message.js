@@ -31,27 +31,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Get all chat items
-    const chatItems = document.querySelectorAll('.message__chat-item');
-    
-    // Get the empty chat area and chat content area
-    const chatEmptyArea = document.querySelector('.message__chat-empty');
-    const chatContentArea = document.querySelector('.message__chat-content');
+    // Function to update URL without adding to browser history
+    function updateUrlWithChatId(chatId) {
+        // Use replaceState to update URL without creating a new history entry
+        history.replaceState(
+            { chatId: chatId }, 
+            '', 
+            `?chat=${chatId}`
+        );
+    }
 
-    // Add click event listener to each chat item
+    // Modify the existing chat item click event listener
+    const chatItems = document.querySelectorAll('.message__chat-item');
+    const chatEmpty = document.querySelector('.message__chat-empty');
+    const chatContent = document.querySelector('.message__chat-content');
+
     chatItems.forEach(item => {
         item.addEventListener('click', function() {
-            // Hide the empty chat area
-            chatEmptyArea.style.display = 'none';
-            
-            // Show the chat content area
-            chatContentArea.style.display = 'flex';
+            // Get the chat ID from the item's ID attribute
+            const chatId = this.id;
 
-            // Update the chat header with the clicked item's name
+            // Update URL with chat ID
+            updateUrlWithChatId(chatId);
+
+            // Existing chat selection logic
+            chatEmpty.classList.add('hidden');
+            chatContent.classList.remove('hidden');
+
+            // Update chat header with selected user's name
             const chatName = this.querySelector('.message__item-chat-name').textContent;
-            const chatHeader = document.querySelector('.message__chat-header .message__chat-name');
+            const chatHeader = document.querySelector('.message__chat-name');
             chatHeader.textContent = chatName;
         });
+    });
+
+    // Optional: Handle back button to reset view if needed
+    window.addEventListener('popstate', function(event) {
+        // If no state is present, show empty chat area
+        if (!event.state || !event.state.chatId) {
+            chatEmpty.classList.remove('hidden');
+            chatContent.classList.add('hidden');
+        }
     });
 });
 
@@ -183,96 +203,136 @@ document.addEventListener('DOMContentLoaded', function() {
 //---------------------------------------------------------
 // Get chat data from JSON file and populate chat list
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Function to fetch chat data from JSON file
-    async function loadChatData() {
-        try {
-            // Fetch data from chat_data.json using a relative path
-            const response = await fetch('./js/chat_data.json');
-            
-            // Check if the response is successful
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+// Modify the existing loadChatData function
+async function loadChatData() {
+    try {
+        // Fetch data from chat_data.json using a relative path
+        const response = await fetch('./js/chat_data.json');
+        
+        // Check if the response is successful
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        // Parse JSON data
+        const usersData = await response.json();
+
+        // Get the chat list container
+        const chatList = document.querySelector('.message__chat-list');
+        const chatEmptyArea = document.querySelector('.message__chat-empty');
+        const chatContentArea = document.querySelector('.message__chat-content');
+        const chatHeader = document.querySelector('.message__chat-header');
+        const messagesContainer = document.querySelector('.message__messages-container');
+
+        // Function to update URL without adding to browser history
+        function updateUrlWithChatId(chatId) {
+            history.replaceState(
+                { chatId: chatId }, 
+                '', 
+                `?chat=${chatId}`
+            );
+        }
+
+        // Function to create chat item
+        function createChatItem(user) {
+            const chatItem = document.createElement('div');
+            chatItem.classList.add('message__chat-item');
+            chatItem.setAttribute('id', user.id);
+
+            const lastMessageTime = new Date(user.lastMessageTime);
+            const currentTime = new Date();
+            const timeDifference = Math.floor((currentTime - lastMessageTime) / (1000 * 60)); // Difference in minutes
+            let timeDifferenceText;
+            if (timeDifference < 60) {
+                timeDifferenceText = `${timeDifference} min`;
+            } else if (timeDifference < 1440) {
+                timeDifferenceText = `${Math.floor(timeDifference / 60)}h`;
+            } else if (timeDifference < 43200) { // Less than 30 days
+                timeDifferenceText = `${Math.floor(timeDifference / 1440)}d`;
+            } else if (timeDifference < 525600) { // Less than 1 year
+                timeDifferenceText = `${Math.floor(timeDifference / 43200)}m`;
+            } else {
+                timeDifferenceText = `${Math.floor(timeDifference / 525600)}y`;
             }
-            
-            // Parse JSON data
-            const usersData = await response.json();
 
-            // Get the chat list container
-            const chatList = document.querySelector('.message__chat-list');
-            const chatEmptyArea = document.querySelector('.message__chat-empty');
-            const chatContentArea = document.querySelector('.message__chat-content');
-            const chatHeader = document.querySelector('.message__chat-header');
-            const messagesContainer = document.querySelector('.message__messages-container');
+            chatItem.innerHTML = `
+                <div class="message__item-profile-pic"></div>
+                <div class="message__chat-info">
+                    <div class="message__item-chat-name">${user.name}</div>
 
-            // Function to create chat item
-            function createChatItem(user) {
-                const chatItem = document.createElement('div');
-                chatItem.classList.add('message__chat-item');
-                chatItem.setAttribute('data-chat-id', user.id);
-
-                chatItem.innerHTML = `
-                    <div class="message__item-profile-pic"></div>
-                    <div class="message__chat-info">
-                        <div class="message__item-chat-name">${user.name}</div>
+                    <div class="message__last-message-container">
                         <div class="message__last-message">${user.lastMessage}</div>
+                        <div class="message__last-message-divider">•</div>
+                        <div class="message__last-message-timeDifference">${timeDifferenceText}</div>
                     </div>
-                `;
+                </div>
+            `;
 
-                // Add click event listener
-                chatItem.addEventListener('click', function() {
-                    // Hide empty chat area
-                    chatEmptyArea.classList.add('hidden');
-                    
-                    // Update chat header
-                    const chatNameElement = chatHeader.querySelector('.message__chat-name');
-                    chatNameElement.textContent = user.name;
+            // Add click event listener
+            chatItem.addEventListener('click', function() {
+                // Update URL with chat ID
+                updateUrlWithChatId(user.id);
 
-                    // Clear previous messages
-                    messagesContainer.innerHTML = '';
+                // Hide empty chat area
+                chatEmptyArea.classList.add('hidden');
+                
+                // Update chat header
+                const chatNameElement = chatHeader.querySelector('.message__chat-name');
+                chatNameElement.textContent = user.name;
 
-                    // Add messages for this user
-                    user.messages.slice().reverse().forEach(message => {
-                        const messageElement = document.createElement('div');
-                        messageElement.classList.add(
-                            'message__message', 
-                            `message__${message.type}`
-                        );
+                // Clear previous messages
+                messagesContainer.innerHTML = '';
 
-                        messageElement.innerHTML = `
-                            <div class="message__message-content">${message.content}</div>
-                        `;
+                // Add messages for this user
+                user.messages.slice().reverse().forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add(
+                        'message__message', 
+                        `message__${message.type}`
+                    );
 
-                        messagesContainer.appendChild(messageElement);
-                    });
+                    messageElement.innerHTML = `
+                        <div class="message__message-content">${message.content}</div>
+                    `;
 
-                    // Show chat content area
-                    chatContentArea.classList.remove('hidden');
+                    messagesContainer.appendChild(messageElement);
                 });
 
-                return chatItem;
-            }
-
-            // Populate chat list
-            usersData.users.forEach(user => {
-                const chatItem = createChatItem(user);
-                chatList.appendChild(chatItem);
+                // Show chat content area
+                chatContentArea.classList.remove('hidden');
             });
 
-        } catch (error) {
-            console.error('Error loading chat data:', error);
-            
-            // Optional: Display an error message to the user
-            const chatList = document.querySelector('.message__chat-list');
-            chatList.innerHTML = `<div style="color: red;">Error loading chat data. Please try again later.</div>`;
+            return chatItem;
         }
+
+        // Populate chat list
+        usersData.users.forEach(user => {
+            const chatItem = createChatItem(user);
+            chatList.appendChild(chatItem);
+        });
+
+        // Check if there's a chat ID in the URL on page load
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialChatId = urlParams.get('chat');
+        
+        if (initialChatId) {
+            const initialChatItem = document.getElementById(initialChatId);
+            if (initialChatItem) {
+                initialChatItem.click(); // Simulate click to load chat
+            }
+        }
+
+    } catch (error) {
+        console.error('Error loading chat data:', error);
+        
+        // Optional: Display an error message to the user
+        const chatList = document.querySelector('.message__chat-list');
+        chatList.innerHTML = `<div style="color: red;">Error loading chat data. Please try again later.</div>`;
     }
+}
 
-    // Call the function to load chat data
-    loadChatData();
-});
-
-
+// Call the function to load chat data
+document.addEventListener('DOMContentLoaded', loadChatData);
 
 
 //---------------------------------------------------------

@@ -76,10 +76,23 @@
   font-size: 14px;
 }
 
-.message__last-message {
+.message__last-message-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  
+  color: #656464;
+  font-size: 11px;
+}
+/* .message__last-message {
   color: #8e8e8e;
   font-size: 12px;
 }
+
+.message__last-message-time {
+  color: #8e8e8e;
+  font-size: 12px;
+} */
 
 .message__chat-list {
   height: calc(100vh - 120px);

@@ -28,67 +28,6 @@ require "shared/sidebar.php";
 
         <!-- Posts feed -->
         <div class="home__posts-container">
-            <!-- Post item 1 -->
-            <div class="home__instagram-post">
-                <div class="home__post-header">
-                    <div class="home__profile-pic"></div>
-                    <a href="<?php echo $user['username']; ?>" class="home__username">beyouniquelyyou</a>
-                    <div class="home__dots">...</div>
-                </div>
-
-                <div class="home__post-image-container">
-                    <img src="<?php echo url_for('/assets/images/postImage/image1.jpg'); ?>" alt="Image 1" class="home__post-image">
-                </div>
-
-                <div class="home__post-actions">
-                    <a class="home__like-post">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
-                    </a>
-                    <a class="home__comment-post">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
-                    </a>
-                    <a class="home__share-post">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/share.svg') ?>
-                    </a>
-                </div>
-
-                <div class="home__likes">2,866 likes</div>
-                <div class="home__username-caption">beyouniquelyyou</div>
-                <div class="home__caption">Always 💛</div>
-                <div class="home__view-comments">View all 8 comments</div>
-            </div>
-
-            
-            <!-- Post item 2 -->
-            <div class="home__instagram-post">
-                <div class="home__post-header">
-                    <div class="home__profile-pic"></div>
-                    <a href="#" class="home__username">leanneansar</a>
-                    <div class="home__dots">...</div>
-                </div>
-
-                <div class="home__post-image-container">
-                    <img src="<?php echo url_for('/assets/images/postImage/image2.jpg'); ?>" alt="Image 2" class="home__post-image">
-                </div>
-
-                <div class="home__post-actions">
-                    <a class="home__like-post">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
-                    </a>
-                    <a class="home__comment-post">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
-                    </a>
-                    <a class="home__share-post">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/share.svg') ?>
-                    </a>
-                </div>
-
-                <div class="home__likes">2,866 likes</div>
-                <div class="home__username-caption">leanneansar</div>
-                <div class="home__caption">I don’t know if it’s too early to say this but I’m so excited for the new year. I really look forward to starting a new chapter. How great that in life we have a day that allows us to “start over” fresh. It’s really incredible. I believe I’ve finally found my balance in life and feel 2025 is going to be it! I can’t wait to share with you so many news… all coming in 2025. ♥️</div>
-                <div class="home__view-comments">View all 8 comments</div>
-            </div>
-
             
         </div>
                 
@@ -146,6 +85,80 @@ require "shared/sidebar.php";
                 <div class="home__follow-button">Follow</div>
             </div>
 
+        </div>
+    </div>
+
+
+
+    
+    <!-- Popup -->
+    <div class="profile__popup" id="imagePopup" onclick="closePopup()">
+        <span class="profile__popup-close">&times;</span>
+        <div class="profile__popup-content" onclick="event.stopPropagation()">
+            <div class="profile__popup-image">
+                <img id="popupImg" src="" alt="Popup Image">
+            </div>
+
+            <div class="profile__popup-details">
+                <div class="profile__details-header">
+                    <div class="profile__user-pic"></div>
+                    <div class="profile__user-name">John Doe</div>
+                </div>
+
+                <div class="profile__details-comment">
+                    <div class="profile__post-caption">
+                        <div class="profile__user-pic"></div>
+                        <div class="profile__user-name-caption">
+                            <div class="profile__user-name">John Doe</div>
+                            <div class="profile__user-caption">Another commission completed! I made a lot of strawberry granny squares and piece them together into bag. I’m so obsessed with the strawberry lining which you can check it out on my recent reel 🍓. This bag is perfect for casual outfits and for outings 🥺✨.</div>
+                        </div>
+                    </div>
+
+                    <div class="profile__post-comment">
+                        <div class="profile__user-pic"></div>
+                        <div class="profile__user-name-caption">
+                            <div class="profile__user-name">Petticoat </div>
+                            <div class="profile__user-comment">Hello hihihi Ngày xưa mình cũng có nhận một lớp nice thế và đến giờ mình vẫn siêu nhớ bé</div>
+                        </div>
+                    </div>
+
+                    <div class="profile__post-comment">
+                        <div class="profile__user-pic"></div>
+                        <div class="profile__user-name-caption">
+                            <div class="profile__user-name">Ariana Grande</div>
+                            <div class="profile__user-comment">Ariana Grande’s Glinda Bubble Dress lives in my head rent free, can’t wait to finish the cosplay before the Wicked movie comes out</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile__details-action">
+                    <div class="profile__details-action-icons">
+                        <a class="profile__like-post">
+                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                        </a>
+                        <a class="profile__comment-post">
+                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
+                        </a>
+                        <a class="profile__share-post">
+                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/share.svg') ?>
+                        </a>
+
+                    </div>
+                    <a class="profile__save-post">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/save.svg') ?>
+                    </a>
+                </div>
+                
+                <div class="profile__like-count">2,171 likes</div>
+                <div class="profile__details-add-comment">
+                    <span class="profile__smile-icon">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
+                    </span>
+                    <input type="text" placeholder="Add a comment...">
+                    <button>Post</button>
+                </div>
+            </div>
+            
         </div>
     </div>
 </main>
