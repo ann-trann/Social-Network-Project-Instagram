@@ -77,16 +77,11 @@ if (!defined('SHARED_PATH')) {
 
     <!-- Profile Button -->
     <a href="<?php echo url_for('profile'); ?>" class="nav-item <?php echo ($page === 'profile') ? 'active' : ''; ?>">
-        <?php 
-        // Kiểm tra xem cookie 'avatar' có tồn tại không
-        if (isset($_COOKIE['avatar']) && !empty($_COOKIE['avatar'])) {
-            $avatar = $_COOKIE['avatar']; // Lấy avatar từ cookie
-        } else {
-            // Nếu không có cookie, sử dụng ảnh mặc định
-            $avatar = url_for("/assets/images/profileImage/default-user.png");
-        }
-        ?>
-        <img src="<?php echo htmlspecialchars($avatar); ?>" alt="User Avatar" />
+        <?php if ($page === 'profile'): ?>
+            <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
+        <?php else: ?>
+            <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
+        <?php endif; ?>
         <span>Profile</span>
     </a>
 
