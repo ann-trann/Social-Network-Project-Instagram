@@ -1,16 +1,14 @@
 <?php
 require_once "core/init.php";
-
 $page = 'home';
+require "shared/sidebar.php";
+require_once 'auth.php';
 
-// Kiểm tra đăng nhập trước khi cho phép truy cập trang home
-if (!loggedIn()) {
-    Redirect::to('login');
+if (!checkToken()) {
+    // Token không hợp lệ hoặc không tồn tại, chuyển hướng về login
+    header('Location: login');
     exit();
 }
-
-$user_id = $_SESSION['user_id'];
-require "shared/sidebar.php";
 ?>
 
 <?php require_once "shared/global.sidebar.php"; ?>

@@ -1,10 +1,6 @@
 /* profile active */
-.nav-item.active img {
-    outline: 2px solid #000;
-    border-radius: 50%;
-}
 
-.profile__main-content-profile {
+.user__main-content-profile {
     margin-left: 250px;
     width: calc(100% - 250px);
     min-height: 100vh; 
@@ -12,7 +8,7 @@
     flex: 1;
 }
 
-.profile__profile-container {
+.user__profile-container {
     width: 950px;
     padding: 40px 20px;
     margin: 0 auto;    /* Căn giữa trong main-content */
@@ -20,42 +16,43 @@
 
 
 /* user profile info */
-.profile__profile-header {
+.user__profile-header {
     display: flex;
     padding: 20px 80px;
     /* border-bottom: 1px solid #dbdbdb; */
 }
 
-.profile__profile-picture {
+.user__profile-picture {
     width: 150px;
     height: 150px;
     margin-right: 100px;
 }
 
-.profile__profile-picture img {
+.user__profile-picture img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.profile__profile-info {
+.user__profile-info {
     flex: 1;
 }
 
-.profile__profile-title {
+.user__profile-title {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.profile__username {
+.user__username {
     font-size: 20px;
     font-weight: 400;
     margin-right: 20px;
 }
 
-.profile__edit-profile-btn {
+.user__following-btn,
+.user__message-btn {
     padding: 5px 15px;
     margin-right: 10px;
     border: none;
@@ -66,58 +63,50 @@
     font-size: 14px;
 }
 
-.profile__settings-option-btn {
-    /* padding: 5px 9px;
-    margin-right: 10px;
-    border: 1px solid #dbdbdb;
-    border-radius: 4px;
-    background: transparent; */
-    cursor: pointer;
-}
 
-.profile__profile-stats {
+.user__profile-stats {
     display: flex;
     gap: 40px;
     margin-bottom: 20px;
     font-size: 16px;
 }
 
-.profile__followers-stats {
+.user__followers-stats {
     cursor: pointer;
 }
 
-.profile__following-stats {
+.user__following-stats {
     cursor: pointer;
 }
 
-.profile__profile-bio {
+.user__profile-bio {
     max-width: 400px;
 }
 
-.profile__full-name {
+.user__full-name {
     font-weight: 600;
     font-size: 16px;
 }
 
-.profile__bio-text {
+.user__bio-text {
     font-weight: 400;
     font-size: 14px;
 }
 
 
 
-.profile__profile-content {
+.user__profile-content {
     margin-top: 20px;
 }
 
-.profile__content-nav {
+.user__content-nav {
     display: flex;
     justify-content: center;
     border-top: 1px solid #dbdbdb;
     margin-top: 40px;
 }
 
-.profile__content-nav .profile__posts {
+.user__content-nav .user__posts {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -130,26 +119,26 @@
 }
 
 
-.profile__posts-grid {
+.user__posts-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
     padding: 20px 0;
 }
 
-.profile__no-posts {
+.user__no-posts {
     grid-column: 1 / -1;
     text-align: center;
     padding: 60px 0;
 }
 
 /* No Content Styling */
-.profile__content-container > div {
+.user__content-container > div {
     display: none;
     animation: fadeIn 0.1s ease-in-out;
 }
 
-.profile__content-container > div.active {
+.user__content-container > div.active {
     display: block;
 }
 
@@ -164,7 +153,7 @@
     }
 }
 
-.profile__no-posts {
+.user__no-posts {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -174,7 +163,7 @@
     color: #8e8e8e;
 }
 
-.profile__camera-icon {
+/* .user__camera-icon {
     width: 60px;
     height: 60px;
     border: 2px solid #8e8e8e;
@@ -185,12 +174,12 @@
     margin-bottom: 20px;
 }
 
-.profile__camera-icon i {
+.user__camera-icon i {
     font-size: 30px;
     color: #8e8e8e;
-}
+} */
 
-.profile__no-posts h2 {
+.user__no-posts h2 {
     font-weight: 1000;
     margin-top: 16px;
     font-size: 24px;
@@ -207,7 +196,7 @@
 /* Setting option overlay */
 
 
-.profile__setting-overlay {
+.user__setting-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -222,7 +211,7 @@
 }
 
 
-.profile__setting-option-card {
+.user__setting-option-card {
     background-color: white;
     border-radius: 12px;
     width: 400px;
@@ -231,7 +220,7 @@
     overflow: hidden;
 }
 
-.profile__setting-option-card a {
+.user__setting-option-card a {
     display: block;
     padding: 15px;
     text-decoration: none;
@@ -242,11 +231,11 @@
     font-size: 14px;
 }
 
-.profile__setting-option-card a:hover {
+.user__setting-option-card a:hover {
     background-color: #f5f5f5;
 }
 
-.profile__setting-option-card a:last-child {
+.user__setting-option-card a:last-child {
     border-bottom: none;
 }
 
@@ -254,8 +243,8 @@
 
 /* ---------------------------------------------------------------------------------- */
 /* Instagram-like Followers Overlay Styles */
-.profile__followers-overlay, 
-.profile__following-overlay {
+.user__followers-overlay, 
+.user__following-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -268,8 +257,8 @@
     z-index: 1000;
 }
 
-.profile__followers, 
-.profile__following {
+.user__followers, 
+.user__following {
     background-color: white;
     width: 400px;
     height: 400px;
@@ -278,8 +267,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.profile__followers-header,
-.profile__following-header {
+.user__followers-header,
+.user__following-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -287,35 +276,35 @@
     border-bottom: 1px solid #dbdbdb;
 }
 
-.profile__followers-header h3,
-.profile__following-header h3 {
+.user__followers-header h3,
+.user__following-header h3 {
     font-weight: 600;
     margin: 0;
     font-size: 16px;
     color: #262626;
 }
 
-.profile__followers-close-btn,
-.profile__following-close-btn {
+.user__followers-close-btn,
+.user__following-close-btn {
     color: #262626;
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
-.profile__followers-close-btn:hover,
-.profile__following-close-btn:hover {
+.user__followers-close-btn:hover,
+.user__following-close-btn:hover {
     color: #8e8e8e;
 }
 
-.profile__list-followers,
-.profile__list-following {
+.user__list-followers,
+.user__list-following {
     max-height: 400px;
     overflow-y: auto;
     padding: 10px 0;
 }
 
-.profile__followers-item,
-.profile__following-item {
+.user__followers-item,
+.user__following-item {
     display: flex;
     align-items: center;
     padding: 10px 15px;
@@ -323,13 +312,13 @@
     cursor: pointer;
 }
 
-.profile__followers-item:hover,
-.profile__following-item:hover {
+.user__followers-item:hover,
+.user__following-item:hover {
     background-color: #f9f9f9;
 }
 
-.profile__followers-pic,
-.profile__following-pic {
+.user__followers-pic,
+.user__following-pic {
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -339,21 +328,21 @@
     background-position: center;
 }
 
-.profile__followers-info,
-.profile__following-info {
+.user__followers-info,
+.user__following-info {
     flex-grow: 1;
 }
 
-.profile__followers-info h4,
-.profile__following-info h4 {
+.user__followers-info h4,
+.user__following-info h4 {
     margin: 0;
     font-size: 14px;
     color: #262626;
     font-weight: 600;
 }
 
-.profile__followers-info p,
-.profile__following-info p {
+.user__followers-info p,
+.user__following-info p {
     margin: 0;
     font-size: 14px;
     color: #8e8e8e;
@@ -369,23 +358,23 @@
 }
 
 /* Scrollbar Styling (Optional, makes it more Instagram-like) */
-.profile__list-followers::-webkit-scrollbar,
-.profile__list-following::-webkit-scrollbar {
+.user__list-followers::-webkit-scrollbar,
+.user__list-following::-webkit-scrollbar {
     width: 8px;
 }
 
-.profile__list-followers::-webkit-scrollbar-track,
-.profile__list-following::-webkit-scrollbar-track {
+.user__list-followers::-webkit-scrollbar-track,
+.user__list-following::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-.profile__list-followers::-webkit-scrollbar-thumb,
-.profile__list-following::-webkit-scrollbar-thumb {
+.user__list-followers::-webkit-scrollbar-thumb,
+.user__list-following::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 4px;
 }
 
-.profile__list-followers::-webkit-scrollbar-thumb:hover,
-.profile__list-following::-webkit-scrollbar-thumb:hover {
+.user__list-followers::-webkit-scrollbar-thumb:hover,
+.user__list-following::-webkit-scrollbar-thumb:hover {
     background: #555;
 }

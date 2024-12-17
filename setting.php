@@ -3,13 +3,14 @@ require_once "core/init.php";
 
 $page = 'setting';
 
-// Kiểm tra đăng nhập
-if (!loggedIn()) {
-    Redirect::to('login');
+require_once 'auth.php';
+
+if (!checkToken()) {
+    // Token không hợp lệ hoặc không tồn tại, chuyển hướng về login
+    header('Location: login');
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
 require "shared/sidebar.php";
 ?>
 
@@ -23,7 +24,7 @@ require "shared/sidebar.php";
         <div class="setting__profile-section">
                 <div class="setting__profile-picture">
                 <div class="avatar-container">
-                    <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="Profile Picture">
+                    <img src="" alt="Profile Picture">
                     <div class="avatar-overlay">
                         <input type="file" id="avatar-upload" accept="image/*">
                         <label for="avatar-upload" class="setting__change-photo-btn">Change Photo</label>
@@ -35,19 +36,19 @@ require "shared/sidebar.php";
             <form class="setting__form">
                 <div class="setting__form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Name" value="Tran Thuy An">
+                    <input type="text" id="name" placeholder="Name" value="">
                     <span class="setting__help-text">Help people discover your account by using the name you're known by: either your full name, nickname, or business name.</span>
                 </div>
 
                 <div class="setting__form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Username" value="trnthyann">
+                    <input type="text" id="username" placeholder="Username" value="">
                     <span class="setting__help-text">In most cases, you'll be able to change your username back to example for another 14 days.</span>
                 </div>
 
                 <div class="setting__form-group">
                     <label for="bio">Bio</label>
-                    <textarea id="bio" rows="3" placeholder="Bio">hihihi</textarea>
+                    <textarea id="bio" rows="3" placeholder="Bio"></textarea>
                     <span class="setting__characters-count">0/150</span>
                 </div>
 

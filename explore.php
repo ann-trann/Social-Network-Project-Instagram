@@ -3,9 +3,11 @@ require_once "core/init.php";
 
 $page = 'explore';
 
-// Kiểm tra đăng nhập
-if (!loggedIn()) {
-    Redirect::to('login');
+require_once 'auth.php';
+
+if (!checkToken()) {
+    // Token không hợp lệ hoặc không tồn tại, chuyển hướng về login
+    header('Location: login');
     exit();
 }
 
@@ -15,7 +17,6 @@ if (isset($_GET['postId'])) {
     // Bạn có thể sử dụng $postId để load thông tin bài post cụ thể nếu cần
 }
 
-$user_id = $_SESSION['user_id'];
 require "shared/sidebar.php";
 ?>
 

@@ -1,6 +1,5 @@
 <?php
 require_once "core/init.php";
-require_once "shared/login_handlers.php";
 require_once "shared/sidebar.php";
 ?>
 
@@ -12,17 +11,12 @@ require_once "shared/sidebar.php";
         </div>
 
         <article class="col-2">
-            <?php
-            if (!empty($form_errors)) {
-                echo show_errors($form_errors);
-            }
-            ?>
-            <form action="<?= h($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <form action="">
                 <div class="siteLogoContainer">
                     <img src="<?= url_for('assets/images/logo/instagram.png'); ?>" alt="">
                 </div>
 
-                <input type="text" placeholder="Email or Username" class="form--input" name="email_username" value="<?= escape(Input::get('email_username')); ?>">
+                <input type="text" placeholder="Email" class="form--input" name="email">
 
                 <div class="passwordContainer">
                     <input type="password" placeholder="Password" class="form--input" name="password" id="password">
@@ -44,6 +38,7 @@ require_once "shared/sidebar.php";
 </section>
 
 <script src="js/common.js"></script>
+<script src="js/login_handle.js"></script>
 </body>
 
 </html>

@@ -1,10 +1,11 @@
 <?php
-    require_once 'core/init.php';
+// auth.php
 
+function checkToken() {
     // Kiểm tra nếu token tồn tại trong cookies
     if (isset($_COOKIE['token'])) {
-        // Gửi yêu cầu tới API logout để hủy token
-        $url = 'http://localhost:81/social-network/auth/logout';
+        // Gửi yêu cầu tới API introspect để xác thực token
+        $url = 'http://localhost:81/social-network/auth/introspect';
         $token = $_COOKIE['token'];
 
         // Khởi tạo cURL
@@ -24,22 +25,25 @@
 
         // Kiểm tra lỗi cURL
         if (curl_errno($ch)) {
-            echo 'cURL Error: ' . curl_error($ch);
-        } elseif ($http_code === 200) {
-            // Xóa token khỏi cookie sau khi logout
-            setcookie('token', '', time() - 3600, '/'); // Đặt thời gian hết hạn của cookie là 1 giờ trước
-            // Redirect về trang đăng nhập
-            header('Location: login');
-            exit();
-        } else {
-            echo "Error during logout: $http_code";
+            curl_close($ch);
+            return false; // Lỗi trong quá trình gửi yêu cầu
         }
 
-        // Đóng cURL
+        // Đảm bảo API trả về HTTP status code 200
+        if ($http_code === 200) {
+            $data = json_decode($response, true);
+
+            if (isset($data['result']['valid']) && $data['result']['valid']) {
+                curl_close($ch);
+                return true;  // Token hợp lệ
+            }
+        }
+
+        // Nếu token không hợp lệ hoặc không thể xác thực
         curl_close($ch);
-    } else {
-        // Token không tồn tại trong cookie, chuyển về trang login
-        header('Location: login');
-        exit();
+        return false;
     }
-?>
+
+    // Nếu không có token trong cookie
+    return false;
+}

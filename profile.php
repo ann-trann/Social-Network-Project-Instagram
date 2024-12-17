@@ -5,21 +5,12 @@ $keywords = "Instagram profile, user profile, Instagram";
 
 $page = 'profile';
 
-// Lấy username từ URL
-$username = isset($_GET['username']) ? $_GET['username'] : '';
+require_once 'auth.php';
 
-// Đảm bảo user đã đăng nhập
-if (!isset($_SESSION['user_id'])) {
-    redirect_to(url_for('index'));
-}
-
-// Nếu có username được truyền, hiển thị profile của user đó
-if ($username) {
-    // Thay thế phần sau bằng thông tin của user tương ứng
-    $profile_username = $username;
-} else {
-    // Nếu không có username, hiển thị profile của user hiện tại
-    $profile_username = $_SESSION['username'];
+if (!checkToken()) {
+    // Token không hợp lệ hoặc không tồn tại, chuyển hướng về login
+    header('Location: login');
+    exit();
 }
 
 // Include header/sidebar
@@ -40,7 +31,7 @@ require_once "shared/sidebar.php";
             
             <div class="profile__profile-info">
                 <div class="profile__profile-title">
-                    <h2 class="profile__username"><?php echo $profile_username; ?></h2>
+                    <h2 class="profile__username"></h2>
                     <button class="profile__edit-profile-btn" onclick="window.location.href='<?php echo url_for('/setting'); ?>'">Edit profile</button>
                     
                     <a class="profile__settings-option-btn">
@@ -55,8 +46,8 @@ require_once "shared/sidebar.php";
                 </div>
                 
                 <div class="profile__profile-bio">
-                    <h1 class="profile__full-name">Full Name</h1>
-                    <p class="profile__bio-text">Bio goes here...</p>
+                    <h1 class="profile__full-name"></h1>
+                    <p class="profile__bio-text"></p>
                 </div>
             </div>
         </header>
@@ -64,115 +55,16 @@ require_once "shared/sidebar.php";
         <!-- Profile Content Section -->
         <div class="profile__profile-content">
             <div class="profile__content-nav">
-                <a class="profile__posts active">
+                <div class="profile__posts active">
                     <?php include(dirname(SHARED_PATH) . '/assets/svg/profile/post_grid.svg') ?> POSTS
-                </a>
-                <a class="profile__saved">
-                    <?php include(dirname(SHARED_PATH) . '/assets/svg/profile/save.svg') ?> SAVED
-                </a>
-                <a class="profile__tagged">
-                    <?php include(dirname(SHARED_PATH) . '/assets/svg/profile/tag.svg') ?> TAGGED
-                </a>
+                </div>
 
             </div>
 
             <div class="profile__content-container">
                 <div class="profile__profile-posts active">
-                    <!-- <div class="profile__no-posts">
-                        <div class="profile__camera-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <h2>No Posts Yet</h2>
-                    </div> -->
                     
                     <div class="explore__explore-grid"> <!-- Reusing the explore grid class for consistency -->
-                        <!-- Profile Grid Item 1 -->
-                        <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=4', 'User 4', 'First profile post caption')">
-                            <img src="https://picsum.photos/300/300?random=4" alt="Profile Post 1">
-                            <div class="explore__overlay">
-                                <div class="explore__overlay-stats">
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                                        <span>876</span>
-                                    </div>
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                                        <span>145</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Profile Grid Item 2 -->
-                        <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=5', 'User 5', 'Second profile post caption')">
-                            <img src="https://picsum.photos/300/300?random=5" alt="Profile Post 2">
-                            <div class="explore__overlay">
-                                <div class="explore__overlay-stats">
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                                        <span>654</span>
-                                    </div>
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                                        <span>98</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Profile Grid Item 3 -->
-                        <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=6', 'User 6', 'Third profile post caption')">
-                            <img src="https://picsum.photos/300/300?random=6" alt="Profile Post 3">
-                            <div class="explore__overlay">
-                                <div class="explore__overlay-stats">
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                                        <span>432</span>
-                                    </div>
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                                        <span>76</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Profile Grid Item 4 -->
-                        <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=7', 'User 7', 'Fourth profile post caption')">
-                            <img src="https://picsum.photos/300/300?random=7" alt="Profile Post 4">
-                            <div class="explore__overlay">
-                                <div class="explore__overlay-stats">
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                                        <span>321</span>
-                                    </div>
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                                        <span>54</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile__profile-saved">
-                    <div class="profile__no-saved">
-                        <div class="profile__camera-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        
-                        <h2>Start Saving</h2>
-                    </div>
-                </div>
-
-
-                <div class="profile__profile-tagged">
-                    <div class="profile__no-tagged">
-                        <div class="profile__camera-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <h2>Photos of you</h2>
                     </div>
                 </div>
 
