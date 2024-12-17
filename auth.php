@@ -1,11 +1,14 @@
+
 <?php
+require_once(__DIR__ . '/shared/config.php');
+
 // auth.php
 
 function checkToken() {
     // Kiểm tra nếu token tồn tại trong cookies
     if (isset($_COOKIE['token'])) {
         // Gửi yêu cầu tới API introspect để xác thực token
-        $url = 'http://localhost:81/social-network/auth/introspect';
+        $url = API_URL . '/auth/introspect';
         $token = $_COOKIE['token'];
 
         // Khởi tạo cURL

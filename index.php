@@ -1,12 +1,13 @@
 <?php
 require_once "core/init.php";
+require_once(__DIR__ . '/shared/config.php');
 
 // Kiểm tra nếu token tồn tại trong cookies
 if (isset($_COOKIE['token'])) {
     $token = $_COOKIE['token'];
 
     // Tạo yêu cầu cURL để gửi token đến endpoint introspect
-    $url = 'http://localhost:81/social-network/auth/introspect';
+    $url = API_URL . '/auth/introspect';
     $data = array('token' => $token);
 
     // Khởi tạo cURL

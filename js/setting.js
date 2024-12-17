@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const userId = decodedToken.sub;
 
                 // Fetch user profile data
-                fetch(`http://localhost:81/social-network/users/${userId}`, {
+                fetch(`http://localhost:8080/social-network/users/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -220,18 +220,20 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('username', username);
         formData.append('bio', bio);
         formData.append('gender', gender);
-
-        // Nếu có file avatar mới, thêm vào formData
+    
         if (avatar) {
             formData.append('avatar', avatar);
         }
-
+    
         const token = getTokenFromCookie();
-
-        fetch('http://localhost:81/social-network/users/update', {
+    
+        // Hiển thị overlay khi bắt đầu gửi request
+        showLoadingOverlay();
+    
+        fetch('http://localhost:8080/social-network/users/update', {
             method: 'PUT',
             headers: {
-                'Authorization': `Bearer ${token}`, // Token để xác thực
+                'Authorization': `Bearer ${token}`,
             },
             body: formData
         })
@@ -246,7 +248,19 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('Error updating profile:', error);
             alert('An error occurred while updating the profile.');
+        })
+        .finally(() => {
+            // Ẩn overlay dù thành công hay gặp lỗi
+            hideLoadingOverlay();
         });
+    }
+
+    function showLoadingOverlay() {
+        document.getElementById('loading-overlay').style.display = 'flex';
+    }
+    
+    function hideLoadingOverlay() {
+        document.getElementById('loading-overlay').style.display = 'none';
     }
 
 });

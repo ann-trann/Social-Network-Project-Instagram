@@ -93,6 +93,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add form submit event listener
     form.addEventListener('submit', validateForm);
 
+    // Function to set cookie with expiration date
+    function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));  // Tính thời gian hết hạn theo số ngày
+        const expires = "expires=" + date.toUTCString();  // Chuyển đổi ngày thành UTC string
+        document.cookie = `${name}=${value}; ${expires}; path=/`;  // Lưu cookie với thời gian hết hạn
+    }
+
     function register() {
         const loginData = {
             email: emailInput.value,
@@ -101,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: passwordInput.value            
           };
           
-        fetch('http://localhost:81/social-network/auth/register', {
+        fetch('http://localhost:8080/social-network/auth/register', {
         method: 'POST',  // Phương thức HTTP
         headers: {
             'Content-Type': 'application/json'  // Định dạng dữ liệu gửi đi là JSON
@@ -116,11 +124,36 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
             .then(data => {
-                console.log('Login successful:', data);
-                // Xử lý dữ liệu trả về (ví dụ: lưu token vào cookies)
-                document.cookie = `token=${data.token}; path=/`;
-                // Điều hướng đến trang chính hoặc trang khác
-                window.location.href = '/Social-Network-Project-Instagram/home';
+                if (data.result.token) {
+                    const token = data.result.token;
+                    const expiresIn = 1; // Thời gian hết hạn của token (1 ngày, bạn có thể thay đổi nếu cần)
+                    setCookie('token', token, expiresIn);  // Lưu token vào cookie với thời gian hết hạn là 1 ngày
+    
+                    fetch('http://localhost:8080/social-network/users/my-info', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    .then (response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Failed');
+                        }
+                    })
+                    .then (data => {
+                        setCookie('userId', data.result.user_id, expiresIn);
+                        setCookie('username', data.result.username, expiresIn);
+                        setCookie('gender', data.result.gender, expiresIn);
+                        setCookie('avatar', data.result.avatar, expiresIn);
+                        setCookie('bio', data.result.bio, expiresIn);
+                    })
+    
+                    window.location.href = '/Social-Network-Project-Instagram/home';
+                } else {
+                    alert('Token không có trong phản hồi API.');
+                }
             })
             .catch(error => {
             console.error('Error:', error);

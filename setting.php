@@ -16,6 +16,7 @@ require "shared/sidebar.php";
 
 <?php require_once "shared/global.sidebar.php"; ?>
 <?php require_once "shared/global.sidebar_small.php"; ?>
+<link rel="stylesheet" href="./css/spinner.css">
 
 <main class="setting__main-content-setting">
     <div class="setting__setting-container">
@@ -71,6 +72,10 @@ require "shared/sidebar.php";
             </form>
         </div>
         
+    </div>
+
+    <div id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
     </div>
 </main>
 

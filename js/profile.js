@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const userId = decodedToken.sub;
 
             // Fetch user profile data
-            fetch(`http://localhost:81/social-network/users/${userId}`, {
+            fetch(`http://localhost:8080/social-network/users/${userId}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

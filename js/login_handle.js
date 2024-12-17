@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: passwordInput.value
         };
 
-        fetch('http://localhost:81/social-network/auth/login', {
+        fetch('http://localhost:8080/social-network/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -113,10 +113,32 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Token:', data.result.token);
             
             if (data.result.token) {
-                // Giả sử token có thời gian hết hạn (ví dụ expires_in trong giây)
+                const token = data.result.token;
                 const expiresIn = 1; // Thời gian hết hạn của token (1 ngày, bạn có thể thay đổi nếu cần)
-                setCookie('token', data.result.token, expiresIn);  // Lưu token vào cookie với thời gian hết hạn là 1 ngày
-                window.location.href = '/Social-Network-Project-Instagram/home';
+                setCookie('token', token, expiresIn);  // Lưu token vào cookie với thời gian hết hạn là 1 ngày
+
+                fetch('http://localhost:8080/social-network/users/my-info', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then (response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed');
+                    }
+                })
+                .then (data => {
+                    setCookie('userId', data.result.user_id, expiresIn);
+                    setCookie('username', data.result.username, expiresIn);
+                    setCookie('gender', data.result.gender, expiresIn);
+                    setCookie('avatar', data.result.avatar, expiresIn);
+                    setCookie('bio', data.result.bio, expiresIn);
+                })
+
+                // window.location.href = '/Social-Network-Project-Instagram/home';
             } else {
                 alert('Token không có trong phản hồi API.');
             }
