@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
                           <div class="home__profile-pic">
                               <img src="${post.profilePic}" alt="${post.username}">
                           </div>
-                          <a href="profile?username=${post.username}" class="home__username">${post.username}</a>
+                          <a href="user?username=${post.username}" class="home__username">${post.username}</a>
                           <div class="home__dots">...</div>
                       </div>
   
@@ -43,9 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
                       </div>
   
                       <div class="home__likes">${post.likes} likes</div>
-                      <div class="home__username-caption">${post.username}</div>
+                      <div class="home__username-caption">${post.username}</div>  
                       <div class="home__caption">${post.caption}</div>
-                      <div class="home__view-comments">View all ${post.comments} comments</div>
+                      <div class="home__view-comments" onclick="showPopup('${post.postImage}', '${post.username}', '${post.caption}', '${post.id}')">View all ${post.comments} comments</div>
                   </div>
                   `;
         postsContainer.insertAdjacentHTML("beforeend", postElement);
@@ -137,28 +137,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // pop-up
 
-// Shows popup when image is clicked
-function showPopup(imgSrc, user, caption, postId) {
-    // Tạo URL với query parameter postId
-    const postUrl = `http://localhost:8080/Social-Network-Project-Instagram/explore?postId=${postId}`;
-    
-    // Mở popup như bình thường
-    document.getElementById('imagePopup').style.display = 'flex';
-    document.getElementById('popupImg').src = imgSrc;
-    
-    // Thay thế URL hiện tại mà không thêm vào lịch sử
-    history.replaceState(null, '', postUrl);
-    
-    document.body.style.overflow = 'hidden';
-    document.querySelector('.explore__main-content-explore').style.overflow = 'hidden';
-}
+
 
 // Closes popup when close button is clicked
 function closePopup() {
-    document.getElementById('imagePopup').style.display = 'none';
-    document.body.style.overflow = 'auto';
-    document.querySelector('.explore__main-content-explore').style.overflow = 'auto';
+  document.getElementById('homeImagePopup').style.display = 'none';
+  document.body.style.overflow = 'auto';
+  document.querySelector('.home__main-content-home').style.overflow = 'auto';
+  
+  // Quay lại URL gốc không có query parameter, không thêm vào lịch sử
+  history.replaceState(null, '', 'http://localhost:8080/Social-Network-Project-Instagram/home');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".home__view-comments").forEach((viewCommentsElement) => {
+    viewCommentsElement.onclick = function(event) {
+      // Prevent all default behaviors
+      event.preventDefault();
+      event.stopPropagation();
+
+      const postElement = this.closest(".home__instagram-post");
+      
+      const imgSrc = postElement.querySelector(".home__post-image").src;
+      const username = postElement.querySelector(".home__username").textContent;
+      const caption = postElement.querySelector(".home__caption").textContent;
+      const postId = postElement.id;
+
+      // Show the home popup instead of the profile popup
+      showPopup(imgSrc, username, caption, postId);
+
+      return false;
+    };
+  });
+});
+
+
+
+document.querySelector('.home__popup-close').addEventListener('click', closePopup);
+
+// Modify showPopup function
+function showPopup(imgSrc, user, caption, postId) {
+  // Debug log
+  console.log("Showing popup with:", imgSrc, user, caption, postId);
+  
+  // Use the home popup instead of the profile popup
+  const popup = document.getElementById('homeImagePopup');
+  
+  if (popup) {
+    // Set image source
+    const popupImg = popup.querySelector('#popupImg');
+    if (popupImg) {
+      popupImg.src = imgSrc;
+    }
+
+    // Set username and caption in popup details
+    const usernameElement = popup.querySelector('.home__user-name');
+    const captionElement = popup.querySelector('.home__user-caption');
     
-    // Quay lại URL gốc không có query parameter, không thêm vào lịch sử
-    history.replaceState(null, '', 'http://localhost:8080/Social-Network-Project-Instagram/explore');
+    if (usernameElement) usernameElement.textContent = user;
+    if (captionElement) captionElement.textContent = caption;
+
+    // Display the popup
+    popup.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    document.querySelector('.home__main-content-home').style.overflow = 'hidden';
+  } else {
+    console.error("Popup element not found!");
+  }
+  
+  // Update URL with post ID
+  const postUrl = `http://localhost:8080/Social-Network-Project-Instagram/home?postId=${postId}`;
+  history.replaceState(null, '', postUrl);
 }

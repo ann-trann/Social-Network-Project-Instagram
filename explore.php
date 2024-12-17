@@ -203,14 +203,8 @@ require "shared/sidebar.php";
                         <a class="explore__comment-post">
                             <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
                         </a>
-                        <a class="explore__share-post">
-                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/share.svg') ?>
-                        </a>
 
                     </div>
-                    <a class="explore__save-post">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/save.svg') ?>
-                    </a>
                 </div>
                 
                 <div class="explore__like-count">2,171 likes</div>

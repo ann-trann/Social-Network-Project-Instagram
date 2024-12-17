@@ -25,5 +25,5 @@
     <div class="more__dropdown-divider"></div>
 
     <a href="#" class="more__dropdown-item">Switch accounts</a>
-    <a href="logout.php" class="more__dropdown-item">Log out</a>
+    <a href="logout" class="more__dropdown-item">Log out</a>
 </div>

@@ -78,7 +78,7 @@ require_once "shared/sidebar.php";
     <!-- Setting post overlay -->
     <div class="profile__setting-overlay" style="display:none;">
         <div class="profile__setting-option-card">
-            <a href="logout.php" class="profile__item-logout">Log out</a>
+            <a href="logout" class="profile__item-logout">Log out</a>
             <a class="profile__item-cancel">Cancel</a>
         </div>
     </div>
