@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: passwordInput.value            
           };
           
-        fetch('http://localhost:8080/social-network/auth/register', {
+        fetch('http://localhost:81/social-network/auth/register', {
         method: 'POST',  // Phương thức HTTP
         headers: {
             'Content-Type': 'application/json'  // Định dạng dữ liệu gửi đi là JSON
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const expiresIn = 1; // Thời gian hết hạn của token (1 ngày, bạn có thể thay đổi nếu cần)
                     setCookie('token', token, expiresIn);  // Lưu token vào cookie với thời gian hết hạn là 1 ngày
     
-                    fetch('http://localhost:8080/social-network/users/my-info', {
+                    fetch('http://localhost:81/social-network/users/my-info', {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`

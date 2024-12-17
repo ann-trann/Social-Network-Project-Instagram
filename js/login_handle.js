@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: passwordInput.value
         };
 
-        fetch('http://localhost:8080/social-network/auth/login', {
+        fetch('http://localhost:81/social-network/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const expiresIn = 1; // Thời gian hết hạn của token (1 ngày, bạn có thể thay đổi nếu cần)
                 setCookie('token', token, expiresIn);  // Lưu token vào cookie với thời gian hết hạn là 1 ngày
 
-                fetch('http://localhost:8080/social-network/users/my-info', {
+                fetch('http://localhost:81/social-network/users/my-info', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     setCookie('bio', data.result.bio, expiresIn);
                 })
 
-                // window.location.href = '/Social-Network-Project-Instagram/home';
+                window.location.href = '/Social-Network-Project-Instagram/home';
             } else {
                 alert('Token không có trong phản hồi API.');
             }

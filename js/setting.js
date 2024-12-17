@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const charCount = document.querySelector('.setting__characters-count');
     const form = document.querySelector('.setting__form');
     const genderSelect = document.getElementById('gender');
-    const defaultAvatarPath = 'http://localhost:8080/Social-Network-Project-Instagram/assets/images/profileImage/default-user.png';
+    const defaultAvatarPath = 'http://localhost:81/Social-Network-Project-Instagram/assets/images/profileImage/default-user.png';
 
 
     // Default profile data structure
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const userId = decodedToken.sub;
 
                 // Fetch user profile data
-                fetch(`http://localhost:8080/social-network/users/${userId}`, {
+                fetch(`http://localhost:81/social-network/users/my-info`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -83,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         document.getElementById('name').value = profile.fullname || '';
                         document.getElementById('username').value = profile.username || '';
                         document.getElementById('bio').value = profile.bio || '';
+
+                        console.log("populateProfileSettings - profile: ", profile);
                         
                         // Update gender (if gender information is available in the profile)
                         if (profile.gender) {
@@ -230,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hiển thị overlay khi bắt đầu gửi request
         showLoadingOverlay();
     
-        fetch('http://localhost:8080/social-network/users/update', {
+        fetch('http://localhost:81/social-network/users/update', {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
