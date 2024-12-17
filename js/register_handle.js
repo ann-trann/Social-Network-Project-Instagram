@@ -138,8 +138,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then (response => {
                         if (response.ok) {
                             return response.json();
+                        } else if (response.status == 400) {
+                            throw new Error('User existed');
                         } else {
-                            throw new Error('Failed');
+                            throw new Error('Failed')
                         }
                     })
                     .then (data => {
