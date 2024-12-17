@@ -15,18 +15,11 @@ function getTokenFromCookie() {
   return "";
 }
 
-// Global seed variable initialized with current timestamp
-const pageSeed = Date.now();
-
 function showHomePosts() {
   // Function to fetch and display posts
-  async function fetchAndDisplayPosts(lastCreatedDate = null) {
+  async function fetchAndDisplayPosts() {
     try {
-      // Xây dựng URL với tham số lastCreatedDate nếu có
-      let url = `http://localhost:81/social-network/posts/`;
-      if (lastCreatedDate) {
-        url += `?lastCreatedDate=${encodeURIComponent(lastCreatedDate)}`;
-      }
+      const url = `http://localhost:81/social-network/posts/`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -42,11 +35,7 @@ function showHomePosts() {
 
       const data = await response.json();
       const postsContainer = document.querySelector(".home__posts-container");
-
-      // Clear existing posts only if it's the first page (offset 0)
-      if (offset === 0) {
-        postsContainer.innerHTML = "";
-      }
+      postsContainer.innerHTML = ""; // Clear existing posts
 
       data.result.forEach((post) => {
         const postElement = createPostElement(post);
@@ -55,24 +44,12 @@ function showHomePosts() {
 
       // Add event listeners for like functionality
       addLikeEventListeners();
-
-      // Return the seed for potential future use
-      return seed;
     } catch (error) {
       console.error("Error fetching posts:", error);
-      // Optional: Show error message to user
       const postsContainer = document.querySelector(".home__posts-container");
       postsContainer.innerHTML = `<div class="error-message">Failed to load posts. Please try again later.</div>`;
-
-      // Return the original seed in case of error
-      return seed;
     }
   }
-
-  // Modify the DOMContentLoaded event listener to use the updated function
-  document.addEventListener("DOMContentLoaded", () => {
-    fetchAndDisplayPosts(); // Uses default offset=0, limit=10
-  });
 
   // Function to create post HTML element
   function createPostElement(post) {
@@ -82,22 +59,16 @@ function showHomePosts() {
                   <div class="home__profile-pic">
                       <img src="${post.postOwnerAvt}" alt="${post.username}">
                   </div>
-                  <a href="user?user_id=${
-                    post.postOwnerId
-                  }" class="home__username">${post.username}</a>
+                  <a href="user?user_id=${post.postOwnerId}" class="home__username">${post.username}</a>
                   <div class="home__dots">...</div>
               </div>
 
               <div class="home__post-image-container">
-                  <img src="${post.postImg}" alt="Image from ${
-      post.username
-    }" class="home__post-image">
+                  <img src="${post.postImg}" alt="Image from ${post.username}" class="home__post-image">
               </div>
 
               <div class="home__post-actions">
-                  <div class="home__like-post" data-liked="${
-                    post.isLike
-                  }" data-post-id="${post.postId}">
+                  <div class="home__like-post" data-liked="${post.isLike}" data-post-id="${post.postId}">
                       ${post.isLike ? createLikedSvg() : createUnlikedSvg()}
                   </div>
                   <div class="home__comment-post">
@@ -111,9 +82,7 @@ function showHomePosts() {
               <div class="home__likes">${post.numberOfLike} likes</div>
               <div class="home__username-caption">${post.username}</div>  
               <div class="home__caption">${post.content}</div>
-              <div class="home__view-comments" onclick="showHomePopup('${
-                post.postId
-              }')">
+              <div class="home__view-comments" onclick="showHomePopup('${post.postId}')">
                   View all ${post.numberOfComment} comments
               </div>
           </div>
@@ -197,16 +166,13 @@ function showHomePosts() {
         const postElement = likeButton.closest(".home__instagram-post");
         const likesElement = postElement.querySelector(".home__likes");
         const postId = likeButton.getAttribute("data-post-id");
-        const isCurrentlyLiked =
-          likeButton.getAttribute("data-liked") === "true";
+        const isCurrentlyLiked = likeButton.getAttribute("data-liked") === "true";
 
         const action = isCurrentlyLiked ? "UNLIKE" : "LIKE";
         const updateResult = await updatePost(postId, action);
 
         if (updateResult) {
-          let likesCount = parseInt(
-            likesElement.textContent.replace(" likes", "")
-          );
+          let likesCount = parseInt(likesElement.textContent.replace(" likes", ""));
 
           if (isCurrentlyLiked) {
             likeButton.innerHTML = createUnlikedSvg();
@@ -234,14 +200,20 @@ function showHomePosts() {
     fetchMainPostDetails,
     updatePost,
     fetchAndDisplayPosts,
-    pageSeed, // Expose the seed for potential external use
   };
 }
 
 // Initialize the home post functionality
 const homePostManager = showHomePosts();
 
+
+
+
 //================================================================================================
+//================================================================================================
+//================================================================================================
+
+
 
 // Keep the existing caption more/less functionality
 document.addEventListener("DOMContentLoaded", () => {
