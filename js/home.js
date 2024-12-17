@@ -20,18 +20,21 @@ const pageSeed = Date.now();
 
 function showHomePosts() {
   // Function to fetch and display posts
-  async function fetchAndDisplayPosts(seed = pageSeed, offset = 0, limit = 10) {
+  async function fetchAndDisplayPosts(lastCreatedDate = null) {
     try {
-      const response = await fetch(
-        `http://localhost:81/social-network/posts/?seed=${seed}&offset=${offset}&limit=${limit}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${getTokenFromCookie()}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // Xây dựng URL với tham số lastCreatedDate nếu có
+      let url = `http://localhost:81/social-network/posts/`;
+      if (lastCreatedDate) {
+        url += `?lastCreatedDate=${encodeURIComponent(lastCreatedDate)}`;
+      }
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${getTokenFromCookie()}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch posts");
