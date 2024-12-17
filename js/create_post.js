@@ -202,9 +202,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+
+
+
+
+
+    //====================================================================================================//
+    //====================================================================================================//
+    //====================================================================================================//
+
     //==================================== Create post handle ====================================//
 
 
+
+    // Handle image upload
     function uploadPost() {
         const caption = document.getElementById('caption').value; // Get caption from textarea
         const imageInput = document.getElementById('upload-image'); // Access the correct image input
@@ -260,7 +271,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+//====================================================================================================//
+//====================================================================================================//
+//====================================================================================================//
 
+
+
+
+// Function to decode JWT token
+function decodeJWTToken(token) {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+  
+  
+  
+  // Function to render user profile data
+  function renderUploadUser(data) {
+  
+    console.log('User data:', data);
+    const userPreview = document.querySelector('.create-post__user-info');
+    const profileImage = userPreview.querySelector('img');
+    const usernameElement = userPreview.querySelector('h4');
+  
+    // Update profile image (use default if not available)
+    profileImage.src = data.avt || 'default-avatar.png'; // Use 'avt' as key for avatar
+    
+    // Update username and full name
+    usernameElement.textContent = data.username || 'Unknown';
+  }
+  
+  // Function to update user preview
+  function updateUserPreview() {
+    const token = getTokenFromCookie();
+  
+    if (token) {
+        const decodedToken = decodeJWTToken(token);
+  
+        if (decodedToken && decodedToken.sub) {
+            const userId = decodedToken.sub;
+  
+            // Fetch user profile data
+            fetch(`http://localhost:81/social-network/users/${userId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user details');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.result) {
+                    renderUploadUser(data.result);
+                } else {
+                    console.error('No user details found');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user details:', error);
+            });
+        } else {
+            console.error('Invalid token or missing user ID');
+        }
+    } else {
+        console.error('No token found');
+    }
+  }
+  
+  // Call the function when the page loads
+  document.addEventListener('DOMContentLoaded', updateUserPreview);
+  
 
 
 

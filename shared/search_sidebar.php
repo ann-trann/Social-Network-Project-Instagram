@@ -13,13 +13,7 @@
     </div>
 
     <div class="search__search-area">
-        <div class="search__recent-search">
-            <p>Recent search</p>
-            <div class="search__recent-search-item">
-                <p>Recent search item</p>
-            </div>
-        </div>
-
+        
         <div class="search__search-result">
             <div class="search__search-result-item">
                 <p>Search result item</p>

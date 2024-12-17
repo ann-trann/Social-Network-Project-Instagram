@@ -59,11 +59,6 @@
     color: var(--text-light);
 }
 
-.home__switch-btn {
-    color: #0095f6;
-    font-weight: 600;
-    font-size: 12px;
-}
 
 .home__suggestions {
     margin-top: 24px;
@@ -152,6 +147,15 @@
 }
 
 .home__profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background: #efefef;
+}
+
+
+.home__profile-pic img {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -256,16 +260,12 @@
 
 
 
-
-
-
-
 /* pop-up */
 
 
 
 /* Popup styles */
-.profile__popup {
+.home__popup {
     display: none;
     position: fixed;
     top: 0;
@@ -277,7 +277,7 @@
     justify-content: center;
     align-items: center;
 }
-.profile__popup-close {
+.home__popup-close {
     position: absolute;
     right: 20px;
     top: 20px;
@@ -287,7 +287,7 @@
     z-index: 1001;
 }
 
-.profile__popup-content {
+.home__popup-content {
     background-color: white;
     width: 150vh;
     height: 90vh;
@@ -297,19 +297,19 @@
     overflow: hidden;
 }
 
-.profile__popup-image {
+.home__popup-image {
     width: 90vh;
     height: 90vh;
     background-color: black;
 }
 
-.profile__popup-image img {
+.home__popup-image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.profile__popup-details {
+.home__popup-details {
     width: 70vh;
     height: 100%;
     overflow-y: auto;
@@ -318,7 +318,7 @@
 }
 
 
-.profile__details-header {
+.home__details-header {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #dbdbdb;
@@ -326,7 +326,7 @@
 }
 
 
-.profile__user-pic {
+.home__user-pic {
     width:32px;
     height: 32px;
     border-radius: 50%;
@@ -335,33 +335,33 @@
     flex-shrink: 0
 }
 
-.profile__user-name-caption {
+.home__user-name-caption {
     flex-grow: 1;
     overflow: hidden;
     /* white-space: nowrap;
     text-overflow: ellipsis; */
 }
 
-.profile__user-name {
+.home__user-name {
     font-size: 14px;
     font-weight: bold;
     padding-right: 5px;
     white-space: nowrap;
 }
 
-.profile__details-header img {
+.home__details-header img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 12px;
 }
 
-.profile__details-header h3 {
+.home__details-header h3 {
     font-size: 14px;
     font-weight: 600;
 }
 
-.profile__details-comment {
+.home__details-comment {
     flex-grow: 1;
     overflow-y: auto;
     display: flex;
@@ -369,8 +369,8 @@
     flex-direction: column;
 }
 
-.profile__post-caption,
-.profile__post-comment {
+.home__post-caption,
+.home__post-comment {
     display: flex;
     align-items: flex-start;
     padding: 10px 16px;
@@ -378,8 +378,8 @@
     word-wrap: break-word;
 }
 
-.profile__user-caption,
-.profile__user-comment {
+.home__user-caption,
+.home__user-comment {
     display: block; /* Change from flex to block */
     word-wrap: break-word; /* Ensure long words break */
     word-break: break-word; /* Additional support for word breaking */
@@ -390,48 +390,48 @@
 
 
 
-.profile__details-action {
+.home__details-action {
     display: flex;
     justify-content: space-between;
     padding: 16px;
     border-top: 1px solid #dbdbdb;
 }
 
-.profile__details-action-icons {
+.home__details-action-icons {
     display: flex;
     gap: 15px;
 }
 
-.profile__details-action-icons a {
+.home__details-action-icons a {
     color: #262626;
     font-size: 22px;
 }
 
-.profile__details-save {
+.home__details-save {
     color: #262626;
     font-weight: 600;
     text-decoration: none;
 }
 
-.profile__like-count {
+.home__like-count {
     font-weight: 600;
     padding: 0 12px 12px 12px;
     font-size: 14px;
     border-bottom: 1px solid #dbdbdb;
 }
 
-.profile__details-add-comment {
+.home__details-add-comment {
     display: flex;
     align-items: center;
     padding: 12px;
 }
 
-.profile__smile-icon {
+.home__smile-icon {
     display: flex;
     align-self: center;
 }
 
-.profile__details-add-comment input {
+.home__details-add-comment input {
     flex-grow: 1;
     border: none;
     outline: none;
@@ -439,7 +439,7 @@
     padding: 0 0 0 10px;
 }
 
-.profile__details-add-comment button {
+.home__details-add-comment button {
     background: none;
     border: none;
     color: #0095f6;
@@ -447,7 +447,7 @@
     cursor: pointer;
 }
 
-.profile__popup-close {
+.home__popup-close {
     position: absolute;
     top: 15px;
     right: 15px;

@@ -130,6 +130,60 @@ require_once "shared/sidebar.php";
         </div>
     </div>
 
+
+
+
+    
+    <!-- Popup -->
+    <div class="profile__popup" id="profileImagePopup" onclick="closeProfilePopup()">
+        <span class="profile__popup-close">&times;</span>
+        <div class="profile__popup-content" onclick="event.stopPropagation()">
+            <div class="profile__popup-image">
+                <img id="popupImg" src="" alt="Popup Image">
+            </div>
+
+            <div class="profile__popup-details">
+                <div class="profile__details-header">
+                    <div class="profile__user-pic"></div>
+                    <div class="profile__user-name"></div>
+                </div>
+
+                <div class="profile__details-comment">
+                    <div class="profile__post-caption">
+                        <div class="profile__user-pic"></div>
+                        <div class="profile__user-name-caption">
+                            <div class="profile__user-name"></div>
+                            <div class="profile__user-caption"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="profile__details-action">
+                    <div class="profile__details-action-icons">
+                        <a class="profile__like-post">
+                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                        </a>
+                        <a class="profile__comment-post">
+                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
+                        </a>
+
+                    </div>
+                </div>
+                
+                <div class="profile__like-count">2,171 likes</div>
+                <div class="profile__details-add-comment">
+                    <span class="profile__smile-icon">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
+                    </span>
+                    <input type="text" placeholder="Add a comment...">
+                    <button>Post</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
     
 </main>
 

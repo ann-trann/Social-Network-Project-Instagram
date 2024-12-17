@@ -41,9 +41,9 @@
             <div class="create-post__caption-area" id="caption-area" style="display:none;">
                 <div class="create-post__user-info">
                     <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
-                    <span>username</span>
+                    <h4>username</h4>
                 </div>
-                <textarea id="caption" placeholder="Write a caption..."></textarea>
+                <textarea id="caption" placeholder="Write a caption..." maxlength="250"></textarea>
             </div>
         </div>
         

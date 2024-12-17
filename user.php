@@ -31,8 +31,8 @@ require_once "shared/sidebar.php";
             
             <div class="user__profile-info">
                 <div class="user__profile-title">
-                    <h2 class="user__username">username</h2>
-                    <button class="user__following-btn">Following</button>
+                    <h2 class="user__username"></h2>
+                    <button class="user__follow-btn">Follow</button>
                     <button class="user__message-btn">Message</button>
                 </div>
                 
@@ -43,8 +43,8 @@ require_once "shared/sidebar.php";
                 </div>
                 
                 <div class="user__profile-bio">
-                    <h1 class="user__full-name">Full Name</h1>
-                    <p class="user__bio-text">Bio goes here...</p>
+                    <h1 class="user__full-name"></h1>
+                    <p class="user__bio-text"></p>
                 </div>
             </div>
         </header>
@@ -60,82 +60,7 @@ require_once "shared/sidebar.php";
 
             <div class="user__content-container">
                 <div class="user__profile-posts active">
-                    <!-- <div class="user__no-posts">
-                        <div class="user__camera-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <h2>No Posts Yet</h2>
-                    </div> -->
                     
-                    <div class="explore__explore-grid"> <!-- Reusing the explore grid class for consistency -->
-                        <!-- Profile Grid Item 1 -->
-                        <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=4', 'User 4', 'First profile post caption')">
-                            <img src="https://picsum.photos/300/300?random=4" alt="Profile Post 1">
-                            <div class="explore__overlay">
-                                <div class="explore__overlay-stats">
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                                        <span>876</span>
-                                    </div>
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                                        <span>145</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Profile Grid Item 2 -->
-                        <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=5', 'User 5', 'Second profile post caption')">
-                            <img src="https://picsum.photos/300/300?random=5" alt="Profile Post 2">
-                            <div class="explore__overlay">
-                                <div class="explore__overlay-stats">
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                                        <span>654</span>
-                                    </div>
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                                        <span>98</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Profile Grid Item 3 -->
-                        <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=6', 'User 6', 'Third user post caption')">
-                            <img src="https://picsum.photos/300/300?random=6" alt="Profile Post 3">
-                            <div class="explore__overlay">
-                                <div class="explore__overlay-stats">
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                                        <span>432</span>
-                                    </div>
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                                        <span>76</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Profile Grid Item 4 -->
-                        <div class="explore__grid-item" onclick="showPopup('https://picsum.photos/300/300?random=7', 'User 7', 'Fourth profile post caption')">
-                            <img src="https://picsum.photos/300/300?random=7" alt="Profile Post 4">
-                            <div class="explore__overlay">
-                                <div class="explore__overlay-stats">
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-heart"></i></span>
-                                        <span>321</span>
-                                    </div>
-                                    <div class="explore__stat-item">
-                                        <span class="explore__stat-icon"><i class="fas fa-comment"></i></span>
-                                        <span>54</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="user__profile-saved">
@@ -179,7 +104,7 @@ require_once "shared/sidebar.php";
         <div class="user__followers">
             <div class="user__followers-header">
                 <h3>Followers</h3>
-                <a class="user__followers-close-btn" onclick="closePopup()"><i class="fas fa-times"></i></a>
+                <a class="user__followers-close-btn" onclick="closeUserPostPopup()"><i class="fas fa-times"></i></a>
             </div>
             <div class="user__list-followers">
                 <div class="user__followers-item">
@@ -221,6 +146,61 @@ require_once "shared/sidebar.php";
     </div>
 
     
+
+    
+
+    <!-- Popup -->
+    <div class="user__popup" id="userImagePopup" onclick="closeUserPostPopup()">
+        <span class="user__popup-close">&times;</span>
+        <div class="user__popup-content" onclick="event.stopPropagation()">
+            <div class="user__popup-image">
+                <img id="popupImg" src="" alt="Popup Image">
+            </div>
+
+            <div class="user__popup-details">
+                <div class="user__details-header">
+                    <div class="user__user-pic"></div>
+                    <div class="user__user-name"></div>
+                </div>
+
+                <div class="user__details-comment">
+                    <div class="user__post-caption">
+                        <div class="user__user-pic"></div>
+                        <div class="user__user-name-caption">
+                            <div class="user__user-name"></div>
+                            <div class="user__user-caption"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="user__details-action">
+                    <div class="user__details-action-icons">
+                        <a class="user__like-post">
+                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                        </a>
+                        <a class="user__comment-post">
+                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
+                        </a>
+
+                    </div>
+                </div>
+                
+                <div class="user__like-count">2,171 likes</div>
+                <div class="user__details-add-comment">
+                    <span class="user__smile-icon">
+                        <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
+                    </span>
+                    <input type="text" placeholder="Add a comment...">
+                    <button>Post</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
 </main>
 
 
