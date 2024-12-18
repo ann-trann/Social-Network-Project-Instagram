@@ -26,7 +26,7 @@ require_once "shared/sidebar.php";
         <!-- Profile Header Section -->
         <header class="profile__profile-header">
             <div class="profile__profile-picture">
-                <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="Profile Picture">
+                <img src="" alt="Profile Picture">
             </div>
             
             <div class="profile__profile-info">
@@ -143,50 +143,47 @@ require_once "shared/sidebar.php";
 
 
 
-    
     <!-- Popup -->
-    <div class="profile__popup" id="profileImagePopup" onclick="closeProfilePopup()">
-        <span class="profile__popup-close">&times;</span>
-        <div class="profile__popup-content" onclick="event.stopPropagation()">
-            <div class="profile__popup-image">
+    <div class="global__popup" id="imagePopup" postId="" onclick="closePopup('profile')">
+        <span class="global__popup-close">&times;</span>
+        <div class="global__popup-content" onclick="event.stopPropagation()">
+            <div class="global__popup-image">
                 <img id="popupImg" src="" alt="Popup Image">
             </div>
 
-            <div class="profile__popup-details">
-                <div class="profile__details-header">
-                    <div class="profile__user-pic"></div>
-                    <div class="profile__user-name"></div>
+            <div class="global__popup-details">
+                <div class="global__details-header">
+                    <div class="global__user-pic"></div>
+                    <div class="global__user-name"></div>
                 </div>
 
-                <div class="profile__details-comment">
-                    <div class="profile__post-caption">
-                        <div class="profile__user-pic"></div>
-                        <div class="profile__user-name-caption">
-                            <div class="profile__user-name"></div>
-                            <div class="profile__user-caption"></div>
+                <div class="global__details-comment">
+                    <div class="global__post-caption">
+                        <div class="global__user-pic"></div>
+                        <div class="global__user-name-caption">
+                            <div class="global__user-name"></div>
+                            <div class="global__user-caption"></div>
                         </div>
                     </div>
-
                 </div>
 
-                <div class="profile__details-action">
-                    <div class="profile__details-action-icons">
-                        <a class="profile__like-post">
-                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                <div class="global__details-action">
+                    <div class="global__details-action-icons">
+                        <a class="global__like-post" data-liked="" data-post-id="">
                         </a>
-                        <a class="profile__comment-post">
+                        <a class="global__comment-post">
                             <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
                         </a>
 
                     </div>
                 </div>
                 
-                <div class="profile__like-count">2,171 likes</div>
-                <div class="profile__details-add-comment">
-                    <span class="profile__smile-icon">
+                <div class="global__like-count"></div>
+                <div class="global__details-add-comment">
+                    <span class="global__comment-input">
                         <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
                     </span>
-                    <input type="text" placeholder="Add a comment...">
+                    <input class="comment__input type="text" placeholder="Add a comment...">
                     <button>Post</button>
                 </div>
             </div>
@@ -200,4 +197,5 @@ require_once "shared/sidebar.php";
 
 <script src="js/common.js"></script>
 <script src="js/profile.js"></script>
+<script src="js/post_popup.js"></script>
 <script src="js/load-follow_like/load_follow_profile.js"></script>

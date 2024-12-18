@@ -72,47 +72,44 @@ if (!checkToken()) {
     </div>
 
 
-
-    <!-- Post Popup -->
-    <div class="home__popup" id="homeImagePopup" onclick="closeHomePopup()">
-        <span class="home__popup-close">&times;</span>
-        <div class="home__popup-content" onclick="event.stopPropagation()">
-            <div class="home__popup-image">
+    <!-- Popup -->
+    <div class="global__popup" id="imagePopup" postId="" onclick="closePopup('home')">
+        <span class="global__popup-close">&times;</span>
+        <div class="global__popup-content" onclick="event.stopPropagation()">
+            <div class="global__popup-image">
                 <img id="popupImg" src="" alt="Popup Image">
             </div>
 
-            <div class="home__popup-details">
-                <div class="home__details-header">
-                    <div class="home__user-pic"></div>
-                    <div class="home__user-name"></div>
+            <div class="global__popup-details">
+                <div class="global__details-header">
+                    <div class="global__user-pic"></div>
+                    <div class="global__user-name"></div>
                 </div>
 
-                <div class="home__details-comment">
-                    <div class="home__post-caption">
-                        <div class="home__user-pic"></div>
-                        <div class="home__user-name-caption">
-                            <div class="home__user-name"></div>
-                            <div class="home__user-caption"></div>
+                <div class="global__details-comment">
+                    <div class="global__post-caption">
+                        <div class="global__user-pic"></div>
+                        <div class="global__user-name-caption">
+                            <div class="global__user-name"></div>
+                            <div class="global__user-caption"></div>
                         </div>
                     </div>
-                    
                 </div>
 
-                <div class="home__details-action">
-                    <div class="home__details-action-icons">
-                        <a class="home__like-post">
-                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                <div class="global__details-action">
+                    <div class="global__details-action-icons">
+                        <a class="global__like-post" data-liked="" data-post-id="${postId}">
                         </a>
-                        <a class="home__comment-post">
+                        <a class="global__comment-post">
                             <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
                         </a>
 
                     </div>
                 </div>
                 
-                <div class="home__like-count">2,171 likes</div>
-                <div class="home__details-add-comment">
-                    <span class="home__smile-icon">
+                <div class="global__like-count"></div>
+                <div class="global__details-add-comment">
+                    <span class="global__smile-icon">
                         <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
                     </span>
                     <input type="text" placeholder="Add a comment...">
@@ -122,7 +119,6 @@ if (!checkToken()) {
             
         </div>
     </div>
-
 
 
     <!-- Like Popup -->
@@ -158,6 +154,7 @@ if (!checkToken()) {
 
 </main>
 
-<script src="js/load-follow_like/load_like_home.js"></script>
+<script src="js/load-follow_like/like_handler.js"></script>
 <script src="js/common.js"></script>
 <script src="js/home.js"></script>
+<script src="js/post_popup.js"></script>

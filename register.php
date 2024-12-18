@@ -43,7 +43,7 @@ require "shared/sidebar.php";
     </main>
 </section>
 <script src="js/common.js"></script>
-<script src="js/register_handle.js"></script>
+<script src="js/register_handler.js"></script>
 </body>
 
 </html>

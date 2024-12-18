@@ -1,16 +1,13 @@
-
 .home__main-content-home {
     margin-left: 250px; /* Cách lề trái 250px */
     width: calc(100% - 250px); /* Chiếm phần còn lại của màn hình */
     min-height: 100vh; /* Chiều cao tối thiểu bằng chiều cao viewport */
     display: flex;
     padding: 32px 0;
-    display: flex;
     gap: 80px;
     max-width: 935px;
     margin-right: auto;
     margin-left: auto;
-
 }
 
 .home__feed-container {
@@ -59,7 +56,6 @@
     color: var(--text-light);
 }
 
-
 .home__suggestions {
     margin-top: 24px;
 }
@@ -82,7 +78,6 @@
     font-weight: 600;
     font-size: 12px;
 }
-
 
 .home__suggestion-item {
     display: flex;
@@ -128,7 +123,6 @@
     cursor: pointer;
 }
 
-
 /* Instagram post */
 .home__instagram-post {
     width: 500px;
@@ -154,7 +148,6 @@
     background: #efefef;
 }
 
-
 .home__profile-pic img {
     width: 32px;
     height: 32px;
@@ -177,7 +170,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%
+    width: 100%;
 }
 
 .home__post-image {
@@ -210,15 +203,12 @@
     cursor: pointer; 
 }
 
-
-
 .home__username-caption {
     font-size: 14px;
     font-weight: 600;
     margin: 4px 16px;
     color: #262626;
     text-decoration: none;
-    font-size: 14px;
 }
 
 .home__caption {
@@ -259,14 +249,10 @@
 
 .home__dots {
     margin-left: auto;
-    display: none
+    display: none;
 }
 
-
-
 /* pop-up */
-
-
 
 /* Popup styles */
 .home__popup {
@@ -281,6 +267,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .home__popup-close {
     position: absolute;
     right: 20px;
@@ -321,7 +308,6 @@
     flex-direction: column;
 }
 
-
 .home__details-header {
     display: flex;
     align-items: center;
@@ -329,14 +315,13 @@
     padding: 16px;
 }
 
-
 .home__user-pic {
-    width:32px;
+    width: 32px;
     height: 32px;
     border-radius: 50%;
     background-color: #dbdbdb;
     margin-right: 12px;
-    flex-shrink: 0
+    flex-shrink: 0;
 }
 
 .home__user-name-caption {
@@ -390,9 +375,6 @@
     white-space: normal; /* Allow text to wrap */
     margin-bottom: 4px;
 }
-
-
-
 
 .home__details-action {
     display: flex;
@@ -451,219 +433,8 @@
     cursor: pointer;
 }
 
-.home__popup-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-
-
-
-
-
-/* ----------------------------------------------------------------------------- */
-
-
-/* Popup styles */
-.home__popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.65);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-.home__popup-close {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-.home__popup-content {
-    background-color: white;
-    width: 150vh;
-    height: 90vh;
-    display: flex;
-    position: relative;
-    border-radius: 0 5px 5px 0;
-    overflow: hidden;
-}
-
-.home__popup-image {
-    width: 90vh;
-    height: 90vh;
-    background-color: black;
-}
-
-.home__popup-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.home__popup-details {
-    width: 70vh;
-    height: 100%;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.home__details-header {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #dbdbdb;
-    padding: 16px;
-}
-
-
-.home__user-pic {
-    width:32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #dbdbdb;
-    margin-right: 12px;
-    flex-shrink: 0
-}
-
-.home__user-name-caption {
-    flex-grow: 1;
-    overflow: hidden;
-    /* white-space: nowrap;
-    text-overflow: ellipsis; */
-}
-
-.home__user-name {
-    font-size: 14px;
-    font-weight: bold;
-    padding-right: 5px;
-    white-space: nowrap;
-}
-
-.home__details-header img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 12px;
-}
-
-.home__details-header h3 {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.home__details-comment {
-    flex-grow: 1;
-    overflow-y: auto;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-}
-
-.home__post-caption,
-.home__post-comment {
-    display: flex;
-    align-items: flex-start;
-    padding: 10px 16px;
-    font-size: 14px;
-    word-wrap: break-word;
-}
-
-.home__user-caption,
-.home__user-comment {
-    display: block; /* Change from flex to block */
-    word-wrap: break-word; /* Ensure long words break */
-    word-break: break-word; /* Additional support for word breaking */
-    white-space: normal; /* Allow text to wrap */
-    margin-bottom: 4px;
-}
-
-
-
-
-.home__details-action {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    border-top: 1px solid #dbdbdb;
-}
-
-.home__details-action-icons {
-    display: flex;
-    gap: 15px;
-}
-
-.home__details-action-icons a {
-    color: #262626;
-    font-size: 22px;
-}
-
-.home__like-count {
-    font-weight: 600;
-    padding: 0 12px 12px 12px;
-    font-size: 14px;
-    border-bottom: 1px solid #dbdbdb;
-}
-
-.home__details-add-comment {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-}
-
-.home__smile-icon {
-    display: flex;
-    align-self: center;
-}
-
-.home__details-add-comment input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    padding: 0 0 0 10px;
-}
-
-.home__details-add-comment button {
-    background: none;
-    border: none;
-    color: #0095f6;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.home__popup-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-
-
-
-
 /* Like Popup */
 
-
-/* ---------------------------------------------------------------------------------- */
 /* Instagram-like Followers Overlay Styles */
 .home_like-overlay {
     position: fixed;

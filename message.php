@@ -65,7 +65,7 @@ require "shared/sidebar.php";
                 <h2>Your Messages</h2>
             </div>
 
-            <div class="message__chat-content message__chat-content-john-doe hidden">
+            <div class="message__chat-content hidden">
                 <div class="message__chat-header">
                     <div class="message__profile-pic"></div>
                     <div class="message__chat-name">John Doe</div>
@@ -90,23 +90,7 @@ require "shared/sidebar.php";
                 </div>
 
                 <div class="message__chat-input">
-                    <span class="message__smile-icon">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
-                    </span>
-
-                    <input type="text" class="message__input-box" placeholder="Message...">
-
-                    <div class="message__input-actions">
-                        <span class="message__image-icon">
-                            <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/image.svg') ?>
-                        </span>
-
-                        <span class="message__like-icon">
-                            <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/like.svg') ?>
-                        </span>
-
-                        <button class="message__send-button hidden">Send</button>
-                    </div>
+                    <textarea class="message__input-box" placeholder="Message..."></textarea>
                 </div>
             </div>
 

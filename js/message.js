@@ -1,3 +1,7 @@
+//====================================================================================================
+//============================================ Sidebar ===============================================
+//====================================================================================================
+
 // Hiển thị sidebar-small khi trang được tải
 document.addEventListener('DOMContentLoaded', function() {
     const sidebarSmall = document.querySelector('.sidebar-small');
@@ -30,6 +34,60 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+//====================================================================================================
+//===================================== Toggle item sidebar ==========================================
+//====================================================================================================
+
+
+
+// Toggle search sidebar
+document.getElementById('search-btn-small').addEventListener('click', function() {
+    const searchBtn = document.getElementById('search-btn-small');
+    const searchSidebar = document.querySelector('.search__search-sidebar');
+    searchSidebar.classList.toggle('active');
+    searchBtn.classList.toggle('active');
+});
+
+
+// Toggle notification sidebar
+document.getElementById('notification-btn-small').addEventListener('click', function() {
+    const notificationBtn = document.getElementById('notification-btn-small');
+    const notificationSidebar = document.querySelector('.notification__notification-sidebar');
+    notificationSidebar.classList.toggle('active');
+    notificationBtn.classList.toggle('active');
+});
+
+
+// Toggle more dropdown
+document.addEventListener('DOMContentLoaded', function() {
+    const moreBtn = document.getElementById('more-btn-small');
+    const moreDropdown = document.querySelector('.more__more-dropdown');
+
+    if (moreBtn && moreDropdown) {
+        moreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            moreDropdown.classList.toggle('active');
+            moreBtn.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!moreBtn.contains(e.target) && !moreDropdown.contains(e.target)) {
+                moreDropdown.classList.remove('active');
+                moreBtn.classList.remove('active');
+            }
+        });
+    }
+});
+
+
+
+
+//====================================================================================================
+//============================================ Chat ==================================================
+//====================================================================================================
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Function to update URL without adding to browser history
     function updateUrlWithChatId(chatId) {
@@ -37,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
         history.replaceState(
             { chatId: chatId }, 
             '', 
-            `?chat=${chatId}`
+            `?chatId=${chatId}`
         );
     }
 
@@ -74,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
 
 
 
@@ -201,131 +260,156 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 //---------------------------------------------------------
-// Get chat data from JSON file and populate chat list
 
-// Modify the existing loadChatData function
-async function loadChatData() {
+function getTokenFromCookie() {
+    const name = 'token=';
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+async function fetchChatData() {
     try {
-        // Fetch data from chat_data.json using a relative path
-        const response = await fetch('./js/chat_data.json');
-        
-        // Check if the response is successful
+        const response = await fetch('http://localhost:81/social-network/messages/', {
+            headers: {
+                'Authorization': `Bearer ${getTokenFromCookie()}`
+            }
+        });
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        
-        // Parse JSON data
-        const usersData = await response.json();
+        const data = await response.json();
+        return data.result;
+    } catch (error) {
+        console.error('Error fetching chat data:', error);
+        throw error;
+    }
+}
 
-        // Get the chat list container
-        const chatList = document.querySelector('.message__chat-list');
-        const chatEmptyArea = document.querySelector('.message__chat-empty');
-        const chatContentArea = document.querySelector('.message__chat-content');
-        const chatHeader = document.querySelector('.message__chat-header');
-        const messagesContainer = document.querySelector('.message__messages-container');
+// Function to create chat item element
+function createChatItem(conversation) {
 
-        // Function to update URL without adding to browser history
-        function updateUrlWithChatId(chatId) {
-            history.replaceState(
-                { chatId: chatId }, 
-                '', 
-                `?chat=${chatId}`
-            );
-        }
+    console.log("conversation:", conversation);
+    const chatItem = document.createElement('div');
+    chatItem.classList.add('message__chat-item');
+    chatItem.setAttribute('id', conversation.username);
 
-        // Function to create chat item
-        function createChatItem(user) {
-            const chatItem = document.createElement('div');
-            chatItem.classList.add('message__chat-item');
-            chatItem.setAttribute('id', user.id);
+    // Update to use img tag instead of background-image
+    chatItem.innerHTML = `
+        <div class="message__item-profile-pic">
+            <img src="${conversation.userAvt}" alt="${conversation.username}">
+        </div>
+        <div class="message__chat-info">
+            <div class="message__item-chat-name">${conversation.username}</div>
+            <div class="message__last-message-container">
+                <div class="message__last-message">${conversation.lastMessage || 'No messages yet'}</div>
+                <div class="message__last-message-divider">•</div>
+                <div class="message__last-message-timeDifference">${conversation.lastTimeMessage}</div>
+            </div>
+        </div>
+    `;
 
-            const lastMessageTime = new Date(user.lastMessageTime);
-            const currentTime = new Date();
-            const timeDifference = Math.floor((currentTime - lastMessageTime) / (1000 * 60)); // Difference in minutes
-            let timeDifferenceText;
-            if (timeDifference < 60) {
-                timeDifferenceText = `${timeDifference} min`;
-            } else if (timeDifference < 1440) {
-                timeDifferenceText = `${Math.floor(timeDifference / 60)}h`;
-            } else if (timeDifference < 43200) { // Less than 30 days
-                timeDifferenceText = `${Math.floor(timeDifference / 1440)}d`;
-            } else if (timeDifference < 525600) { // Less than 1 year
-                timeDifferenceText = `${Math.floor(timeDifference / 43200)}m`;
-            } else {
-                timeDifferenceText = `${Math.floor(timeDifference / 525600)}y`;
+    if (!conversation.isRead) {
+        chatItem.classList.add('unread');
+    }
+
+    return chatItem;
+}
+
+// Function to load chat messages for a specific user
+async function loadChatMessages(recipientId, offset = 0, limit = 20) {
+    try {
+        const response = await fetch(`http://localhost:81/social-network/messages/${recipientId}?offset=${offset}&limit=${limit}`, {
+            headers: {
+                'Authorization': `Bearer ${getTokenFromCookie()}`
             }
-
-            chatItem.innerHTML = `
-                <div class="message__item-profile-pic"></div>
-                <div class="message__chat-info">
-                    <div class="message__item-chat-name">${user.name}</div>
-
-                    <div class="message__last-message-container">
-                        <div class="message__last-message">${user.lastMessage}</div>
-                        <div class="message__last-message-divider">•</div>
-                        <div class="message__last-message-timeDifference">${timeDifferenceText}</div>
-                    </div>
-                </div>
-            `;
-
-            // Add click event listener
-            chatItem.addEventListener('click', function() {
-                // Update URL with chat ID
-                updateUrlWithChatId(user.id);
-
-                // Hide empty chat area
-                chatEmptyArea.classList.add('hidden');
-                
-                // Update chat header
-                const chatNameElement = chatHeader.querySelector('.message__chat-name');
-                chatNameElement.textContent = user.name;
-
-                // Clear previous messages
-                messagesContainer.innerHTML = '';
-
-                // Add messages for this user
-                user.messages.slice().reverse().forEach(message => {
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add(
-                        'message__message', 
-                        `message__${message.type}`
-                    );
-
-                    messageElement.innerHTML = `
-                        <div class="message__message-content">${message.content}</div>
-                    `;
-
-                    messagesContainer.appendChild(messageElement);
-                });
-
-                // Show chat content area
-                chatContentArea.classList.remove('hidden');
-            });
-
-            return chatItem;
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch messages');
         }
+        const data = await response.json();
+        return data.result;
+    } catch (error) {
+        console.error('Error loading messages:', error);
+        throw error;
+    }
+}
 
-        // Populate chat list
-        usersData.users.forEach(user => {
-            const chatItem = createChatItem(user);
+// Function to load chat content
+async function loadChatContent(recipientId, username) {
+    const chatEmptyArea = document.querySelector('.message__chat-empty');
+    const chatContentArea = document.querySelector('.message__chat-content');
+    const chatHeader = document.querySelector('.message__chat-header');
+    const messagesContainer = document.querySelector('.message__messages-container');
+
+    chatEmptyArea.classList.add('hidden');
+    chatHeader.querySelector('.message__chat-name').textContent = username;
+    messagesContainer.innerHTML = '';
+
+    try {
+        const messages = await loadChatMessages(recipientId);
+        messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add(
+                'message__message',
+                message.sender_id === getCurrentUserId() ? 'message__sent' : 'message__received'
+            );
+            
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('message__message-content');
+            messageContent.textContent = message.text;
+            
+            messageElement.appendChild(messageContent);
+            messagesContainer.appendChild(messageElement);
+        });
+
+        chatContentArea.classList.remove('hidden');
+    } catch (error) {
+        console.error('Error loading chat content:', error);
+    }
+}
+
+// Function to load chat data and populate chat list
+async function loadChatData() {
+    try {
+        const conversations = await fetchChatData();
+        const chatList = document.querySelector('.message__chat-list');
+        chatList.innerHTML = ''; // Clear existing chats
+
+        conversations.forEach(conversation => {
+            const chatItem = createChatItem(conversation);
+            chatItem.addEventListener('click', () => {
+                loadChatContent(conversation.username, conversation.username);
+                // Update URL
+                history.replaceState(
+                    { chat_id: conversation.username }, 
+                    '', 
+                    `?chat_id=${conversation.username}`
+                );
+            });
             chatList.appendChild(chatItem);
         });
 
-        // Check if there's a chat ID in the URL on page load
+        // Handle initial chat if URL has chatId
         const urlParams = new URLSearchParams(window.location.search);
-        const initialChatId = urlParams.get('chat');
-        
+        const initialChatId = urlParams.get('chatId');
         if (initialChatId) {
-            const initialChatItem = document.getElementById(initialChatId);
-            if (initialChatItem) {
-                initialChatItem.click(); // Simulate click to load chat
+            const conversation = conversations.find(c => c.username === initialChatId);
+            if (conversation) {
+                loadChatContent(conversation.username, conversation.username);
             }
         }
-
     } catch (error) {
         console.error('Error loading chat data:', error);
-        
-        // Optional: Display an error message to the user
         const chatList = document.querySelector('.message__chat-list');
         chatList.innerHTML = `<div style="color: red;">Error loading chat data. Please try again later.</div>`;
     }
@@ -335,43 +419,26 @@ async function loadChatData() {
 document.addEventListener('DOMContentLoaded', loadChatData);
 
 
-//---------------------------------------------------------
-
-// Toggle search sidebar
-document.getElementById('search-btn-small').addEventListener('click', function() {
-    const searchBtn = document.getElementById('search-btn-small');
-    const searchSidebar = document.querySelector('.search__search-sidebar');
-    searchSidebar.classList.toggle('active');
-    searchBtn.classList.toggle('active');
-});
 
 
-// Toggle notification sidebar
-document.getElementById('notification-btn-small').addEventListener('click', function() {
-    const notificationBtn = document.getElementById('notification-btn-small');
-    const notificationSidebar = document.querySelector('.notification__notification-sidebar');
-    notificationSidebar.classList.toggle('active');
-    notificationBtn.classList.toggle('active');
-});
-
-
-// Toggle more dropdown
-document.addEventListener('DOMContentLoaded', function() {
-    const moreBtn = document.getElementById('more-btn-small');
-    const moreDropdown = document.querySelector('.more__more-dropdown');
-
-    if (moreBtn && moreDropdown) {
-        moreBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            moreDropdown.classList.toggle('active');
-            moreBtn.classList.toggle('active');
+async function fetchUsernameById(userId) {
+    try {
+        const response = await fetch(`http://localhost:81/social-network/users/${userId}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${getTokenFromCookie()}`,
+            },
         });
 
-        document.addEventListener('click', function(e) {
-            if (!moreBtn.contains(e.target) && !moreDropdown.contains(e.target)) {
-                moreDropdown.classList.remove('active');
-                moreBtn.classList.remove('active');
-            }
-        });
+        if (!response.ok) {
+            throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        return data.result.username; // Trả về username từ kết quả
+    } catch (error) {
+        console.error("Error fetching username:", error);
+        return "Unknown User"; // Trường hợp không lấy được username
     }
-});
+}
+

@@ -67,6 +67,18 @@
   margin-right: 12px;
 }
 
+.message__item-profile-pic img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #dbdbdb;
+  margin-right: 12px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .message__chat-info {
   flex: 1;
 }
@@ -212,6 +224,7 @@
   border-radius: 22px;
   outline: none;
   font-size: 14px;
+  resize: none;
 }
 
 .message__input-actions {

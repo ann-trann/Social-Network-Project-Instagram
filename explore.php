@@ -34,53 +34,43 @@ require "shared/sidebar.php";
 
 
     <!-- Popup -->
-    <div class="explore__popup" id="imagePopup" onclick="closeExplorePopup()">
-        <span class="explore__popup-close">&times;</span>
-        <div class="explore__popup-content" onclick="event.stopPropagation()">
-            <div class="explore__popup-image">
+    <div class="global__popup" id="imagePopup" postId="" onclick="closePopup('explore')">
+        <span class="global__popup-close">&times;</span>
+        <div class="global__popup-content" onclick="event.stopPropagation()">
+            <div class="global__popup-image">
                 <img id="popupImg" src="" alt="Popup Image">
             </div>
 
-            <div class="explore__popup-details">
-                <div class="explore__details-header">
-                    <div class="explore__user-pic"></div>
-                    <div class="explore__user-name"></div>
+            <div class="global__popup-details">
+                <div class="global__details-header">
+                    <div class="global__user-pic"></div>
+                    <div class="global__user-name"></div>
                 </div>
 
-                <div class="explore__details-comment">
-                    <div class="explore__post-caption">
-                        <div class="explore__user-pic"></div>
-                        <div class="explore__user-name-caption">
-                            <div class="explore__user-name"></div>
-                            <div class="explore__user-caption"></div>
+                <div class="global__details-comment">
+                    <div class="global__post-caption">
+                        <div class="global__user-pic"></div>
+                        <div class="global__user-name-caption">
+                            <div class="global__user-name"></div>
+                            <div class="global__user-caption"></div>
                         </div>
                     </div>
-
-                    <div class="explore__post-comment">
-                        <div class="explore__user-pic"></div>
-                        <div class="explore__user-name-caption">
-                            <div class="explore__user-name">Petticoat </div>
-                            <div class="explore__user-comment">Hello hihihi Ngày xưa mình cũng có nhận một lớp nice thế và đến giờ mình vẫn siêu nhớ bé</div>
-                        </div>
-                    </div>
-
                 </div>
 
-                <div class="explore__details-action">
-                    <div class="explore__details-action-icons">
-                        <a class="explore__like-post">
-                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                <div class="global__details-action">
+                    <div class="global__details-action-icons">
+                        <a class="global__like-post" data-liked="" data-post-id="${postId}">
                         </a>
-                        <a class="explore__comment-post">
+                        <a class="global__comment-post">
                             <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
                         </a>
 
                     </div>
                 </div>
                 
-                <div class="explore__like-count">2,171 likes</div>
-                <div class="explore__details-add-comment">
-                    <span class="explore__smile-icon">
+                <div class="global__like-count"></div>
+                <div class="global__details-add-comment">
+                    <span class="global__smile-icon">
                         <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
                     </span>
                     <input type="text" placeholder="Add a comment...">
@@ -94,3 +84,4 @@ require "shared/sidebar.php";
 
 <script src="js/common.js"></script>
 <script src="js/explore.js"></script>
+<script src="js/post_popup.js"></script>

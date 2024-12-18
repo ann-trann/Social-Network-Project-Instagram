@@ -21,7 +21,7 @@ require_once "shared/sidebar.php";
 <?php include_once "shared/global.sidebar_small.php"; ?>
 
 
-<main class="user__main-content-profile"> 
+<main class="user__main-content-user"> 
     <div class="user__profile-container">
         <!-- user Header Section -->
         <header class="user__profile-header">
@@ -33,7 +33,7 @@ require_once "shared/sidebar.php";
                 <div class="user__profile-title">
                     <h2 class="user__username"></h2>
                     <button class="user__follow-btn">Follow</button>
-                    <button class="user__message-btn">Message</button>
+                    <button class="user__message-btn" data-user-id="<?php echo $_GET['user_id'] ?>">Message</button>
                 </div>
                 
                 <div class="user__profile-stats">
@@ -150,46 +150,43 @@ require_once "shared/sidebar.php";
     
 
     <!-- Popup -->
-    <div class="user__popup" id="userImagePopup" onclick="closeUserPostPopup()">
-        <span class="user__popup-close">&times;</span>
-        <div class="user__popup-content" onclick="event.stopPropagation()">
-            <div class="user__popup-image">
+    <div class="global__popup" id="imagePopup" postId="" onclick="closePopup('user?user_id=<?php echo $_GET['user_id'] ?>')">
+        <span class="global__popup-close">&times;</span>
+        <div class="global__popup-content" onclick="event.stopPropagation()">
+            <div class="global__popup-image">
                 <img id="popupImg" src="" alt="Popup Image">
             </div>
 
-            <div class="user__popup-details">
-                <div class="user__details-header">
-                    <div class="user__user-pic"></div>
-                    <div class="user__user-name"></div>
+            <div class="global__popup-details">
+                <div class="global__details-header">
+                    <div class="global__user-pic"></div>
+                    <div class="global__user-name"></div>
                 </div>
 
-                <div class="user__details-comment">
-                    <div class="user__post-caption">
-                        <div class="user__user-pic"></div>
-                        <div class="user__user-name-caption">
-                            <div class="user__user-name"></div>
-                            <div class="user__user-caption"></div>
+                <div class="global__details-comment">
+                    <div class="global__post-caption">
+                        <div class="global__user-pic"></div>
+                        <div class="global__user-name-caption">
+                            <div class="global__user-name"></div>
+                            <div class="global__user-caption"></div>
                         </div>
                     </div>
-
-
                 </div>
 
-                <div class="user__details-action">
-                    <div class="user__details-action-icons">
-                        <a class="user__like-post">
-                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/like.svg') ?>
+                <div class="global__details-action">
+                    <div class="global__details-action-icons">
+                        <a class="global__like-post" data-liked="" data-post-id="${postId}">
                         </a>
-                        <a class="user__comment-post">
+                        <a class="global__comment-post">
                             <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
                         </a>
 
                     </div>
                 </div>
                 
-                <div class="user__like-count">2,171 likes</div>
-                <div class="user__details-add-comment">
-                    <span class="user__smile-icon">
+                <div class="global__like-count"></div>
+                <div class="global__details-add-comment">
+                    <span class="global__smile-icon">
                         <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
                     </span>
                     <input type="text" placeholder="Add a comment...">
@@ -201,8 +198,10 @@ require_once "shared/sidebar.php";
     </div>
 
 
+
 </main>
 
 
-<script src="js/common.js"></script>  <!-- Thêm dòng này -->
+<script src="js/common.js"></script>
 <script src="js/user.js"></script>
+<script src="js/post_popup.js"></script>

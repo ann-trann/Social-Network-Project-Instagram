@@ -38,7 +38,7 @@ require_once "shared/sidebar.php";
 </section>
 
 <script src="js/common.js"></script>
-<script src="js/login_handle.js"></script>
+<script src="js/login_handler.js"></script>
 </body>
 
 </html>
