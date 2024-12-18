@@ -46,104 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-//-------------------------------------------------------------------------------------------------------//
-// Overlay for followers in the profile page
-
-document.addEventListener('DOMContentLoaded', () => {
-    const followersButton = document.querySelector('.profile__followers-stats');
-    const followersOverlay = document.querySelector('.profile__followers-overlay');
-    const closeButton = document.querySelector('.profile__follower-close-btn');
-
-    // Function to show overlay
-    function showOverlay() {
-        if (followersOverlay) {
-            followersOverlay.style.display = 'flex';
-        }
-    }
-
-    // Function to hide overlay
-    function hideOverlay() {
-        if (followersOverlay) {
-            followersOverlay.style.display = 'none';
-        }
-    }
-
-    // Show overlay when followers button is clicked
-    if (followersButton) {
-        followersButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            showOverlay();
-        });
-    }
-
-    // Hide overlay when cancel button is clicked
-    if (closeButton) {
-        closeButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            hideOverlay();
-        });
-    }
-
-    // Optional: Close overlay when clicking outside the overlay
-    if (followersOverlay) {
-        followersOverlay.addEventListener('click', (e) => {
-            if (e.target === followersOverlay) {
-                hideOverlay();
-            }
-        });
-    }
-});
-
-//-------------------------------------------------------------------------------------------------------//
-// Overlay for following in the profile page
-
-document.addEventListener('DOMContentLoaded', () => {
-    const followingButton = document.querySelector('.profile__following-stats');
-    const followingOverlay = document.querySelector('.profile__following-overlay');
-    const closeButton = document.querySelector('.profile__following-close-btn');
-
-    // Function to show overlay
-    function showOverlay() {
-        if (followingOverlay) {
-            followingOverlay.style.display = 'flex';
-        }
-    }
-
-    // Function to hide overlay
-    function hideOverlay() {
-        if (followingOverlay) {
-            followingOverlay.style.display = 'none';
-        }
-    }
-
-    // Show overlay when following button is clicked
-    if (followingButton) {
-        followingButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            showOverlay();
-        });
-    }
-
-    // Hide overlay when cancel button is clicked
-    if (closeButton) {
-        closeButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            hideOverlay();
-        });
-    }
-
-    // Optional: Close overlay when clicking outside the overlay
-    if (followingOverlay) {
-        followingOverlay.addEventListener('click', (e) => {
-            if (e.target === followingOverlay) {
-                hideOverlay();
-            }
-        });
-    }
-});
-
-
-
 
 
 // =========================================================================================================//
@@ -350,9 +252,12 @@ function closeProfilePopup() {
 }
 
 
+
 // =========================================================================================================//
 // =========================================================================================================//
 // =========================================================================================================//
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -479,6 +384,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('No token found');
         // Optional: Redirect to login page
-        // window.location.href = 'login.php';
+        window.location.href = 'login.php';
     }
 });

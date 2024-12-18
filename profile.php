@@ -89,7 +89,7 @@ require_once "shared/sidebar.php";
         <div class="profile__followers">
             <div class="profile__followers-header">
                 <h3>Followers</h3>
-                <a class="profile__followers-close-btn" onclick="closePopup()"><i class="fas fa-times"></i></a>
+                <a class="profile__followers-close-btn"><i class="fas fa-times"></i></a>
             </div>
             <div class="profile__list-followers">
                 <div class="profile__followers-item">
@@ -116,7 +116,7 @@ require_once "shared/sidebar.php";
         <div class="profile__following">
             <div class="profile__following-header">
                 <h3>Following</h3>
-                <a class="profile__following-close-btn" onclick="closePopup()"><i class="fas fa-times"></i></a>
+                <a class="profile__following-close-btn"><i class="fas fa-times"></i></a>
             </div>
             <div class="profile__list-following">
                 <div class="profile__following-item">
@@ -125,7 +125,17 @@ require_once "shared/sidebar.php";
                         <h4>username</h4>
                         <p>Full Name</p>
                     </div>
-                </div>                
+                    <div class="profile__following-action_btn">Following</div>
+                </div>     
+                <div class="profile__following-item">
+                    <div class="profile__following-pic"></div>
+                    <div class="profile__following-info">
+                        <h4>username</h4>
+                        <p>Full Name</p>
+                    </div>
+                    <div class="profile__following-action_btn">Following</div>
+                </div>     
+
             </div>
         </div>
     </div>
@@ -188,5 +198,6 @@ require_once "shared/sidebar.php";
 </main>
 
 
-<script src="js/common.js"></script>  <!-- Thêm dòng này -->
+<script src="js/common.js"></script>
 <script src="js/profile.js"></script>
+<script src="js/load-follow_like/load_follow_profile.js"></script>

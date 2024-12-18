@@ -35,7 +35,7 @@ if (!checkToken()) {
     <div class="home__right-sidebar">
         <!-- User profile preview -->
         <div class="home__user-preview">
-            <img src="<?php echo url_for('/assets/images/profileImage/default-user.png'); ?>" alt="Profile">
+            <img src="" alt="Profile">
             <div class="home__user-info">
                 <h4></h4>
                 <p></p>
@@ -62,17 +62,7 @@ if (!checkToken()) {
                 <div class="home__suggestion-profile">
                     <div class="home__suggestion-pic"></div>
                     <div class="home__suggestion-info">
-                        <a href="#" class="home__suggestion-username">user3</a>
-                    </div>
-                </div>
-                <div class="home__follow-button">Follow</div>
-            </div>
-
-            <div class="home__suggestion-item">
-                <div class="home__suggestion-profile">
-                    <div class="home__suggestion-pic"></div>
-                    <div class="home__suggestion-info">
-                        <a href="#" class="home__suggestion-username">user4</a>
+                        <a href="#" class="home__suggestion-username">user2</a>
                     </div>
                 </div>
                 <div class="home__follow-button">Follow</div>
@@ -83,7 +73,7 @@ if (!checkToken()) {
 
 
 
-    <!-- Popup -->
+    <!-- Post Popup -->
     <div class="home__popup" id="homeImagePopup" onclick="closeHomePopup()">
         <span class="home__popup-close">&times;</span>
         <div class="home__popup-content" onclick="event.stopPropagation()">
@@ -116,14 +106,8 @@ if (!checkToken()) {
                         <a class="home__comment-post">
                             <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/comment.svg') ?>
                         </a>
-                        <a class="home__share-post">
-                            <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/share.svg') ?>
-                        </a>
 
                     </div>
-                    <a class="home__save-post">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/like_share_comment/save.svg') ?>
-                    </a>
                 </div>
                 
                 <div class="home__like-count">2,171 likes</div>
@@ -138,7 +122,42 @@ if (!checkToken()) {
             
         </div>
     </div>
+
+
+
+    <!-- Like Popup -->
+     
+
+    <div class="home_like-overlay" style="display:none;">
+        <div class="home_like">
+            <div class="home_like-header">
+                <h3>Followers</h3>
+                <a class="home_like-close-btn"><i class="fas fa-times"></i></a>
+            </div>
+            <div class="like__list-followers">
+                <div class="home_like-item">
+                    <div class="home_like-pic"></div>
+                    <div class="home_like-info">
+                        <h4>username</h4>
+                        <p>Full Name</p>
+                    </div>
+                </div>
+                <div class="home_like-item">
+                    <div class="home_like-pic"></div>
+                    <div class="home_like-info">
+                        <h4>username</h4>
+                        <p>Full Name</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </main>
 
+<script src="js/load-follow_like/load_like_home.js"></script>
 <script src="js/common.js"></script>
 <script src="js/home.js"></script>

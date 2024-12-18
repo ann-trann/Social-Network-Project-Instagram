@@ -296,7 +296,6 @@ function fetchPostDetails(postId) {
             return response.json();
         })
         .then(data => {
-            console.log("Post data:", data);
             resolve(data.result);
         })
         .catch(error => {
@@ -371,6 +370,8 @@ function closeUserPostPopup() {
 
 
 function follow(userId) {
+    
+    console.log("Follow user ID:", userId);
     const token = getTokenFromCookie();
     fetch(`http://localhost:81/social-network/users/follow/${userId}`, {
         method: 'POST',

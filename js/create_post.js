@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('expanded');
         modalBody.classList.remove('expanded');
         previewImage.src = '';
+        document.getElementById('caption').value = '';
     });
 
     // Hàm lấy giá trị token từ cookie
@@ -298,7 +299,6 @@ function decodeJWTToken(token) {
   // Function to render user profile data
   function renderUploadUser(data) {
   
-    console.log('User data:', data);
     const userPreview = document.querySelector('.create-post__user-info');
     const profileImage = userPreview.querySelector('img');
     const usernameElement = userPreview.querySelector('h4');

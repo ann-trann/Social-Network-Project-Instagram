@@ -76,12 +76,8 @@ if (!defined('SHARED_PATH')) {
 
 
     <!-- Profile Small Button -->
-    <a href="<?php echo url_for('profile'); ?>" class="nav-item <?php echo ($page === 'profile') ? 'active' : ''; ?>">
-        <?php if ($page === 'profile'): ?>
-            <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
-        <?php else: ?>
-            <img src="<?php echo url_for("/assets/images/profileImage/default-user.png"); ?>" alt="">
-        <?php endif; ?>
+    <a href="<?php echo url_for('profile'); ?>" class="nav-item <?php echo ($page === 'profile') ? 'active' : ''; ?>" id="profile-btn-small">
+        <img src="">
         <!-- <span>Profile</span> -->
     </a>
 

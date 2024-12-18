@@ -332,12 +332,23 @@
 .profile__following-pic {
     width: 44px;
     height: 44px;
-    border-radius: 50%;
-    background-color: #dbdbdb;
+    background-color: #fff;
     margin-right: 12px;
     background-size: cover;
     background-position: center;
 }
+
+
+.profile__followers-pic img,
+.profile__following-pic img {
+    width: 44px;
+    height: 44px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+}
+
 
 .profile__followers-info,
 .profile__following-info {
@@ -357,6 +368,19 @@
     margin: 0;
     font-size: 14px;
     color: #8e8e8e;
+}
+
+
+
+.profile__following-action_btn {
+    padding: 5px 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    background: #dfdfdf;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 @keyframes fadeIn {

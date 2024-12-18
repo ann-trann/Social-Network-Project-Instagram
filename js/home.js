@@ -15,12 +15,18 @@ function getTokenFromCookie() {
   return "";
 }
 
+// Global seed variable initialized with current timestamp
+const pageSeed = Date.now();
+
 function showHomePosts() {
   // Function to fetch and display posts
-  async function fetchAndDisplayPosts() {
+  async function fetchAndDisplayPosts(lastCreatedDate = null) {
     try {
-      const url = `http://localhost:81/social-network/posts/`;
-
+      let url = `http://localhost:81/social-network/posts/`;
+      if (lastCreatedDate) {
+        url += `?lastCreatedDate=${encodeURIComponent(lastCreatedDate)}`;
+      }
+  
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -28,28 +34,51 @@ function showHomePosts() {
           "Content-Type": "application/json",
         },
       });
-
+  
       if (!response.ok) {
         throw new Error("Failed to fetch posts");
       }
-
+  
       const data = await response.json();
       const postsContainer = document.querySelector(".home__posts-container");
-      postsContainer.innerHTML = ""; // Clear existing posts
-
+  
+      // Nếu đã có bài đăng, thì không clear hết, chỉ thêm bài mới
+      if (lastCreatedDate === null) {
+        postsContainer.innerHTML = ''; // Clear posts nếu là lần đầu tiên tải
+      }
+  
+      // Duyệt qua các bài đăng trả về từ API
       data.result.forEach((post) => {
         const postElement = createPostElement(post);
         postsContainer.insertAdjacentHTML("beforeend", postElement);
+  
+        if (post.createAt !== null) {
+          lastCreatedDate = post.createAt; // Cập nhật lastCreatedDate cho lần gọi sau
+        }
       });
-
-      // Add event listeners for like functionality
+  
+      // Thêm sự kiện cho các nút like
       addLikeEventListeners();
+  
     } catch (error) {
       console.error("Error fetching posts:", error);
       const postsContainer = document.querySelector(".home__posts-container");
       postsContainer.innerHTML = `<div class="error-message">Failed to load posts. Please try again later.</div>`;
     }
   }
+
+  // Modify the DOMContentLoaded event listener to use the updated function
+  document.addEventListener("scroll", () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+  
+    // Kiểm tra nếu người dùng cuộn gần đến cuối trang
+    if (scrollTop + clientHeight >= scrollHeight - 100) {
+      // Nếu đã cuộn gần đến cuối trang, gọi lại fetchAndDisplayPosts với lastCreatedDate
+      fetchAndDisplayPosts(lastCreatedDate);
+    }
+  });
 
   // Function to create post HTML element
   function createPostElement(post) {
@@ -64,12 +93,16 @@ function showHomePosts() {
               </div>
 
               <div class="home__post-image-container">
-                  <img src="${post.postImg}" alt="Image from ${post.username}" class="home__post-image">
+                  <img src="${post.postImg}" alt="Image from ${
+      post.username
+    }" class="home__post-image">
               </div>
 
               <div class="home__post-actions">
-                  <div class="home__like-post" data-liked="${post.isLike}" data-post-id="${post.postId}">
-                      ${post.isLike ? createLikedSvg() : createUnlikedSvg()}
+                  <div class="home__like-post" data-liked="${
+                    post.like
+                  }" data-post-id="${post.postId}">
+                      ${post.like ? createLikedSvg() : createUnlikedSvg()}
                   </div>
                   <div class="home__comment-post">
                       <svg aria-label="Comment" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
@@ -80,9 +113,12 @@ function showHomePosts() {
               </div>
 
               <div class="home__likes">${post.numberOfLike} likes</div>
-              <div class="home__username-caption">${post.username}</div>  
+              <a href="user?user_id=${post.postOwnerId}" class="home__username-caption">${post.username}</a>
+
               <div class="home__caption">${post.content}</div>
-              <div class="home__view-comments" onclick="showHomePopup('${post.postId}')">
+              <div class="home__view-comments" onclick="showHomePopup('${
+                post.postId
+              }')">
                   View all ${post.numberOfComment} comments
               </div>
           </div>
@@ -132,8 +168,6 @@ function showHomePosts() {
       if (!response.ok) {
         throw new Error("Failed to update post");
       }
-
-      return await response.json();
     } catch (error) {
       console.error("Error updating post:", error);
       return null;
@@ -162,18 +196,18 @@ function showHomePosts() {
     document.querySelectorAll(".home__like-post").forEach((likeButton) => {
       likeButton.addEventListener("click", async (event) => {
         event.stopPropagation();
-
+  
         const postElement = likeButton.closest(".home__instagram-post");
         const likesElement = postElement.querySelector(".home__likes");
         const postId = likeButton.getAttribute("data-post-id");
         const isCurrentlyLiked = likeButton.getAttribute("data-liked") === "true";
-
+  
         const action = isCurrentlyLiked ? "UNLIKE" : "LIKE";
         const updateResult = await updatePost(postId, action);
-
-        if (updateResult) {
+  
+        if (updateResult !== null) {
           let likesCount = parseInt(likesElement.textContent.replace(" likes", ""));
-
+  
           if (isCurrentlyLiked) {
             likeButton.innerHTML = createUnlikedSvg();
             likeButton.setAttribute("data-liked", "false");
@@ -183,7 +217,7 @@ function showHomePosts() {
             likeButton.setAttribute("data-liked", "true");
             likesCount++;
           }
-
+  
           likesElement.textContent = `${likesCount} likes`;
         }
       });
@@ -200,20 +234,14 @@ function showHomePosts() {
     fetchMainPostDetails,
     updatePost,
     fetchAndDisplayPosts,
+    pageSeed, // Expose the seed for potential external use
   };
 }
 
 // Initialize the home post functionality
 const homePostManager = showHomePosts();
 
-
-
-
 //================================================================================================
-//================================================================================================
-//================================================================================================
-
-
 
 // Keep the existing caption more/less functionality
 document.addEventListener("DOMContentLoaded", () => {
@@ -255,9 +283,7 @@ function updateUserDetails(postData) {
   const userNameElements = document.querySelectorAll(".home__user-name");
   const postCaptionElement = document.querySelector(".home__user-caption");
   const popupImg = document.getElementById("popupImg");
-
-  console.log("Post data:", postData);
-  console.log("postCaptionElement:", postCaptionElement);
+  // const detailsHeader = document.querySelector(".home__details-header"); // Get the details header
 
   popupImg.src = postData.postImg;
 
@@ -284,6 +310,11 @@ function updateUserDetails(postData) {
   } else {
     console.warn("No caption element found in the popup");
   }
+
+  // // Add click event to the details header to navigate to the user's profile
+  // detailsHeader.onclick = () => {
+  //   window.location.href = `user?user_id=${postData.userId}`; // Navigate to the user's profile
+  // };
 }
 
 // Update comments in popup
@@ -343,7 +374,6 @@ function fetchPostDetails(postId) {
         return response.json();
       })
       .then((data) => {
-        console.log("Post data:", data);
         resolve(data.result);
       })
       .catch((error) => {
@@ -360,38 +390,72 @@ function handleLikePost(postId, isCurrentlyLiked) {
   const likeIcon = likePostButton.querySelector("svg");
   const likeCountElement = document.querySelector(".home__like-count");
 
+  // Immediately update UI optimistically
+  let currentLikes = parseInt(likeCountElement.textContent.split(" ")[0]);
+  
+  if (isCurrentlyLiked) {
+    // Unlike action
+    likeIcon.innerHTML = createUnlikedSvg(); // Use the existing createUnlikedSvg function
+    likeCountElement.textContent = `${currentLikes - 1} likes`;
+  } else {
+    // Like action
+    likeIcon.innerHTML = createLikedSvg(); // Use the existing createLikedSvg function
+    likeCountElement.textContent = `${currentLikes + 1} likes`;
+  }
+
+  // Send the like/unlike request to the server
   fetch(`http://localhost:81/social-network/posts/${postId}/like`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ action: isCurrentlyLiked ? "UNLIKE" : "LIKE" })
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to like/unlike post");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Update like state and count
-      if (isCurrentlyLiked) {
-        likeIcon.classList.remove("liked");
-        const currentLikes = parseInt(
-          likeCountElement.textContent.split(" ")[0]
-        );
-        likeCountElement.textContent = `${currentLikes - 1} likes`;
-      } else {
-        likeIcon.classList.add("liked");
-        const currentLikes = parseInt(
-          likeCountElement.textContent.split(" ")[0]
-        );
-        likeCountElement.textContent = `${currentLikes + 1} likes`;
-      }
-    })
-    .catch((error) => {
-      console.error("Error liking/unliking post:", error);
-    });
+  .then((response) => {
+    if (!response.ok) {
+      // If server request fails, revert UI changes
+      throw new Error("Failed to like/unlike post");
+    }
+    return response.json();
+  })
+  .then(() => {
+    // Update the like state in the main page posts
+    updateMainPagePostLike(postId, !isCurrentlyLiked);
+  })
+  .catch((error) => {
+    console.error("Error liking/unliking post:", error);
+    
+    // Revert UI changes if server request fails
+    if (isCurrentlyLiked) {
+      likeIcon.innerHTML = createLikedSvg();
+      likeCountElement.textContent = `${currentLikes} likes`;
+    } else {
+      likeIcon.innerHTML = createUnlikedSvg();
+      likeCountElement.textContent = `${currentLikes} likes`;
+    }
+  });
+}
+
+// New function to update likes in the main page posts
+function updateMainPagePostLike(postId, isLiked) {
+  const mainPagePost = document.getElementById(postId);
+  if (mainPagePost) {
+    const likeButton = mainPagePost.querySelector('.home__like-post');
+    const likesCountElement = mainPagePost.querySelector('.home__likes');
+
+    if (likeButton && likesCountElement) {
+      // Update SVG
+      likeButton.innerHTML = isLiked ? createLikedSvg() : createUnlikedSvg();
+      likeButton.setAttribute('data-liked', isLiked.toString());
+
+      // Update likes count
+      let currentLikes = parseInt(likesCountElement.textContent.split(' ')[0]);
+      likesCountElement.textContent = isLiked 
+        ? `${currentLikes + 1} likes` 
+        : `${currentLikes - 1} likes`;
+    }
+  }
 }
 
 // Shows popup when image is clicked and fetches post details
@@ -464,8 +528,6 @@ function decodeJWTToken(token) {
 
 // Function to render user profile data
 function renderUserPreview(data) {
-
-  console.log('User data:', data);
   const userPreview = document.querySelector('.home__user-preview');
   const profileImage = userPreview.querySelector('img');
   const usernameElement = userPreview.querySelector('h4');
