@@ -20,7 +20,7 @@ require "shared/sidebar.php";
     <div class="message__container">
         <div class="message__sidebar">
             <div class="message__sidebar-header">
-                <div class="message__username">username</div>
+                <div class="message__username"></div>
                 <!-- <div class="message__new-message">New message</div> -->
                 <div class="message__new-message">
                     <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/new_message.svg') ?>
@@ -68,9 +68,8 @@ require "shared/sidebar.php";
             <div class="message__chat-content hidden">
                 <div class="message__chat-header">
                     <div class="message__profile-pic"></div>
-                    <div class="message__chat-name">John Doe</div>
+                    <div class="message__chat-name"></div>
                 </div>
-
                 <div class="message__chat-messages">
                     <div class="message__messages-container">
                         <div class="message__message message__sent">
@@ -90,7 +89,7 @@ require "shared/sidebar.php";
                 </div>
 
                 <div class="message__chat-input">
-                    <textarea class="message__input-box" placeholder="Message..."></textarea>
+                    <input class="message__input-box" placeholder="Message..."></input>
                 </div>
             </div>
 

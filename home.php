@@ -34,41 +34,13 @@ if (!checkToken()) {
     <!-- Right sidebar -->
     <div class="home__right-sidebar">
         <!-- User profile preview -->
-        <div class="home__user-preview">
+        <a href="/Social-Network-Project-Instagram/profile" class="home__user-preview">
             <img src="" alt="Profile">
             <div class="home__user-info">
                 <h4></h4>
                 <p></p>
             </div>
-        </div>
-
-        <!-- Suggestions -->
-        <div class="home__suggestions">
-            <div class="home__suggestions-header">
-                <h4>Suggestions For You</h4>
-            </div>
-            
-            <div class="home__suggestion-item">
-                <div class="home__suggestion-profile">
-                    <div class="home__suggestion-pic"></div>
-                    <div class="home__suggestion-info">
-                        <a href="#" class="home__suggestion-username">user1</a>
-                    </div>
-                </div>
-                <div class="home__follow-button">Follow</div>
-            </div>
-
-            <div class="home__suggestion-item">
-                <div class="home__suggestion-profile">
-                    <div class="home__suggestion-pic"></div>
-                    <div class="home__suggestion-info">
-                        <a href="#" class="home__suggestion-username">user2</a>
-                    </div>
-                </div>
-                <div class="home__follow-button">Follow</div>
-            </div>
-
-        </div>
+        </a>
     </div>
 
 

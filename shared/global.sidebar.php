@@ -5,10 +5,9 @@ if (!defined('SHARED_PATH')) {
 ?>
 
 <nav class="sidebar">
-    <div class="logo">
+    <a href="/Social-Network-Project-Instagram/home" class="logo">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/logo.svg') ?>
-    </div>
-
+    </a>
 
     <!-- Home Button -->
     <a href="<?php echo url_for('home'); ?>" class="nav-item <?php echo ($page === 'home') ? 'active' : ''; ?>">

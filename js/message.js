@@ -81,11 +81,75 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+function truncateText(text, maxLength = 50) {
+    if (!text) return 'No messages yet';
+    
+    // Trim whitespace and then truncate
+    text = text.trim();
+    
+    if (text.length <= maxLength) {
+        return text;
+    }
+    
+    // Truncate and add ellipsis
+    return text.substring(0, maxLength).trim() + '...';
+}
 
 
 //====================================================================================================
 //============================================ Chat ==================================================
 //====================================================================================================
+
+
+
+
+async function getCurrentUserInfo() {
+    try {
+        // Fetch user info from the endpoint
+        const response = await fetch('http://localhost:81/social-network/users/my-info', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${getTokenFromCookie()}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch user information');
+        }
+
+        const data = await response.json();
+        const username = data.result.username;
+
+        // Update the username in the DOM
+        const usernameElement = document.querySelector('.message__username');
+        if (usernameElement) {
+            usernameElement.textContent = username;
+        }
+
+        return {
+            userId: data.result.user_id,
+            username: username
+        };
+    } catch (error) {
+        console.error('Error fetching current user info:', error);
+        // Optionally, update the UI to show an error
+        const usernameElement = document.querySelector('.message__username');
+        if (usernameElement) {
+            usernameElement.textContent = 'Error loading username';
+        }
+        return null;
+    }
+}
+
+// Call the function when the DOM is loaded
+document.addEventListener('DOMContentLoaded', getCurrentUserInfo);
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -249,17 +313,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+// --------------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-//---------------------------------------------------------
 
 function getTokenFromCookie() {
     const name = 'token=';
@@ -294,14 +349,35 @@ async function fetchChatData() {
         throw error;
     }
 }
-
 // Function to create chat item element
 function createChatItem(conversation) {
-
     console.log("conversation:", conversation);
     const chatItem = document.createElement('div');
     chatItem.classList.add('message__chat-item');
     chatItem.setAttribute('id', conversation.username);
+
+    console.log("conversation time:", conversation);
+
+    // Truncate the last message
+    const truncatedLastMessage = truncateText(conversation.lastMessage);
+
+    // Calculate time difference
+    const lastMessageTime = new Date(conversation.lastTimeMessage);
+    const currentTime = new Date();
+    const timeDifference = Math.floor((currentTime - lastMessageTime) / (1000 * 60)); // Difference in minutes
+
+    let timeDifferenceText;
+    if (timeDifference < 60) {
+        timeDifferenceText = `${timeDifference} min`; // Less than 60 minutes
+    } else if (timeDifference < 1440) {
+        timeDifferenceText = `${Math.floor(timeDifference / 60)}h`; // Less than 24 hours
+    } else if (timeDifference < 43200) { // Less than 30 days
+        timeDifferenceText = `${Math.floor(timeDifference / 1440)}d`;
+    } else if (timeDifference < 525600) { // Less than 1 year
+        timeDifferenceText = `${Math.floor(timeDifference / 43200)}m`;
+    } else {
+        timeDifferenceText = `${Math.floor(timeDifference / 525600)}y`;
+    }
 
     // Update to use img tag instead of background-image
     chatItem.innerHTML = `
@@ -311,9 +387,9 @@ function createChatItem(conversation) {
         <div class="message__chat-info">
             <div class="message__item-chat-name">${conversation.username}</div>
             <div class="message__last-message-container">
-                <div class="message__last-message">${conversation.lastMessage || 'No messages yet'}</div>
+                <div class="message__last-message">${truncatedLastMessage}</div>
                 <div class="message__last-message-divider">•</div>
-                <div class="message__last-message-timeDifference">${conversation.lastTimeMessage}</div>
+                <div class="message__last-message-timeDifference">${timeDifferenceText}</div>
             </div>
         </div>
     `;
@@ -327,6 +403,7 @@ function createChatItem(conversation) {
 
 // Function to load chat messages for a specific user
 async function loadChatMessages(recipientId, offset = 0, limit = 20) {
+    console.log("recipientId:", recipientId);
     try {
         const response = await fetch(`http://localhost:81/social-network/messages/${recipientId}?offset=${offset}&limit=${limit}`, {
             headers: {
@@ -337,6 +414,7 @@ async function loadChatMessages(recipientId, offset = 0, limit = 20) {
             throw new Error('Failed to fetch messages');
         }
         const data = await response.json();
+        console.log("data:", data.result);
         return data.result;
     } catch (error) {
         console.error('Error loading messages:', error);
@@ -345,36 +423,60 @@ async function loadChatMessages(recipientId, offset = 0, limit = 20) {
 }
 
 // Function to load chat content
-async function loadChatContent(recipientId, username) {
+async function loadChatContent(recipientId, username, userAvt) {
     const chatEmptyArea = document.querySelector('.message__chat-empty');
     const chatContentArea = document.querySelector('.message__chat-content');
     const chatHeader = document.querySelector('.message__chat-header');
     const messagesContainer = document.querySelector('.message__messages-container');
 
     chatEmptyArea.classList.add('hidden');
+    
+    // Update chat header
     chatHeader.querySelector('.message__chat-name').textContent = username;
-    messagesContainer.innerHTML = '';
+    chatHeader.querySelector('.message__profile-pic').innerHTML = `
+        <img src="${userAvt}" alt="${username}">
+    `;
+
+    messagesContainer.innerHTML = ''; // Clear existing messages
 
     try {
         const messages = await loadChatMessages(recipientId);
+        
+        // Sort messages by createAt in ascending order
+        messages.sort((a, b) => new Date(a.createAt) - new Date(b.createAt));
+        
         messages.forEach(message => {
             const messageElement = document.createElement('div');
-            messageElement.classList.add(
-                'message__message',
-                message.sender_id === getCurrentUserId() ? 'message__sent' : 'message__received'
-            );
+            messageElement.classList.add('message__message');
             
+            // Determine if message is sent or received
+            const isSentByCurrentUser = message.sender_id === getCurrentUserId();
+            messageElement.classList.add(isSentByCurrentUser ? 'message__sent' : 'message__received');
+            
+            // Create message content
             const messageContent = document.createElement('div');
             messageContent.classList.add('message__message-content');
             messageContent.textContent = message.text;
             
+            // Add timestamp (optional)
+            const timestamp = document.createElement('div');
+            timestamp.classList.add('message__timestamp');
+            const messageDate = new Date(message.createAt);
+            timestamp.textContent = messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            // Append elements
             messageElement.appendChild(messageContent);
+            messageElement.appendChild(timestamp);
             messagesContainer.appendChild(messageElement);
         });
 
+        // Scroll to bottom of messages
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
         chatContentArea.classList.remove('hidden');
     } catch (error) {
         console.error('Error loading chat content:', error);
+        messagesContainer.innerHTML = '<div class="message__error">Error loading messages</div>';
     }
 }
 
@@ -385,15 +487,21 @@ async function loadChatData() {
         const chatList = document.querySelector('.message__chat-list');
         chatList.innerHTML = ''; // Clear existing chats
 
+        console.log("conversations:", conversations);
+
         conversations.forEach(conversation => {
             const chatItem = createChatItem(conversation);
             chatItem.addEventListener('click', () => {
-                loadChatContent(conversation.username, conversation.username);
+                loadChatContent(
+                    conversation.userId, 
+                    conversation.username,
+                    conversation.userAvt  // Pass the user avatar URL
+                );
                 // Update URL
                 history.replaceState(
-                    { chat_id: conversation.username }, 
+                    { chatId: conversation.username }, 
                     '', 
-                    `?chat_id=${conversation.username}`
+                    `?chatId=${conversation.username}`
                 );
             });
             chatList.appendChild(chatItem);
@@ -405,7 +513,11 @@ async function loadChatData() {
         if (initialChatId) {
             const conversation = conversations.find(c => c.username === initialChatId);
             if (conversation) {
-                loadChatContent(conversation.username, conversation.username);
+                loadChatContent(
+                    conversation.username, 
+                    conversation.username,
+                    conversation.userAvt  // Pass the user avatar URL
+                );
             }
         }
     } catch (error) {
@@ -421,24 +533,16 @@ document.addEventListener('DOMContentLoaded', loadChatData);
 
 
 
-async function fetchUsernameById(userId) {
-    try {
-        const response = await fetch(`http://localhost:81/social-network/users/${userId}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${getTokenFromCookie()}`,
-            },
-        });
+// ---------------------------------------------------------------------------------------
 
-        if (!response.ok) {
-            throw new Error("Failed to fetch user data");
-        }
-
-        const data = await response.json();
-        return data.result.username; // Trả về username từ kết quả
-    } catch (error) {
-        console.error("Error fetching username:", error);
-        return "Unknown User"; // Trường hợp không lấy được username
-    }
+function toggleChatContent() {
+    const chatArea = document.querySelector('.message__chat-area');
+    const chatContent = document.querySelector('.message__chat-content');
+    
+    chatArea.classList.add('hidden');
+    chatContent.classList.remove('hidden');
 }
 
+
+
+document.addEventListener('DOMContentLoaded', toggleChatContent);

@@ -167,8 +167,6 @@ function closePopup(page) {
     // Cập nhật URL
     history.replaceState(null, "", newUrl);
 
-    console.log("Popup closed", newUrl);
-
     // Xóa các phần tử trong popup (nếu có)
     const commentElements = popup.querySelectorAll('.global__post-comment');
     commentElements.forEach(el => el.remove());

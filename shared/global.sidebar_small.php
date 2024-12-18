@@ -5,7 +5,7 @@ if (!defined('SHARED_PATH')) {
 ?>
 
 <nav class="sidebar-small">
-    <div class="logo-small">
+    <a href="/Social-Network-Project-Instagram/home" class="logo-small">
         <?php include(dirname(SHARED_PATH) . '/assets/svg/sidebar/logo_camera.svg') ?>
     </div>
 

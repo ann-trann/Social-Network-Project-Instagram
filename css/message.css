@@ -156,6 +156,19 @@
   margin-right: 12px;
 }
 
+
+.message__profile-pic img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #dbdbdb;
+  margin-right: 12px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .message__chat-name {
   font-weight: 600;
   margin-bottom: 4px;

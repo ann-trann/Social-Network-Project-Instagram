@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const charCount = document.querySelector('.setting__characters-count');
     const form = document.querySelector('.setting__form');
     const genderSelect = document.getElementById('gender');
-    const defaultAvatarPath = 'http://localhost:81/Social-Network-Project-Instagram/assets/images/profileImage/default-user.png';
 
 
     // Default profile data structure
@@ -55,13 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch and populate user profile data
     function populateProfileSettings() {
         const token = getTokenFromCookie();
-
+    
         if (token) {
             const decodedToken = decodeJWTToken(token);
             
             if (decodedToken && decodedToken.sub) {
                 const userId = decodedToken.sub;
-
+    
                 // Fetch user profile data
                 fetch(`http://localhost:81/social-network/users/my-info`, {
                     method: 'GET',
@@ -78,32 +77,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.result) {
                         const profile = data.result;
-
-                        // Update form fields
-                        document.getElementById('name').value = profile.fullname || '';
-                        document.getElementById('username').value = profile.username || '';
-                        document.getElementById('bio').value = profile.bio || '';
-
-                        console.log("populateProfileSettings - profile: ", profile);
                         
-                        // Update gender (if gender information is available in the profile)
-                        if (profile.gender) {
-                            // Assuming the gender values match the option values
-                            genderSelect.value = profile.gender;
-                        } else {
-                            // Reset to default if no gender is set
-                            genderSelect.selectedIndex = 0;
-                        }
-
-                        // Update avatar
-                        if (profile.avt) {
-                            avatarImg.src = profile.avt;
+                        // Update avatar specifically using the avatar URL from profile
+                        const avatarImg = document.querySelector('.avatar-container img');
+                        if (profile.avatar) {
+                            avatarImg.src = profile.avatar;
                             removePhotoBtn.style.display = 'block';
                         } else {
                             avatarImg.src = defaultAvatarPath;
                             removePhotoBtn.style.display = 'none';
                         }
-
+    
+                        // Rest of the existing code remains the same...
+                        document.getElementById('name').value = profile.fullname || '';
+                        document.getElementById('username').value = profile.username || '';
+                        document.getElementById('bio').value = profile.bio || '';
+    
+                        if (profile.gender) {
+                            genderSelect.value = profile.gender;
+                        } else {
+                            genderSelect.selectedIndex = 0;
+                        }
+    
                         // Update bio character count
                         const bioLength = (profile.bio || '').length;
                         charCount.textContent = `${bioLength}/150`;

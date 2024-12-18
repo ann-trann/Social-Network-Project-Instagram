@@ -12,7 +12,6 @@ const userId = getQueryParam("user_id");
 
 // Kiểm tra giá trị userId
 if (userId) {
-  console.log("User ID:", userId);
   // Gọi API hoặc thực hiện các thao tác để render dữ liệu của user
   fetchUserData(userId);
 } else {
@@ -218,7 +217,6 @@ function unfollow(userId) {
 document.addEventListener('DOMContentLoaded', function() {
   const messageBtn = document.querySelector('.user__message-btn');
   
-  console.log('Message button:', messageBtn);
   if (messageBtn) {
       messageBtn.addEventListener('click', function() {
 
