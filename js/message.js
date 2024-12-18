@@ -200,34 +200,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-// Hiển thị chat content khi click vào chat item
-document.addEventListener('DOMContentLoaded', function() {
-    const inputBox = document.querySelector('.message__input-box');
-    const sendButton = document.querySelector('.message__send-button');
-    const actionIcons = document.querySelectorAll('.message__image-icon, .message__like-icon');
+// // Hiển thị chat content khi click vào chat item
+// document.addEventListener('DOMContentLoaded', function() {
+//     const inputBox = document.querySelector('.message__input-box');
+//     const sendButton = document.querySelector('.message__send-button');
+//     const actionIcons = document.querySelectorAll('.message__image-icon, .message__like-icon');
 
-    inputBox.addEventListener('input', function() {
-        if (this.value.trim() !== '') {
-            sendButton.style.display = 'block';
-            actionIcons.forEach(icon => icon.style.display = 'none');
-        } else {
-            sendButton.style.display = 'none';
-            actionIcons.forEach(icon => icon.style.display = 'block');
-        }
-    });
+//     inputBox.addEventListener('input', function() {
+//         if (this.value.trim() !== '') {
+//             sendButton.style.display = 'block';
+//             actionIcons.forEach(icon => icon.style.display = 'none');
+//         } else {
+//             sendButton.style.display = 'none';
+//             actionIcons.forEach(icon => icon.style.display = 'block');
+//         }
+//     });
 
-    // Để hiển thị chat content khi click vào chat item
-    const chatItems = document.querySelectorAll('.message__chat-item');
-    const chatEmpty = document.querySelector('.message__chat-empty');
-    const chatContent = document.querySelector('.message__chat-content');
+//     // Để hiển thị chat content khi click vào chat item
+//     const chatItems = document.querySelectorAll('.message__chat-item');
+//     const chatEmpty = document.querySelector('.message__chat-empty');
+//     const chatContent = document.querySelector('.message__chat-content');
 
-    chatItems.forEach(item => {
-        item.addEventListener('click', function() {
-            chatEmpty.classList.add('hidden');
-            chatContent.classList.remove('hidden');
-        });
-    });
-});
+//     chatItems.forEach(item => {
+//         item.addEventListener('click', function() {
+//             chatEmpty.classList.add('hidden');
+//             chatContent.classList.remove('hidden');
+//         });
+//     });
+// });
 
 
 
@@ -332,6 +332,27 @@ function getTokenFromCookie() {
     return "";
 }
 
+
+function decodeJWTToken(token) {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+    }
+}
+
+function getUserIdFromToken(token) {
+    const decodedToken = decodeJWTToken(token);
+    return decodedToken ? decodedToken.sub : null;
+}
+
+
 async function fetchChatData() {
     try {
         const response = await fetch('http://localhost:81/social-network/messages/', {
@@ -405,7 +426,7 @@ function createChatItem(conversation) {
 async function loadChatMessages(recipientId, offset = 0, limit = 20) {
     console.log("recipientId:", recipientId);
     try {
-        const response = await fetch(`http://localhost:81/social-network/messages/${recipientId}?offset=${offset}&limit=${limit}`, {
+        const response = await fetch(`http://localhost:81/social-network/messages?recipientId=${recipientId}&offset=${offset}&limit=${limit}`, {
             headers: {
                 'Authorization': `Bearer ${getTokenFromCookie()}`
             }
@@ -427,30 +448,57 @@ async function loadChatContent(recipientId, username, userAvt) {
     const chatEmptyArea = document.querySelector('.message__chat-empty');
     const chatContentArea = document.querySelector('.message__chat-content');
     const chatHeader = document.querySelector('.message__chat-header');
+    const usernameElement = chatHeader.querySelector('.message__chat-name');
     const messagesContainer = document.querySelector('.message__messages-container');
-
-    chatEmptyArea.classList.add('hidden');
+    const avatarElement = chatHeader.querySelector('.message__profile-pic');
     
-    // Update chat header
-    chatHeader.querySelector('.message__chat-name').textContent = username;
-    chatHeader.querySelector('.message__profile-pic').innerHTML = `
-        <img src="${userAvt}" alt="${username}">
-    `;
+    console.log("Debug Header Update:", {
+        chatHeader,
+        usernameElement,
+        avatarElement,
+        username,
+        userAvt
+    });
 
-    messagesContainer.innerHTML = ''; // Clear existing messages
+    // Cập nhật username
+    if (usernameElement) {
+        usernameElement.textContent = username || 'Unknown User';
+    }
+
+    // Cập nhật avatar
+    if (avatarElement) {
+        // Kiểm tra userAvt có giá trị
+        if (userAvt) {
+            // Nếu chưa có img, tạo mới
+            let imgElement = avatarElement.querySelector('img');
+            if (!imgElement) {
+                imgElement = document.createElement('img');
+                avatarElement.appendChild(imgElement);
+            }
+            
+            imgElement.src = userAvt;
+            imgElement.alt = username || 'User Avatar';
+        } else {
+            console.warn('No avatar URL provided');
+            avatarElement.innerHTML = ''; // Xóa nội dung nếu không có avatar
+        }
+    }
+
+    // Phần còn lại của hàm giữ nguyên
+    chatEmptyArea.classList.add('hidden');
+    chatContentArea.classList.remove('hidden');
 
     try {
         const messages = await loadChatMessages(recipientId);
-        
-        // Sort messages by createAt in ascending order
-        messages.sort((a, b) => new Date(a.createAt) - new Date(b.createAt));
         
         messages.forEach(message => {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message__message');
             
             // Determine if message is sent or received
-            const isSentByCurrentUser = message.sender_id === getCurrentUserId();
+            console.log("sender_id: " +  message.sender_id + " " + getUserIdFromToken(getTokenFromCookie()));
+            const isSentByCurrentUser = message.sender_id === getUserIdFromToken(getTokenFromCookie());
+            console.log("true false: ", isSentByCurrentUser)
             messageElement.classList.add(isSentByCurrentUser ? 'message__sent' : 'message__received');
             
             // Create message content
@@ -499,9 +547,9 @@ async function loadChatData() {
                 );
                 // Update URL
                 history.replaceState(
-                    { chatId: conversation.username }, 
+                    { chatId: conversation.userId }, 
                     '', 
-                    `?chatId=${conversation.username}`
+                    `?chatId=${conversation.userId}`
                 );
             });
             chatList.appendChild(chatItem);
@@ -530,19 +578,83 @@ async function loadChatData() {
 // Call the function to load chat data
 document.addEventListener('DOMContentLoaded', loadChatData);
 
+// ---------------------------------------------------------------------------------------
+
+// Function to send a message to the recipient
+document.addEventListener('DOMContentLoaded', function() {
+    const inputBox = document.querySelector('.message__input-box');
+
+    inputBox.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của Enter
+
+            const messageText = inputBox.value.trim();
+            if (messageText) {
+                const recipientId = getRecipientId();
+                sendMessage(recipientId, messageText);
+                inputBox.value = ''; // Xóa nội dung input
+            }
+        }
+    });
+});
+
+function getRecipientId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('chatId');
+}
+
+async function sendMessage(recipientId, messageText) {
+    try {
+        const response = await fetch(`http://localhost:81/social-network/messages/${recipientId}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${getTokenFromCookie()}`,
+                'Content-Type': 'application/json'
+            },
+            body: messageText
+            
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to send message');
+        }
+
+        const messagesContainer = document.querySelector('.message__messages-container');
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message__message', 'message__sent');
+        
+        const messageContent = document.createElement('div');
+        messageContent.classList.add('message__message-content');
+        messageContent.textContent = messageText;
+        
+        const timestamp = document.createElement('div');
+        timestamp.classList.add('message__timestamp');
+        timestamp.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        messageElement.appendChild(messageContent);
+        messageElement.appendChild(timestamp);
+        
+        messagesContainer.insertBefore(messageElement, messagesContainer.firstChild);
+        
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        loadChatData();
+    } catch (error) {
+        console.error('Error sending message:', error);
+    }
+}
 
 
 
 // ---------------------------------------------------------------------------------------
 
-function toggleChatContent() {
-    const chatArea = document.querySelector('.message__chat-area');
-    const chatContent = document.querySelector('.message__chat-content');
+// function toggleChatContent() {
+//     const chatArea = document.querySelector('.message__chat-area');
+//     const chatContent = document.querySelector('.message__chat-content');
     
-    chatArea.classList.add('hidden');
-    chatContent.classList.remove('hidden');
-}
+//     chatContent.classList.remove('hidden');
+// }
 
 
 
-document.addEventListener('DOMContentLoaded', toggleChatContent);
+// document.addEventListener('DOMContentLoaded', toggleChatContent);

@@ -50,23 +50,59 @@ function connectToSocket() {
     stompClient.connect({}, () => {
         stompClient.subscribe(destination, (response) => {
             const data = JSON.parse(response.body);
-            
+            handleMessage(data);
         });
-    });	
-
+    });    
 }
 
 function handleMessage(data) {
     if (data.type === 'CHAT') {
-        /*
-            Xử lý khi tin nhắn đến
-            Ví dụ nếu đang ở trang chat thì hiển thị tin nhắn, hiển thị ở phần conversation
-        */
+        // Kiểm tra xem tin nhắn có phải của cuộc trò chuyện hiện tại không
+        const currentChatId = getRecipientId();
+        if (data.sender === currentChatId) {
+            const messagesContainer = document.querySelector('.message__messages-container');
+            const messageElement = document.createElement('div');
+            
+            // Xác định xem tin nhắn là gửi đi hay nhận về
+            const isSentByCurrentUser = data.senderId === getUserIdFromToken(getTokenFromCookie());
+            
+            messageElement.classList.add(
+                'message__message', 
+                isSentByCurrentUser ? 'message__sent' : 'message__received'
+            );
+
+            console.log('send by user: ', data.senderId)
+            
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('message__message-content');
+            messageContent.textContent = data.message;
+            
+            const timestamp = document.createElement('div');
+            timestamp.classList.add('message__timestamp');
+            const messageDate = new Date();
+            timestamp.textContent = messageDate.toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            messageElement.appendChild(messageContent);
+            messageElement.appendChild(timestamp);
+            
+            // Thêm tin nhắn vào đầu danh sách (hoặc cuối danh sách nếu muốn)
+            messagesContainer.insertBefore(messageElement, messagesContainer.firstChild);
+            
+            // Cuộn xuống dưới cùng
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Cập nhật danh sách cuộc trò chuyện
+        loadChatData();
     } else {
-        /**
-         * Ngược lại, nếu là thông báo về like, comment, share, ...
-         * hiển thị thông báo notification
-         * Update notification sidebar -> có 1 màu đỏ ở đầu chẳng hạn
-         */
+        // Xử lý các loại thông báo khác
+        // Ví dụ: cập nhật notification sidebar
+        console.log('Received notification:', data);
     }
 }
+
+// Gọi kết nối socket khi trang được tải
+document.addEventListener('DOMContentLoaded', connectToSocket);

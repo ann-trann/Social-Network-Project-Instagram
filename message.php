@@ -72,20 +72,7 @@ require "shared/sidebar.php";
                 </div>
                 <div class="message__chat-messages">
                     <div class="message__messages-container">
-                        <div class="message__message message__sent">
-                            <div class="message__message-content">Sure, sounds good!</div>
-                        </div>
-                        <div class="message__message message__received">
-                            <div class="message__message-content">Doing great! Want to catch up later?</div>
-                        </div>
-                        <div class="message__message message__sent">
-                            <div class="message__message-content">I'm good, thanks! How about you?</div>
-                        </div>
-                        <div class="message__message message__received">
-                            <div class="message__message-content">Hey, how are you?</div>
-                        </div>
                     </div>
-
                 </div>
 
                 <div class="message__chat-input">
@@ -100,3 +87,6 @@ require "shared/sidebar.php";
 
 <script src="js/common.js"></script>
 <script src="js/message.js"></script>
+<script src="js/socket.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
