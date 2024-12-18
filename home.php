@@ -59,13 +59,6 @@ if (!checkToken()) {
                 </div>
 
                 <div class="global__details-comment">
-                    <div class="global__post-caption">
-                        <div class="global__user-pic"></div>
-                        <div class="global__user-name-caption">
-                            <div class="global__user-name"></div>
-                            <div class="global__user-caption"></div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="global__details-action">
@@ -81,14 +74,33 @@ if (!checkToken()) {
                 
                 <div class="global__like-count"></div>
                 <div class="global__details-add-comment">
-                    <span class="global__smile-icon">
-                        <?php include(dirname(SHARED_PATH) . '/assets/svg/message_svg/smile_icon.svg') ?>
-                    </span>
                     <input type="text" placeholder="Add a comment...">
                     <button>Post</button>
                 </div>
             </div>
             
+        </div>
+
+
+        <div class="global__like-overlay">
+            <div class="global__like">
+                <div class="global__like-header">
+                    <h3>Likes</h3>
+                    <a class="global__like-close-btn">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+                <div class="global__like-list-followers">
+                    <!-- Placeholder for dynamically added like items -->
+                    <div class="global__like-item">
+                        <div class="global__like-pic" style="background-image: url('default-avatar.png')"></div>
+                        <div class="global__like-info">
+                            <h4>username</h4>
+                            <p>Full Name</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

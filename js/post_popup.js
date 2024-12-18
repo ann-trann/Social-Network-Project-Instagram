@@ -27,7 +27,7 @@ function createUnlikedSvg() {
 // Update user details in popup
 function updateUserDetails(postData) {
     const userPicElements = document.querySelectorAll(".global__user-pic");
-    const userNameElements = document.querySelectorAll(".global__user-name");
+    const userNameElements = document.querySelectorAll(".global__details-header .global__user-name");
     const postCaptionElement = document.querySelector(".global__user-caption");
     const popupImg = document.getElementById("popupImg");
 
@@ -45,9 +45,16 @@ function updateUserDetails(postData) {
         el.style.backgroundRepeat = "no-repeat";
     });
 
-    // Update usernames
+    // Update usernames in header with href
     userNameElements.forEach((el) => {
-        el.textContent = postData.username || "Unknown User";
+        // Create an anchor element
+        const usernameLink = document.createElement('a');
+        usernameLink.href = `http://localhost:8080/Social-Network-Project-Instagram/user?user_id=${postData.userId}`;
+        usernameLink.textContent = postData.username || "Unknown User";
+        
+        // Clear existing content and append the new link
+        el.innerHTML = '';
+        el.appendChild(usernameLink);
     });
 
     // Update post caption (ensure there's a caption element and post has a caption)
@@ -75,7 +82,6 @@ function fetchPostDetails(postId) {
                 return response.json();
             })
             .then((data) => {
-                console.log("Post data:", data);
                 resolve(data.result);
             })
             .catch((error) => {
@@ -88,8 +94,8 @@ function fetchPostDetails(postId) {
 
 
 // Shows popup when image is clicked and fetches post details
-async function showPopup(postId, page) {
-    console.log("page: ", page);
+// Modify showPopup to store postData
+function showPopup(postId, page) {
 
     // Get popup elements
     const popup = document.getElementById("imagePopup");
@@ -116,22 +122,26 @@ async function showPopup(postId, page) {
 
     try {
         // Fetch post details
-        const postData = await fetchPostDetails(postId);
+        fetchPostDetails(postId).then((postData) => {
 
-        // Update popup content
-        updateUserDetails(postData);
+            // Store full postData on popup for later use
+            popup.setAttribute('postData', JSON.stringify(postData));
 
-        // Update like button attributes
-        likeButton.setAttribute('data-liked', postData.like);
-        likeButton.setAttribute('data-post-id', postId);
-        likeCount.textContent = `${postData.numberOfLike} likes`;
+            // Update popup content
+            updateUserDetails(postData);
 
-        // Update SVG based on like state
-        likeButton.innerHTML = postData.like 
-            ? createLikedSvg() 
-            : createUnlikedSvg();
+            // Update like button attributes
+            likeButton.setAttribute('data-liked', postData.like);
+            likeButton.setAttribute('data-post-id', postId);
+            likeCount.textContent = `${postData.numberOfLike} likes`;
 
-        updateComments(postData.commentInPostResponseList);
+            // Update SVG based on like state
+            likeButton.innerHTML = postData.like 
+                ? createLikedSvg() 
+                : createUnlikedSvg();
+
+            updateComments(postData.commentInPostResponseList);
+        });
 
     } catch (error) {
         console.error("Error updating popup:", error);
@@ -274,19 +284,36 @@ document.addEventListener("DOMContentLoaded", addLikePopupEventListeners);
 function updateComments(comments) {
     const commentContainer = document.querySelector('.global__details-comment');
     
-    // Clear existing comments
-    const postCommentSection = commentContainer.querySelector('.global__post-comment');
-    if (postCommentSection) {
+    // Clear ALL existing comments, including the caption
+    const existingComments = commentContainer.querySelectorAll('.global__post-comment, .global__post-caption');
+    existingComments.forEach(comment => comment.remove());
+
+    // Add caption first
+    const popup = document.getElementById('imagePopup');
+    const postData = JSON.parse(popup.getAttribute('postData') || '{}');
+    
+    if (postData.caption) {
+        const captionEl = document.createElement('div');
+        captionEl.classList.add('global__post-caption');
+        captionEl.innerHTML = `
+            <div class="global__user-pic" style="background-image: url(${postData.userAvt})"></div>
+            <div href="user?user_id=${postData.userId} class="global__user-name-caption" userId="${postData.userId}">
+                <a href="user?user_id=${postData.userId}" class="global__user-name">${postData.username || 'Unknown User'}</a>
+                <div class="global__user-caption">${postData.caption}</div>
+            </div>
+        `;
+        commentContainer.appendChild(captionEl);
     }
 
+    // Add new comments
     if (comments && comments.length > 0) {
         comments.forEach(comment => {
             const commentEl = document.createElement('div');
             commentEl.classList.add('global__post-comment');
             commentEl.innerHTML = `
                 <div class="global__user-pic" style="background-image: url(${comment.avt})"></div>
-                <div class="global__user-name-caption">
-                    <div class="global__user-name">${comment.username}</div>
+                <div class="global__user-name-caption" userId="${comment.userId}">
+                    <a href="user?user_id=${postData.userId}" class="global__user-name">${comment.username || 'Unknown User'}</a>
                     <div class="global__user-comment">${comment.content}</div>
                 </div>
             `;
@@ -300,7 +327,19 @@ function updateComments(comments) {
 async function commentPostPopup(postId) {
     const token = getTokenFromCookie();
     const popup = document.getElementById('imagePopup');
-    const commentInput = popup.querySelector('.global__comment-input');
+    
+    if (!popup) {
+        console.error('Popup not found');
+        return;
+    }
+
+    const commentInput = popup.querySelector('.global__details-add-comment input');
+    
+    if (!commentInput) {
+        console.error('Comment input element not found');
+        return;
+    }
+
     const commentContent = commentInput.value.trim();
 
     if (!commentContent) {
@@ -315,7 +354,7 @@ async function commentPostPopup(postId) {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ content: commentContent }),
+            body: commentContent, // Directly send the comment text
         });
 
         if (!response.ok) {
@@ -335,18 +374,220 @@ async function commentPostPopup(postId) {
 }
 
 
+// ============================================================================================== //
+// =================================== Handle comment event listener ============================ //
+// ============================================================================================== //
+
+
+async function commentPostPopup(postId) {
+    const token = getTokenFromCookie();
+    const popup = document.getElementById('imagePopup');
+    
+    if (!popup) {
+        console.error('Popup not found');
+        return;
+    }
+
+    const commentInput = popup.querySelector('.global__details-add-comment input');
+    
+    if (!commentInput) {
+        console.error('Comment input element not found');
+        return;
+    }
+
+    const commentContent = commentInput.value.trim();
+
+    if (!commentContent) {
+        console.error('Comment content is empty');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:81/social-network/posts/${postId}/comment`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: commentContent, // Directly send the comment text
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to comment on post");
+        }
+
+        // Clear the comment input
+        commentInput.value = '';
+
+        // Fetch post details again to update comments
+        const postData = await fetchPostDetails(postId);
+        updateComments(postData.commentInPostResponseList);
+
+    } catch (error) {
+        console.error("Error commenting on post:", error);
+    }
+}
+
+// Modify the event listener setup
+function addCommentEventListeners() {
+    const popup = document.getElementById('imagePopup');
+    if (!popup) {
+        console.error('Popup element not found');
+        return;
+    }
+
+    const commentButton = popup.querySelector('.global__details-add-comment button');
+    const commentInput = popup.querySelector('.global__details-add-comment input');
+
+    // Error checking for elements
+    if (!commentButton) {
+        console.error('Comment button not found');
+        return;
+    }
+
+    if (!commentInput) {
+        console.error('Comment input not found');
+        return;
+    }
+
+    // Add click event to Post button
+    commentButton.addEventListener('click', () => {
+        const postId = popup.getAttribute('postId');
+        if (!postId) {
+            console.error('No post ID found');
+            return;
+        }
+        commentPostPopup(postId);
+    });
+
+    // Add enter key support for input
+    commentInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            const postId = popup.getAttribute('postId');
+            if (!postId) {
+                console.error('No post ID found');
+                return;
+            }
+            commentPostPopup(postId);
+        }
+    });
+}
+
+// Ensure event listeners are added after DOM is fully loaded
+document.addEventListener("DOMContentLoaded", () => {
+    addLikePopupEventListeners();
+    addCommentEventListeners();
+});
 
 
 
+// ================================================================================================//
+//================================= Handler global like popup =====================================//
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    const likeOverlay = document.querySelector(".global__like-overlay");
+    const likeCloseBtn = document.querySelector(".global__like-close-btn");
 
+    // Function to show the likes overlay
+    function showLikesOverlay() {
+        const imagePopup = document.getElementById("imagePopup");
+        const postId = imagePopup.getAttribute("postId");
 
+        // Fetch and populate likes
+        async function fetchAndPopulateLikes() {
+            try {
+                const response = await fetch(
+                    `http://localhost:81/social-network/posts/people-like-post/${postId}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${getTokenFromCookie()}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
 
+                if (!response.ok) {
+                    throw new Error("Failed to fetch users who liked the post");
+                }
 
+                const data = await response.json();
+                const usersLikedPost = data.result;
 
+                // Clear existing items
+                const likesList = document.querySelector(".global__like-list-followers");
+                likesList.innerHTML = '';
 
+                // Populate likes list
+                usersLikedPost.forEach((user) => {
+                    const likeItem = document.createElement("div");
+                    likeItem.className = "global__like-item";
+                    likeItem.innerHTML = `
+                    <div class="global__like-pic" style="background-image: url(${
+                        user.avatar || "default-avatar.png"
+                    })"></div>
+                    <div class="global__like-info">
+                        <h4>${user.username}</h4>
+                        <p>${user.fullname || ""}</p>
+                    </div>
+                    `;
+                    likesList.appendChild(likeItem);
+                });
 
+                // Show the overlay
+                likeOverlay.style.display = "flex";
+            } catch (error) {
+                console.error("Error fetching likes:", error);
+            }
+        }
 
+        // Fetch and populate likes when overlay is shown
+        fetchAndPopulateLikes();
+    }
 
+    // Function to hide the likes overlay
+    function hideLikesOverlay() {
+        likeOverlay.style.display = "none";
+    }
+
+    // Add click event listener to global like count
+    const globalLikeCount = document.querySelector(".global__like-count");
+    if (globalLikeCount) {
+        globalLikeCount.addEventListener("click", showLikesOverlay);
+    }
+
+    // Add click event listener to close button with event stopPropagation
+    if (likeCloseBtn) {
+        likeCloseBtn.addEventListener("click", (event) => {
+            event.stopPropagation(); // Prevent event from bubbling up
+            hideLikesOverlay();
+        });
+    }
+
+    // Add click event to likes overlay to close only when clicking outside the likes content
+    if (likeOverlay) {
+        likeOverlay.addEventListener("click", (event) => {
+            if (event.target === likeOverlay) {
+                hideLikesOverlay();
+            }
+        });
+    }
+
+    // Ensure likes overlay is hidden when popup is opened
+    function ensureLikesOverlayHidden() {
+        if (likeOverlay) {
+            likeOverlay.style.display = "none";
+        }
+    }
+
+    // Modify the showPopup function to hide likes overlay
+    const originalShowPopup = window.showPopup;
+    window.showPopup = function(...args) {
+        ensureLikesOverlayHidden();
+        if (originalShowPopup) {
+            originalShowPopup.apply(this, args);
+        }
+    };
+});
 

@@ -58,7 +58,7 @@
     padding: 16px;
 }
 
-.global__user-pic {
+.global__details-header .global__user-pic {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -87,6 +87,8 @@
     font-weight: bold;
     padding-right: 5px;
     white-space: nowrap;
+    color:#262626;
+    cursor: pointer;
 }
 
 .global__details-header img {
@@ -149,6 +151,7 @@
     padding: 0 12px 12px 12px;
     font-size: 14px;
     border-bottom: 1px solid #dbdbdb;
+    cursor: pointer;
 }
 
 .global__details-add-comment {
@@ -186,4 +189,135 @@
     font-size: 30px;
     cursor: pointer;
     z-index: 1001;
+}
+
+
+
+
+/* Instagram-like Followers Overlay Styles */
+.global__like-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.global__like {
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.global__like-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.global__like-header h3 {
+    font-weight: 600;
+    margin: 0;
+    font-size: 16px;
+    color: #262626;
+}
+
+.global__like-close-btn {
+    color: #262626;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.global__like-close-btn:hover {
+    color: #8e8e8e;
+}
+
+.profile__list-followers {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.global__like-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.global__like-item:hover {
+    background-color: #f9f9f9;
+}
+
+.global__like-pic {
+    width: 44px;
+    height: 44px;
+    background-color: #fff;
+    margin-right: 12px;
+    background-size: cover;
+    background-position: center;
+}
+
+.global__like-pic img {
+    width: 44px;
+    height: 44px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+}
+
+.global__like-info {
+    flex-grow: 1;
+}
+
+.global__like-info h4 {
+    margin: 0;
+    font-size: 14px;
+    color: #262626;
+    font-weight: 600;
+}
+
+.global__like-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #8e8e8e;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Scrollbar Styling (Optional, makes it more Instagram-like) */
+.like__list-followers::-webkit-scrollbar {
+    width: 8px;
+}
+
+.like__list-followers::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.like__list-followers::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.like__list-followers::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

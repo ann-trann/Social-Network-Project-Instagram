@@ -43,8 +43,6 @@ function showExplorePosts() {
 
       const data = await response.json();
 
-      console.log("data: ", data);
-
       const exploreContainer = document.querySelector(".explore__explore-grid");
 
       // Clear existing posts only if it's the first page (offset 0)

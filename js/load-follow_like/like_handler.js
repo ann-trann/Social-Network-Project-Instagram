@@ -182,11 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="home_like-info">
                     <h4>${user.username}</h4>
                     <p>${user.fullname || ""}</p>
-                    ${
-                      user.isFollow
-                        ? '<button class="follow-btn following">Following</button>'
-                        : '<button class="follow-btn">Follow</button>'
-                    }
                 </div>
             `;
       likesList.appendChild(likeItem);
