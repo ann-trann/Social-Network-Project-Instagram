@@ -209,6 +209,10 @@
   padding: 12px;
   border-radius: 22px;
   font-size: 14px;
+  max-width: 300px; 
+  word-wrap: break-word; 
+  white-space: normal;  
+  overflow-wrap: break-word;
 }
 
 .message__received .message__message-content {

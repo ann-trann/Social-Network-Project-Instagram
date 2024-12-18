@@ -69,6 +69,9 @@ require "shared/sidebar.php";
                 <div class="message__chat-header">
                     <div class="message__profile-pic"></div>
                     <div class="message__chat-name"></div>
+                    <button onclick="handleVideoCall()" class="message__video-call-btn">
+                        <i class="fas fa-video"></i>
+                    </button>
                 </div>
                 <div class="message__chat-messages">
                     <div class="message__messages-container">
@@ -90,3 +93,7 @@ require "shared/sidebar.php";
 <script src="js/socket.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="js/videoCall.js"></script>
+<script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>

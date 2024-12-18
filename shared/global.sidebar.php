@@ -110,3 +110,5 @@ if (!defined('SHARED_PATH')) {
 
 
 </nav>
+
+<script src="js/common.js"></script>

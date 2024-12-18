@@ -109,3 +109,5 @@ if (!defined('SHARED_PATH')) {
     <?php include(SHARED_PATH . '/create_post_modal.php'); ?>
 
 </nav>
+
+<script src="js/common.js"></script>

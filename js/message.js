@@ -423,7 +423,7 @@ function createChatItem(conversation) {
 }
 
 // Function to load chat messages for a specific user
-async function loadChatMessages(recipientId, offset = 0, limit = 20) {
+async function loadChatMessages(recipientId, offset = 0, limit = 200) {
     console.log("recipientId:", recipientId);
     try {
         const response = await fetch(`http://localhost:81/social-network/messages?recipientId=${recipientId}&offset=${offset}&limit=${limit}`, {
@@ -442,6 +442,8 @@ async function loadChatMessages(recipientId, offset = 0, limit = 20) {
         throw error;
     }
 }
+
+var des;
 
 // Function to load chat content
 async function loadChatContent(recipientId, username, userAvt) {
@@ -528,6 +530,8 @@ async function loadChatContent(recipientId, username, userAvt) {
     }
 }
 
+
+
 // Function to load chat data and populate chat list
 async function loadChatData() {
     try {
@@ -555,18 +559,35 @@ async function loadChatData() {
             chatList.appendChild(chatItem);
         });
 
+
         // Handle initial chat if URL has chatId
         const urlParams = new URLSearchParams(window.location.search);
-        const initialChatId = urlParams.get('chatId');
+        const initialChatId = urlParams.get('chat_id');
+        console.log("initialChatId ", initialChatId)
         if (initialChatId) {
-            const conversation = conversations.find(c => c.username === initialChatId);
-            if (conversation) {
-                loadChatContent(
-                    conversation.username, 
-                    conversation.username,
-                    conversation.userAvt  // Pass the user avatar URL
-                );
-            }
+            const response = await fetch(`http://localhost:81/social-network/users/${initialChatId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${getTokenFromCookie()}`
+                }
+            })
+            .then (response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user profile.');
+                } 
+                return response.json();
+            })
+            .then (data => {
+                if (data.result) {
+                    const chatEmpty = document.querySelector('.message__chat-empty');
+                    const chatContent = document.querySelector('.message__chat-content');
+            
+                    chatEmpty.classList.add('hidden');
+                    chatContent.classList.remove('hidden');
+                    des = data.result.userId
+                    loadChatContent(data.result.userId, data.result.username, data.result.avt)
+                }
+            })
         }
     } catch (error) {
         console.error('Error loading chat data:', error);
@@ -590,8 +611,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const messageText = inputBox.value.trim();
             if (messageText) {
-                const recipientId = getRecipientId();
-                sendMessage(recipientId, messageText);
+                let recipient;
+                if (getRecipientId()) {
+                    const recipient = getRecipientId();
+                } else {
+                    recipient = des;
+                }
+                console.log('repid:, ', recipient)
+                sendMessage(recipient, messageText);
                 inputBox.value = ''; // Xóa nội dung input
             }
         }
@@ -658,3 +685,6 @@ async function sendMessage(recipientId, messageText) {
 
 
 // document.addEventListener('DOMContentLoaded', toggleChatContent);
+
+
+

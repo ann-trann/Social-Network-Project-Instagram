@@ -5,12 +5,9 @@
     </div>
 
     <div class="notification__notification-body">
-        <div class="notification__this-month-item">
-            <p>This month</p>
-        </div>
-        <div class="notification__earlier-item">
-            <p>Earlier</p>
-        </div>
+        
     </div>
 
 </div>
+
+<script src="js/notification_sidebar.js"></script>
