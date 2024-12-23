@@ -1,3 +1,5 @@
+//========================= SOCKET =========================
+
 var sockUrl = 'http://localhost:81/social-network/ws';
 var socket, stompClient;
 
@@ -55,23 +57,25 @@ function connectToSocket() {
     });    
 }
 
+
+function getRecipientId() {
+    return currentRecipientId;  // Sử dụng biến currentRecipientId từ chat system
+}
+
+
 function handleMessage(data) {
     if (data.type === 'CHAT') {
-        // Kiểm tra xem tin nhắn có phải của cuộc trò chuyện hiện tại không
         const currentChatId = getRecipientId();
         if (data.sender === currentChatId) {
             const messagesContainer = document.querySelector('.message__messages-container');
             const messageElement = document.createElement('div');
             
-            // Xác định xem tin nhắn là gửi đi hay nhận về
             const isSentByCurrentUser = data.senderId === getUserIdFromToken(getTokenFromCookie());
             
             messageElement.classList.add(
                 'message__message', 
                 isSentByCurrentUser ? 'message__sent' : 'message__received'
             );
-
-            console.log('send by user: ', data.senderId)
             
             const messageContent = document.createElement('div');
             messageContent.classList.add('message__message-content');
@@ -88,18 +92,14 @@ function handleMessage(data) {
             messageElement.appendChild(messageContent);
             messageElement.appendChild(timestamp);
             
-            // Thêm tin nhắn vào đầu danh sách (hoặc cuối danh sách nếu muốn)
-            messagesContainer.insertBefore(messageElement, messagesContainer.firstChild);
+            messagesContainer.appendChild(messageElement);
             
-            // Cuộn xuống dưới cùng
+            // Scroll to bottom after adding new message
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
         
-        // Cập nhật danh sách cuộc trò chuyện
         loadChatData();
     } else {
-        // Xử lý các loại thông báo khác
-        // Ví dụ: cập nhật notification sidebar
         console.log('Received notification:', data);
     }
 }

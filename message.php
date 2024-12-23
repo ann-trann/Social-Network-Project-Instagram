@@ -28,30 +28,6 @@ require "shared/sidebar.php";
             </div>
 
             <div class="message__chat-list">
-                <!-- <div class="message__chat-item" id="john-doe">
-                    <div class="message__item-profile-pic"></div>
-                    <div class="message__chat-info">
-                        <div class="message__item-chat-name">John Doe</div>
-                        <div class="message__last-message-container">
-                            <div class="message__last-message">Hey, how are you?</div>
-                            <div class="message__last-message-divider">•</div>
-                            <div class="message__last-message-timeDifference">2h</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="message__chat-item" id="jane-smith">
-                    <div class="message__item-profile-pic"></div>
-                    <div class="message__chat-info">
-                        <div class="message__item-chat-name">Jane Smith</div>
-                        <div class="message__last-message-container">
-                            <div class="message__last-message">See you tomorrow!</div>
-                            <div class="message__last-message-divider">•</div>
-                            <div class="message__last-message-time">1d</div>
-                        </div>
-                    </div>
-                </div> -->
-
             </div>
 
         </div>

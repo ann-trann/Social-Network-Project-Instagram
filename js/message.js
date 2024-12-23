@@ -250,8 +250,10 @@ async function loadChatMessages(recipientId, page = 0) {
 }
 
 function renderMessages(messages, container, shouldPrepend = false) {
-    // Đảo ngược mảng tin nhắn để hiển thị theo đúng thứ tự thời gian
-    const orderedMessages = messages;
+    // Sort messages by time to ensure correct order (oldest to newest)
+    const orderedMessages = messages.sort((a, b) => {
+        return new Date(a.createAt) - new Date(b.createAt);
+    });
     
     orderedMessages.forEach(message => {
         const messageElement = document.createElement('div');
@@ -281,6 +283,9 @@ function renderMessages(messages, container, shouldPrepend = false) {
             container.appendChild(messageElement);
         }
     });
+
+    // Scroll to bottom after rendering messages
+    container.scrollTop = container.scrollHeight;
 }
 
 async function loadChatContent(recipientId, username, userAvt) {
@@ -344,8 +349,6 @@ async function loadChatContent(recipientId, username, userAvt) {
             }
         });
 
-        // Scroll to bottom after loading initial messages
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     } catch (error) {
         console.error('Error loading chat content:', error);
         const messagesContainer = document.querySelector('.message__messages-container');
